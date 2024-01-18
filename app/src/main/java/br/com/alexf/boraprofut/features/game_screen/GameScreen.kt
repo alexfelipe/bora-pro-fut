@@ -23,30 +23,29 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.com.alexf.boraprofut.features.game_screen.model.NameTime
+import br.com.alexf.boraprofut.features.game_screen.model.ReadyMadeGames
 import coil.compose.AsyncImage
 import androidx.lifecycle.viewmodel.compose.viewModel
-import br.com.alexf.boraprofut.features.game_screen.mock.mockOfTemaList
+import br.com.alexf.boraprofut.features.game_screen.mock.mockReadyMadeGames
 
 @Composable
 fun GameScreen(
     viewModel: GameScreenViewModel = viewModel(),
 ) {
-
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(15.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         contentPadding = PaddingValues(15.dp),
     ) {
-        items(mockOfTemaList) { time ->
+        items( viewModel.getGames()) { time ->
             GameGroup(time)
         }
     }
 }
 
 @Composable
-private fun GameGroup(time: NameTime) {
+private fun GameGroup(time: ReadyMadeGames) {
     Card(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         modifier = Modifier
@@ -103,7 +102,7 @@ private fun Team(nameTime: String) {
 @Preview
 @Composable
 fun GameGroupPreview() {
-    GameGroup(NameTime("teste1", "teste2", "teste3"))
+    GameGroup(ReadyMadeGames("teste1", "teste2", "teste3"))
 }
 
 @Preview(showSystemUi = true)
