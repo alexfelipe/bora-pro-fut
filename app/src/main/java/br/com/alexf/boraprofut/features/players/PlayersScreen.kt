@@ -15,7 +15,9 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
@@ -45,7 +47,11 @@ fun PlayersScreen(
 ) {
     val players = uiState.players
     val playersAmountPerTeam = uiState.playersPerTeam
-    Column(modifier.fillMaxSize()) {
+    Column(
+        modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ) {
         Column(
             Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -117,6 +123,14 @@ fun PlayersScreen(
                     fontWeight = FontWeight.Bold
                 )
             )
+        }
+        Column {
+            uiState.drawedTeams.forEachIndexed { index, players ->
+                Text(text = "Time ${index + 1}")
+                for (player in players) {
+                    Text(text = player.name)
+                }
+            }
         }
     }
 }
