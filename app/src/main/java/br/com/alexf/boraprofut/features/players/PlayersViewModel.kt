@@ -1,33 +1,30 @@
 package br.com.alexf.boraprofut.features.players
 
 import androidx.lifecycle.ViewModel
+import br.com.alexf.boraprofut.data.repositories.PlayersRepository
 import br.com.alexf.boraprofut.features.players.model.Player
-import br.com.alexf.boraprofut.features.players.useCases.TeamDrawerUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
-import kotlin.random.Random
-
-//TODO adicionar esse valor em um meio persistente para que o usuário tenha a sua preferência
-private const val defaultPlayersPerTeam: Int = 4
 
 data class PlayersUiState(
     val players: String = "",
-    val teams: Int = 2,
-    val playersPerTeam: Int = defaultPlayersPerTeam,
-    val drawedTeams: List<List<Player>> = emptyList(),
     val onPlayersChange: (String) -> Unit = {},
-    val onIncreasesPlayersPerTeam: () -> Unit = {},
-    val onDecreasesPlayersPerTeam: () -> Unit = {}
+    val isPlayersSaved: Boolean = false,
+    val isSaving: Boolean = false,
 )
 
 class PlayersViewModel(
-    private val teamDrawerUseCase: TeamDrawerUseCase
+    private val repository: PlayersRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PlayersUiState())
 
-    val uiState = _uiState.asStateFlow()
+    val uiState = _uiState
+        .combine(repository.players) { uiState, players ->
+            uiState.copy(isPlayersSaved = players.isNotEmpty())
+        }
 
     init {
         _uiState.update { currentState ->
@@ -37,35 +34,25 @@ class PlayersViewModel(
                         it.copy(players = players)
                     }
                 },
-                onIncreasesPlayersPerTeam = {
-                    _uiState.update {
-                        it.copy(playersPerTeam = it.playersPerTeam + 1)
-                    }
-                },
-                onDecreasesPlayersPerTeam = {
-                    _uiState.update {
-                        val playersPerTeam = it.playersPerTeam.let { players ->
-                            if (players > 2) players - 1 else players
-                        }
-                        it.copy(playersPerTeam = playersPerTeam)
-                    }
-                }
             )
         }
     }
 
-    fun drawTeams() {
-        val playersPerTeam = _uiState.value.playersPerTeam
-        val players = _uiState.value.players.parseToPlayers()
-        _uiState.update {
-            it.copy(
-                drawedTeams = teamDrawerUseCase.drawTeams(players, playersPerTeam)
-            )
+    fun savePlayers() {
+        with(_uiState.value) {
+            if (isSaving) {
+                return
+            }
+            _uiState.update {
+                copy(isSaving = true)
+            }
+            players.parseToPlayers().let {
+                repository.save(it)
+            }
         }
     }
 
 }
-
 
 private fun String.parseToPlayers(): Set<Player> {
     return this.split("\n")

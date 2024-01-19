@@ -3,6 +3,7 @@ package br.com.alexf.boraprofut.ui.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -19,48 +20,68 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.alexf.boraprofut.R
+import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
 
 @Composable
 fun SelectPlayerPerTeam(
     players: Int,
-    onDecreasesPlayers: () -> Unit,
-    onIncreasesPlayers: () -> Unit,
+    onDecreasePlayers: () -> Unit,
+    onIncreasePlayers: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    Text(
-        text = stringResource(R.string.players_amount_per_team),
-        style = MaterialTheme.typography.titleLarge
-    )
-    Spacer(modifier = Modifier.size(16.dp))
-    Row(
-        Modifier.height(48.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalAlignment = Alignment.CenterVertically
+    Column(
+        modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val iconModifier = Modifier
-            .fillMaxHeight()
-            .width(40.dp)
-        Icon(
-            Icons.Filled.ArrowBack,
-            contentDescription = stringResource(R.string.decreases_players_amount_per_team),
-            iconModifier
-                .clickable { onDecreasesPlayers() }
+        Text(
+            text = stringResource(R.string.players_amount_per_team),
+            style = MaterialTheme.typography.titleLarge
         )
-        Box(Modifier.fillMaxHeight()) {
-            Text(
-                text = "$players",
-                Modifier
-                    .align(Alignment.Center),
-                style = MaterialTheme.typography.titleLarge
+        Spacer(modifier = Modifier.size(16.dp))
+        Row(
+            Modifier.height(48.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            val iconModifier = Modifier
+                .fillMaxHeight()
+                .width(40.dp)
+            Icon(
+                Icons.Filled.ArrowBack,
+                contentDescription = stringResource(R.string.decreases_players_amount_per_team),
+                iconModifier
+                    .clickable { onDecreasePlayers() }
             )
-        }
-        Icon(
-            Icons.Filled.ArrowForward,
-            contentDescription = stringResource(R.string.increases_players_amount_per_team),
-            iconModifier
-                .clickable { onIncreasesPlayers() }
-        )
+            Box(Modifier.fillMaxHeight()) {
+                Text(
+                    text = "$players",
+                    Modifier
+                        .align(Alignment.Center),
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
+            Icon(
+                Icons.Filled.ArrowForward,
+                contentDescription = stringResource(R.string.increases_players_amount_per_team),
+                iconModifier
+                    .clickable { onIncreasePlayers() }
+            )
 
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SelectPlayerPerTeamPreview() {
+    BoraProFutTheme {
+        SelectPlayerPerTeam(
+            1,
+            onIncreasePlayers = {},
+            onDecreasePlayers = {}
+        )
     }
 }
