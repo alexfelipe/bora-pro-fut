@@ -14,9 +14,13 @@ fun NavGraphBuilder.playersScreen(
 ) {
     composable(playersRoute) {
         val viewModel = koinViewModel<PlayersViewModel>()
-        val uiState by viewModel.uiState.collectAsState(initial = PlayersUiState())
+        val uiState by viewModel.uiState
+            .collectAsState(initial = PlayersUiState())
         LaunchedEffect(uiState.isPlayersSaved) {
             if (uiState.isPlayersSaved) {
+                //TODO preciso investir esse comportamento,
+                // pois ele está mantendo o estado ao fazer a navegação de volta
+                viewModel.clearIsPlayersSaved()
                 onNavigateToDrawScreen()
             }
         }

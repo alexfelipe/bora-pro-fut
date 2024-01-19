@@ -20,11 +20,7 @@ class PlayersViewModel(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PlayersUiState())
-
-    val uiState = _uiState
-        .combine(repository.players) { uiState, players ->
-            uiState.copy(isPlayersSaved = players.isNotEmpty())
-        }
+    val uiState = _uiState.asStateFlow()
 
     init {
         _uiState.update { currentState ->
@@ -49,6 +45,18 @@ class PlayersViewModel(
             players.parseToPlayers().let {
                 repository.save(it)
             }
+            _uiState.update {
+                it.copy(
+                    isSaving = false,
+                    isPlayersSaved = true
+                )
+            }
+        }
+    }
+
+    fun clearIsPlayersSaved() {
+        _uiState.update {
+            it.copy(isPlayersSaved = false)
         }
     }
 
