@@ -18,7 +18,7 @@ data class DrawTeamsUiState(
 )
 
 class DrawTeamsViewModel(
-    private val repository: PlayersRepository
+    repository: PlayersRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DrawTeamsUiState())

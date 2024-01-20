@@ -51,8 +51,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.koin.androidx.compose.navigation)
     implementation(libs.androidx.material.icons.extended)
-
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
     implementation(libs.androidx.navigation.compose)

@@ -48,15 +48,8 @@ class PlayersViewModel(
             _uiState.update {
                 it.copy(
                     isSaving = false,
-                    isPlayersSaved = true
                 )
             }
-        }
-    }
-
-    fun clearIsPlayersSaved() {
-        _uiState.update {
-            it.copy(isPlayersSaved = false)
         }
     }
 
