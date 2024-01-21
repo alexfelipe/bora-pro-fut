@@ -37,7 +37,9 @@ fun DrawTeamsScreen(
     modifier: Modifier = Modifier,
     onDecreasePlayers: () -> Unit,
     onIncreasePlayers: () -> Unit,
+    onDrawRandomTeamsClick: () -> Unit,
 ) {
+    val totalPlayers = uiState.players.size
     Column(
         modifier
             .fillMaxSize()
@@ -49,7 +51,7 @@ fun DrawTeamsScreen(
             style = MaterialTheme.typography.titleLarge,
         )
         SelectPlayerPerTeam(
-            players = 0,
+            players = uiState.playersPerTeam,
             onDecreasePlayers = onDecreasePlayers,
             onIncreasePlayers = onIncreasePlayers,
             Modifier.align(Alignment.CenterHorizontally)
@@ -58,11 +60,8 @@ fun DrawTeamsScreen(
             Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            BoraProFutButton(onClick = { }) {
+            BoraProFutButton(onClick = onDrawRandomTeamsClick) {
                 Text(text = "Sorteiro aleatório")
-            }
-            BoraProFutButton(onClick = {}) {
-                Text(text = "Sorteiro equilibrado")
             }
             Row(
                 Modifier
@@ -93,7 +92,8 @@ fun DrawTeamsScreen(
                     imageVector = buttonIcon,
                     contentDescription = contentDescription
                 )
-                Text(text = buttonText)
+
+                Text(text = "$buttonText ($totalPlayers)")
             }
         }
 
@@ -117,8 +117,12 @@ fun DrawTeamsScreen(
 @Composable
 fun DrawTeamsScreenPreview() {
     BoraProFutTheme {
-        DrawTeamsScreen(uiState = DrawTeamsUiState(), onDecreasePlayers = { /*TODO*/ }) {
-        }
+        DrawTeamsScreen(
+            uiState = DrawTeamsUiState(),
+            onDecreasePlayers = { /*TODO*/ },
+            onDrawRandomTeamsClick = {},
+            onIncreasePlayers = {}
+        )
     }
 }
 
@@ -136,7 +140,8 @@ fun DrawTeamsScreenDisplayingPlayersPreview() {
                 isShowPlayers = true
             ),
             onDecreasePlayers = { },
-            onIncreasePlayers = { }
+            onIncreasePlayers = { },
+            onDrawRandomTeamsClick = {}
         )
     }
 }

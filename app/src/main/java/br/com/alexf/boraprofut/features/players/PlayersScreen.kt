@@ -38,52 +38,63 @@ fun PlayersScreen(
         modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .verticalScroll(rememberScrollState())
     ) {
-        Text(
-            text = "Cadastrado de jogadores",
-            Modifier.padding(16.dp),
-            style = MaterialTheme.typography.titleLarge
-        )
         Column(
-            Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-
-        }
-        OutlinedTextField(
-            value = players,
-            onValueChange = uiState.onPlayersChange,
             Modifier
-                .heightIn(200.dp)
-                .fillMaxWidth()
-                .padding(16.dp),
-            label = {
-                Text(text = stringResource(R.string.players))
-            }
-        )
-        if (uiState.isSaving) {
-            Box(modifier = Modifier.fillMaxWidth()) {
-                CircularProgressIndicator(Modifier.align(Alignment.Center))
-            }
-        } else {
-            BoraProFutButton(
-                onClick = onSavePlayers,
-                Modifier.padding(16.dp)
+                .weight(1f)
+                .verticalScroll(rememberScrollState())
+        ) {
+            Text(
+                text = "Cadastrado de jogadores",
+                Modifier.padding(16.dp),
+                style = MaterialTheme.typography.titleLarge
+            )
+            Column(
+                Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
+
+            }
+            OutlinedTextField(
+                value = players,
+                onValueChange = uiState.onPlayersChange,
+                Modifier
+                    .heightIn(200.dp)
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                label = {
+                    Text(text = stringResource(R.string.players))
+                }
+            )
+        }
+        Column(
+            Modifier
+                .fillMaxWidth()
+        ) {
+            if (uiState.isSaving) {
                 Box(modifier = Modifier.fillMaxWidth()) {
-                    Text(
-                        text = stringResource(R.string.save_players)
-                            .toUpperCase(Locale.current),
-                        Modifier
-                            .align(Alignment.Center),
-                        style = LocalTextStyle.current.copy(
-                            fontWeight = FontWeight.Bold
+                    CircularProgressIndicator(Modifier.align(Alignment.Center))
+                }
+            } else {
+                BoraProFutButton(
+                    onClick = onSavePlayers,
+                    Modifier.padding(16.dp)
+                ) {
+                    Box(modifier = Modifier.fillMaxWidth()) {
+                        Text(
+                            text = stringResource(R.string.save_players)
+                                .toUpperCase(Locale.current),
+                            Modifier
+                                .align(Alignment.Center),
+                            style = LocalTextStyle.current.copy(
+                                fontWeight = FontWeight.Bold
+                            )
                         )
-                    )
+                    }
                 }
             }
         }
+
     }
 }
 

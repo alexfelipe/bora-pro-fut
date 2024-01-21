@@ -4,13 +4,15 @@ import br.com.alexf.boraprofut.features.players.model.Player
 
 class TeamDrawerUseCase {
 
-    fun drawTeams(
+    fun drawRandomTeams(
         players: Set<Player>,
         playersPerTeam: Int
-    ): List<List<Player>> {
+    ): List<Set<Player>> {
         return players
             .shuffled()
-            .chunked(playersPerTeam)
+            .chunked(playersPerTeam) {
+                it.toSet()
+            }
     }
 
 }

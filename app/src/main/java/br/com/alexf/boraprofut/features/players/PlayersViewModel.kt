@@ -1,5 +1,6 @@
 package br.com.alexf.boraprofut.features.players
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository
 import br.com.alexf.boraprofut.features.players.model.Player

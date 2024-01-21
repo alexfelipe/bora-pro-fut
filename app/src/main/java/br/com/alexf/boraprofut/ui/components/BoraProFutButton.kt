@@ -25,12 +25,12 @@ fun BoraProFutButton(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(25))
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.primaryContainer)
-            .padding(16.dp)
             .clickable {
                 onClick()
             }
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.primaryContainer)
+            .padding(16.dp)
     ) {
         content()
     }

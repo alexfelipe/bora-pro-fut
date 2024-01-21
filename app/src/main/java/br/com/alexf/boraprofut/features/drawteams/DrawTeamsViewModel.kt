@@ -7,24 +7,25 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 
-//TODO refatorar para adicionar em um meio persistente
-private const val defaultPlayersPerTeam = 4
 
 data class DrawTeamsUiState(
     val players: Set<Player> = emptySet(),
-    val playersPerTeam: Int = defaultPlayersPerTeam,
+    val playersPerTeam: Int = 0,
     val isShowPlayers: Boolean = false,
     val onShowPlayersToggle: () -> Unit = {}
 )
 
 class DrawTeamsViewModel(
-    repository: PlayersRepository
+    private val repository: PlayersRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DrawTeamsUiState())
-    val uiState = _uiState.combine(repository.players) { uiState, players ->
-        uiState.copy(players = players)
-    }
+    val uiState = _uiState
+        .combine(repository.players) { uiState, players ->
+            uiState.copy(players = players)
+        }.combine(repository.playersPerTeam) { uiState, playersPerTeam ->
+            uiState.copy(playersPerTeam = playersPerTeam)
+        }
 
     init {
         _uiState.update { currentState ->
@@ -39,17 +40,11 @@ class DrawTeamsViewModel(
     }
 
     fun increasePlayersPerTeam() {
-        _uiState.update {
-            it.copy(playersPerTeam = it.playersPerTeam + 1)
-        }
+        repository.increasePlayersPerTeam()
     }
 
     fun decreasePlayersPerTeam() {
-        if(_uiState.value.playersPerTeam > 2){
-            _uiState.update {
-                it.copy(playersPerTeam = it.playersPerTeam - 1)
-            }
-        }
+        repository.decreasePlayersPerTeam()
     }
 
 }
