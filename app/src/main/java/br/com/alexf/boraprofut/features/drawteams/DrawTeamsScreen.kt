@@ -24,6 +24,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.alexf.boraprofut.features.players.model.Player
@@ -98,14 +100,32 @@ fun DrawTeamsScreen(
         }
 
         if (uiState.isShowPlayers) {
-            Column(Modifier.padding(16.dp)) {
-                Text(text = "Jogadores", style = MaterialTheme.typography.titleLarge)
-                Spacer(modifier = Modifier.size(16.dp))
+            Column {
+                Text(
+                    text = "Jogadores",
+                    Modifier
+                        .fillMaxWidth()
+                        .background(
+                            Brush.linearGradient(
+                                listOf(
+                                    MaterialTheme.colorScheme.secondaryContainer,
+                                    MaterialTheme.colorScheme.primaryContainer,
+                                    MaterialTheme.colorScheme.background
+                                )
+                            )
+                        )
+                        .padding(16.dp),
+                    style = MaterialTheme.typography.titleLarge
+                )
                 Column(
+                    Modifier.padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     uiState.players.forEach {
-                        Text(it.name, style = MaterialTheme.typography.titleMedium)
+                        Text(
+                            it.name, Modifier.fillMaxWidth(),
+                            style = MaterialTheme.typography.titleMedium
+                        )
                     }
                 }
             }

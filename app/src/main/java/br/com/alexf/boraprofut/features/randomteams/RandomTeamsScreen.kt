@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,11 +37,12 @@ fun RandomTeamsScreen(
         modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(16.dp)
     ) {
         Text(
             text = "Times sorteados",
-            Modifier.fillMaxWidth(),
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             style = MaterialTheme.typography.titleLarge
         )
         Spacer(modifier = Modifier.size(16.dp))
@@ -49,9 +51,16 @@ fun RandomTeamsScreen(
                 Text(
                     text = "Time ${index + 1}",
                     Modifier
-                        .clip(RoundedCornerShape(15))
                         .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.primaryContainer)
+                        .background(
+                            Brush.linearGradient(
+                                listOf(
+                                    MaterialTheme.colorScheme.secondaryContainer,
+                                    MaterialTheme.colorScheme.primaryContainer,
+                                    MaterialTheme.colorScheme.background
+                                )
+                            )
+                        )
                         .padding(16.dp),
                     style = MaterialTheme.typography.titleMedium
                 )
