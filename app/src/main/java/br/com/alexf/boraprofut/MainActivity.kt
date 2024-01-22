@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BoraProFutTheme(darkTheme = true) {
+            BoraProFutTheme {
                 val navController = rememberNavController()
                 Surface(color = MaterialTheme.colorScheme.background) {
                     NavHost(

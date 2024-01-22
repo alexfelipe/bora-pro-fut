@@ -2,17 +2,20 @@ package br.com.alexf.boraprofut.features.players
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository
 import br.com.alexf.boraprofut.features.players.model.Player
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 data class PlayersUiState(
     val players: String = "",
     val onPlayersChange: (String) -> Unit = {},
-    val isPlayersSaved: Boolean = false,
     val isSaving: Boolean = false,
 )
 
@@ -22,6 +25,8 @@ class PlayersViewModel(
 
     private val _uiState = MutableStateFlow(PlayersUiState())
     val uiState = _uiState.asStateFlow()
+    private val _isPlayersSaved = MutableSharedFlow<Boolean>()
+    val isPlayersSaved = _isPlayersSaved.asSharedFlow()
 
     init {
         _uiState.update { currentState ->
@@ -50,6 +55,9 @@ class PlayersViewModel(
                 it.copy(
                     isSaving = false,
                 )
+            }
+            viewModelScope.launch {
+                _isPlayersSaved.emit(true)
             }
         }
     }
