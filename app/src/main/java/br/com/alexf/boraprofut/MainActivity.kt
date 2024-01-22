@@ -3,6 +3,8 @@ package br.com.alexf.boraprofut
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -18,21 +20,23 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BoraProFutTheme {
+            BoraProFutTheme(darkTheme = true) {
                 val navController = rememberNavController()
-                NavHost(
-                    navController = navController,
-                    startDestination = playersRoute
-                ) {
-                    playersScreen(onNavigateToDrawScreen = {
-                        navController.navigateToDrawTeams()
-                    })
-                    drawTeams(
-                        onNavigateToRandomTeams = {
-                            navController.navigateToRandomTeams()
-                        }
-                    )
-                    randomTeams()
+                Surface(color = MaterialTheme.colorScheme.background) {
+                    NavHost(
+                        navController = navController,
+                        startDestination = playersRoute
+                    ) {
+                        playersScreen(onNavigateToDrawScreen = {
+                            navController.navigateToDrawTeams()
+                        })
+                        drawTeams(
+                            onNavigateToRandomTeams = {
+                                navController.navigateToRandomTeams()
+                            }
+                        )
+                        randomTeams()
+                    }
                 }
             }
         }
