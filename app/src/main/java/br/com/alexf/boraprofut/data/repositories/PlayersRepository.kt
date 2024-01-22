@@ -16,18 +16,21 @@ class PlayersRepository {
     fun save(players: Set<Player>) {
         _players.update {
             players
+                .filter {
+                    it.name.trim().isNotBlank()
+                }.toSet()
         }
     }
 
-    fun increasePlayersPerTeam(){
+    fun increasePlayersPerTeam() {
         _playersPerTeam.update {
             it + 1
         }
     }
 
-    fun decreasePlayersPerTeam(){
+    fun decreasePlayersPerTeam() {
         _playersPerTeam.update {
-            if(it > 2) {
+            if (it > 2) {
                 it - 1
             } else {
                 it
