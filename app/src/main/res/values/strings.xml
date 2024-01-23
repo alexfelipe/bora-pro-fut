@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Bora pro Fut</string>
+    <string name="team_standby">Time em espera</string>
+    <string name="team_realy">Times prontos</string>
 </resources>
