@@ -5,8 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import br.com.alexf.boraprofut.features.game.navigation.gameRoute
-import br.com.alexf.boraprofut.features.game.navigation.gameScreen
+import br.com.alexf.boraprofut.features.players.navigation.playersRoute
+import br.com.alexf.boraprofut.features.players.navigation.playersScreen
 import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,8 +15,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             BoraProFutTheme {
                 val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = gameRoute) {
-                    gameScreen()
+                NavHost(navController = navController, startDestination = playersRoute) {
+                    playersScreen(navController)
                 }
             }
         }
