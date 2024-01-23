@@ -3,6 +3,7 @@ package br.com.alexf.boraprofut.data.repositories
 import br.com.alexf.boraprofut.features.players.model.Player
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.update
 
 //TODO analisar e refatorar para padronizar onde será armazenado o valor padrão
@@ -35,6 +36,30 @@ class PlayersRepository {
             } else {
                 it
             }
+        }
+    }
+
+    fun increasePlayerLevel(player: Player) {
+        _players.update { players ->
+            players.map {
+                if (it.name == player.name && it.level < 10) {
+                    it.copy(level = it.level + 1)
+                } else {
+                    it
+                }
+            }.toSet()
+        }
+    }
+
+    fun decreasePlayerLevel(player: Player) {
+        _players.update { players ->
+            players.map {
+                if (it.name == player.name && it.level > 0) {
+                    it.copy(level = it.level - 1)
+                } else {
+                    it
+                }
+            }.toSet()
         }
     }
 

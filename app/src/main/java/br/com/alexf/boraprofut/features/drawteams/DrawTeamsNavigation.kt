@@ -17,9 +17,8 @@ fun NavGraphBuilder.drawTeams(
         val uiState by viewModel.uiState.collectAsState(initial = DrawTeamsUiState())
         DrawTeamsScreen(
             uiState,
-            onDecreasePlayers = { viewModel.decreasePlayersPerTeam() },
-            onIncreasePlayers = { viewModel.increasePlayersPerTeam() },
-            onDrawRandomTeamsClick = { onNavigateToRandomTeams() }
+            onDrawRandomTeamsClick = { onNavigateToRandomTeams() },
+            onDrawBalancedTeamsClick = {}
         )
     }
 }
