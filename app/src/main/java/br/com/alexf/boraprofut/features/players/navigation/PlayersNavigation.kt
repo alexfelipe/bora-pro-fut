@@ -44,15 +44,7 @@ fun NavGraphBuilder.playersScreen(navController: NavHostController) {
                 .clickable {
                  navController.navigate(gameRoute)
                 }) {
-                Text(
-                    text = "Ir para tela de jogos".toUpperCase(Locale.current),
-                    Modifier
-                        .align(Alignment.Center)
-                        .padding(16.dp),
-                    style = LocalTextStyle.current.copy(
-                        fontWeight = FontWeight.Bold
-                    )
-                )
+                Text(text = "Ir para tela de jogos".toUpperCase(Locale.current), Modifier.align(Alignment.Center).padding(16.dp), style = LocalTextStyle.current.copy(fontWeight = FontWeight.Bold))
             }
             PlayersScreen(uiState, onDrawTeamsClick = {
                 viewModel.drawTeams()
