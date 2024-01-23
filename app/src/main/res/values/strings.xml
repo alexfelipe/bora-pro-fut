@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Bora pro Fut</string>
+    <string name="players">Jogadores</string>
+    <string name="players_amount_per_team">Jogadores por time</string>
+    <string name="decreases_players_amount_per_team">Diminui quantidade de time</string>
+    <string name="increases_players_amount_per_team">Aumenta quantidade de jogadores por time</string>
+    <string name="draw_teams">Sortear times</string>
     <string name="team_standby">Time em espera</string>
     <string name="team_realy">Times prontos</string>
 </resources>
