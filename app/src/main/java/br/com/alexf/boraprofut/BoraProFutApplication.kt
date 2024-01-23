@@ -2,7 +2,7 @@ package br.com.alexf.boraprofut
 
 import android.app.Application
 import br.com.alexf.boraprofut.di.appModule
-import br.com.alexf.boraprofut.features.gameScreenModule
+import br.com.alexf.boraprofut.di.dataModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -12,7 +12,10 @@ class BoraProFutApplication : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@BoraProFutApplication)
-            modules(appModule, gameScreenModule)
+            modules(
+                appModule,
+                dataModule
+            )
         }
     }
 
