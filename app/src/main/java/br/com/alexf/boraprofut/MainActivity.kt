@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import br.com.alexf.boraprofut.features.game.navigation.gameRoute
-import br.com.alexf.boraprofut.features.players.navigation.playersRoute
 import br.com.alexf.boraprofut.features.players.navigation.playersScreen
 import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
 
