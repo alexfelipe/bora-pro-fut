@@ -11,7 +11,7 @@ class TeamDrawerUseCaseTest {
     fun shouldTeamPlayersGivenAmount() {
         val teamDrawer = TeamDrawerUseCase()
         val players = generatePlayers(12)
-        val teams = teamDrawer.drawTeams(players, 4)
+        val teams = teamDrawer.drawRandomTeams(players, 4)
         Assert.assertEquals(teams.size, 3)
         val teamA = teams[0]
         val teamB = teams[1]
