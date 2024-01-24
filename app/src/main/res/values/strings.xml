@@ -6,6 +6,6 @@
     <string name="increases_players_amount_per_team">Aumenta quantidade de jogadores por time</string>
     <string name="save_players">Salvar jogadores</string>
     <string name="waiting_next_game">Aguardando próximo jogo</string>
-    <string name="formed_games">Aguardando próximo jogo</string>
+    <string name="formed_games">Partidas formadas</string>
     <string name="match_symbol">VS</string>
 </resources>

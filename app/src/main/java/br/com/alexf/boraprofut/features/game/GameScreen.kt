@@ -36,19 +36,20 @@ fun GameScreen(
     uiState: ReadyMadeGamesUiState
 ) {
     Column {
-        Text(text = stringResource(id = R.string.waiting_next_game), modifier = modifier.padding(16.dp))
-
-        LazyColumn(
-            modifier = modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(15.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            contentPadding = PaddingValues(15.dp),
-        ) {
-            items(uiState.teamAtStandby) { time ->
-                TeamAtStandbyComponent(time = time)
+        if(uiState.teamAtStandby.isNotEmpty()) {
+            Text(text = stringResource(id = R.string.waiting_next_game), modifier = modifier.padding(16.dp))
+            LazyColumn(
+                modifier = modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(15.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                contentPadding = PaddingValues(15.dp),
+            ) {
+                items(uiState.teamAtStandby) { time ->
+                    TeamAtStandbyComponent(time = time)
+                }
             }
         }
-        Text( text = stringResource(id = R.string.match_symbol), modifier = modifier.padding(16.dp))
+        Text( text = stringResource(id = R.string.formed_games), modifier = modifier.padding(16.dp))
         LazyColumn(
             modifier = modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(15.dp),
@@ -112,7 +113,7 @@ private fun ReadyMadeGamesComponent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             TextGame(string = time.timeA, modifier = modifier.weight(1F))
-            TextGame(string = "VS", modifier = modifier.weight(1F))
+            TextGame(string = stringResource(id = R.string.match_symbol), modifier = modifier.weight(1F))
             TextGame(string = time.timeB, modifier = modifier.weight(1F))
         }
     }
