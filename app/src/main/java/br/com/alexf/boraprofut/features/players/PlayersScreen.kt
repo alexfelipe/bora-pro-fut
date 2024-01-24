@@ -66,7 +66,7 @@ fun PlayersScreen(
                 label = {
                     Text(text = stringResource(R.string.players))
                 },
-                shape = RoundedCornerShape(15)
+                shape = RoundedCornerShape(4)
             )
         }
         Column(

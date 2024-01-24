@@ -10,15 +10,17 @@ import org.koin.androidx.compose.koinViewModel
 const val drawTeamsRoute = "drawTeams"
 
 fun NavGraphBuilder.drawTeams(
-    onNavigateToRandomTeams: () -> Unit
+    onNavigateToRandomTeams: () -> Unit,
+    onNavigateToBalancedTeams: () -> Unit,
 ) {
     composable(drawTeamsRoute) {
         val viewModel = koinViewModel<DrawTeamsViewModel>()
-        val uiState by viewModel.uiState.collectAsState(initial = DrawTeamsUiState())
+        val uiState by viewModel
+            .uiState.collectAsState(initial = DrawTeamsUiState())
         DrawTeamsScreen(
             uiState,
             onDrawRandomTeamsClick = { onNavigateToRandomTeams() },
-            onDrawBalancedTeamsClick = {}
+            onDrawBalancedTeamsClick = { onNavigateToBalancedTeams() }
         )
     }
 }

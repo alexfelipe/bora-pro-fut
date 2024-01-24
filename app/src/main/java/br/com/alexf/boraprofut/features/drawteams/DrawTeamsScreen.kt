@@ -1,7 +1,9 @@
 package br.com.alexf.boraprofut.features.drawteams
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -56,6 +58,7 @@ private class DrawOption(
     val action: () -> Unit
 )
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DrawTeamsScreen(
     uiState: DrawTeamsUiState,
@@ -106,7 +109,7 @@ fun DrawTeamsScreen(
                                 Color(0xFFE91E63)
                             )
                         ),
-                    action = onDrawRandomTeamsClick
+                    action = onDrawBalancedTeamsClick
                 ),
             )
         }
@@ -225,7 +228,14 @@ fun DrawTeamsScreen(
                                 Box(
                                     modifier = Modifier
                                         .clip(CircleShape)
-                                        .clickable { uiState.onDecreasePlayerLevel(player) }
+                                        .combinedClickable(
+                                            onClick = {
+                                                uiState.onDecreasePlayerLevel(player)
+                                            },
+                                            onLongClick = {
+                                                uiState.onDecreasePlayerLevel(player)
+                                            }
+                                        )
                                         .background(Color(0xFFFF1744))
                                         .padding(4.dp)
                                 ) {
@@ -244,7 +254,14 @@ fun DrawTeamsScreen(
                                 Box(
                                     modifier = Modifier
                                         .clip(CircleShape)
-                                        .clickable { uiState.onIncreasePlayerLevel(player) }
+                                        .combinedClickable(
+                                            onClick = {
+                                                uiState.onIncreasePlayerLevel(player)
+                                            },
+                                            onLongClick = {
+                                                uiState.onIncreasePlayerLevel(player)
+                                            }
+                                        )
                                         .background(Color(0xFF00E676))
                                         .padding(4.dp)
                                 ) {

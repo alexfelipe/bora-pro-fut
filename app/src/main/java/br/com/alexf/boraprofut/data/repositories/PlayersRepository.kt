@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.update
+import kotlin.random.Random
 
 //TODO analisar e refatorar para padronizar onde será armazenado o valor padrão
 private const val defaultPlayersPerTeam = 4
@@ -64,7 +65,9 @@ class PlayersRepository {
     }
 
     private companion object {
-        private val _players = MutableStateFlow<Set<Player>>(emptySet())
+        private val _players = MutableStateFlow<Set<Player>>(List(20) {
+            Player("jogador $it", Random.nextInt(1, 10))
+        }.toSet())
         private val _playersPerTeam = MutableStateFlow(defaultPlayersPerTeam)
     }
 
