@@ -20,10 +20,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.alexf.boraprofut.R
 import br.com.alexf.boraprofut.features.game.model.ReadyMadeGames
 import br.com.alexf.boraprofut.features.game.model.TeamAtStandby
 import br.com.alexf.boraprofut.features.randomteams.ReadyMadeGamesUiState
@@ -34,7 +36,7 @@ fun GameScreen(
     uiState: ReadyMadeGamesUiState
 ) {
     Column {
-        Text(text = "Aguardando próxima partida", modifier = modifier.padding(16.dp))
+        Text(text = stringResource(id = R.string.waiting_next_game), modifier = modifier.padding(16.dp))
 
         LazyColumn(
             modifier = modifier.fillMaxWidth(),
@@ -46,9 +48,7 @@ fun GameScreen(
                 TeamAtStandbyComponent(time = time)
             }
         }
-
-        Text(text = "Jogos formados", modifier = modifier.padding(16.dp))
-
+        Text( text = stringResource(id = R.string.match_symbol), modifier = modifier.padding(16.dp))
         LazyColumn(
             modifier = modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(15.dp),
@@ -71,10 +71,16 @@ private fun TeamAtStandbyComponent(
         shape = RoundedCornerShape(10.dp),
         border = BorderStroke(1.dp, Color.Gray),
         colors = CardDefaults.cardColors(containerColor = Color.Transparent),
-        modifier = modifier.fillMaxWidth().height(90.dp).background(Color.White)
+        modifier = modifier
+            .fillMaxWidth()
+            .height(90.dp)
+            .background(Color.White)
     ) {
         Row(
-            modifier = modifier.fillMaxWidth().fillMaxHeight().padding(16.dp),
+            modifier = modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(16.dp),
             horizontalArrangement = Arrangement.Absolute.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -92,10 +98,16 @@ private fun ReadyMadeGamesComponent(
         shape = RoundedCornerShape(10.dp),
         border = BorderStroke(1.dp, Color.Gray),
         colors = CardDefaults.cardColors(containerColor = Color.Transparent),
-        modifier = modifier.fillMaxWidth().height(90.dp).background(Color.White)
+        modifier = modifier
+            .fillMaxWidth()
+            .height(90.dp)
+            .background(Color.White)
     ) {
         Row(
-            modifier = modifier.fillMaxWidth().fillMaxHeight().padding(16.dp),
+            modifier = modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(16.dp),
             horizontalArrangement = Arrangement.Absolute.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
