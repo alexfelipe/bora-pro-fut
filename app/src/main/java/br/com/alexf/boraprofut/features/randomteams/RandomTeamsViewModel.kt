@@ -2,6 +2,7 @@ package br.com.alexf.boraprofut.features.randomteams
 
 import androidx.lifecycle.ViewModel
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository
+import br.com.alexf.boraprofut.features.game.model.Team
 import br.com.alexf.boraprofut.features.players.model.Player
 import br.com.alexf.boraprofut.features.players.useCases.TeamDrawerUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +13,7 @@ data class RandomTeamsUiState(
 )
 
 class RandomTeamsViewModel(
-    repository: PlayersRepository,
+    val repository: PlayersRepository,
     private val useCase: TeamDrawerUseCase
 ) : ViewModel() {
 
@@ -27,5 +28,8 @@ class RandomTeamsViewModel(
         uiState.copy(teams = teamsDrawn)
     }
 
+    fun save(list:List<Team>){
+        repository.saveGame(list.toSet())
+    }
 
 }

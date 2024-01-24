@@ -1,6 +1,7 @@
-package br.com.alexf.boraprofut.features.game
+package br.com.alexf.boraprofut.features.randomteams
 
 import androidx.lifecycle.ViewModel
+import br.com.alexf.boraprofut.data.repositories.PlayersRepository
 import br.com.alexf.boraprofut.features.game.model.ReadyMadeGames
 import br.com.alexf.boraprofut.features.game.model.TeamAtStandby
 import br.com.alexf.boraprofut.features.game.usecase.GameUseCase
@@ -16,6 +17,7 @@ data class ReadyMadeGamesUiState(
 )
 
 class GameViewModel(
+    repository: PlayersRepository,
     game: GameUseCase
 ) : ViewModel() {
 
