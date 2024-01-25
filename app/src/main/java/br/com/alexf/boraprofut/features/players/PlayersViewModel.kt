@@ -40,6 +40,7 @@ class PlayersViewModel(
                 },
             )
         }
+        //TODO adicionado apenas para pular para a tela de sorteio diretamente [é gambiarra]
         viewModelScope.launch {
             delay(1000)
             if(repository.players.first().isNotEmpty()) {

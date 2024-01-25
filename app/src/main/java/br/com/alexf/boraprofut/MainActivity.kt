@@ -11,6 +11,8 @@ import br.com.alexf.boraprofut.features.balancedteams.balancedTeams
 import br.com.alexf.boraprofut.features.balancedteams.navigateToBalancedTeams
 import br.com.alexf.boraprofut.features.drawteams.drawTeams
 import br.com.alexf.boraprofut.features.drawteams.navigateToDrawTeams
+import br.com.alexf.boraprofut.features.game.navigation.gameScreen
+import br.com.alexf.boraprofut.features.game.navigation.navigateToGameScreen
 import br.com.alexf.boraprofut.features.players.playersRoute
 import br.com.alexf.boraprofut.features.players.playersScreen
 import br.com.alexf.boraprofut.features.randomteams.navigateToRandomTeams
@@ -39,8 +41,13 @@ class MainActivity : ComponentActivity() {
                                 navController.navigateToBalancedTeams()
                             }
                         )
-                        randomTeams()
                         balancedTeams()
+                        randomTeams(
+                            onNavigateToGameScreen = {
+                                navController.navigateToGameScreen()
+                            }
+                        )
+                        gameScreen()
                     }
                 }
             }
