@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.alexf.boraprofut.R
+import br.com.alexf.boraprofut.features.game.model.ReadyMadeGames
 import br.com.alexf.boraprofut.features.randomteams.ReadyMadeGamesUiState
 
 @Composable
@@ -34,8 +35,11 @@ fun GameScreen(
     uiState: ReadyMadeGamesUiState
 ) {
     Column {
-        if(uiState.teamAtStandby.isNotEmpty()) {
-            Text(text = stringResource(id = R.string.waiting_next_game), modifier = modifier.padding(16.dp))
+        if (uiState.teamAtStandby.isNotEmpty()) {
+            Text(
+                text = stringResource(id = R.string.waiting_next_game),
+                modifier = modifier.padding(16.dp)
+            )
             LazyColumn(
                 modifier = modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(15.dp),
@@ -47,7 +51,7 @@ fun GameScreen(
                 }
             }
         }
-        Text( text = stringResource(id = R.string.formed_games), modifier = modifier.padding(16.dp))
+        Text(text = stringResource(id = R.string.formed_games), modifier = modifier.padding(16.dp))
         LazyColumn(
             modifier = modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(15.dp),
@@ -66,7 +70,7 @@ fun GameScreen(
 private fun ReadyMadeGamesComponent(
     modifier: Modifier = Modifier,
     timeA: String,
-    timeB:String = ""
+    timeB: String = ""
 ) {
     Card(
         shape = RoundedCornerShape(10.dp),
@@ -100,7 +104,8 @@ private fun ReadyMadeGamesComponent(
 @Composable
 fun TextGame(
     modifier: Modifier = Modifier,
-    string: String) {
+    string: String
+) {
     Text(
         text = string,
         textAlign = TextAlign.Center,
@@ -118,5 +123,14 @@ fun ReadyMadeGamesComponentPreview() {
 @Preview(showSystemUi = true)
 @Composable
 private fun GameScreenPreview() {
-    GameScreen(uiState = ReadyMadeGamesUiState(listOf()))
+    GameScreen(
+        uiState = ReadyMadeGamesUiState(
+            readyMadeGames = listOf(
+                ReadyMadeGames(
+                    "Flamengo",
+                    timeB = "Vasco"
+                )
+            )
+        )
+    )
 }
