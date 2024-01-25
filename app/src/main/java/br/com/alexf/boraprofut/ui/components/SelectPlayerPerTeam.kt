@@ -17,15 +17,21 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import br.com.alexf.boraprofut.R
 import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
 
@@ -38,14 +44,21 @@ fun SelectPlayerPerTeam(
 ) {
     Column(
         modifier
-            .clip(RoundedCornerShape(15))
-            .background(MaterialTheme.colorScheme.secondaryContainer)
+            .background(
+                Brush.linearGradient(
+                    listOf(
+                        Color(0xFF673AB7),
+                        Color(0xFFF44336)
+                    )
+                )
+            )
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = stringResource(R.string.players_amount_per_team),
             style = MaterialTheme.typography.titleLarge
+                .copy(color = Color.White)
         )
         Spacer(modifier = Modifier.size(16.dp))
         Row(
@@ -60,21 +73,27 @@ fun SelectPlayerPerTeam(
                 Icons.Filled.ArrowBack,
                 contentDescription = stringResource(R.string.decreases_players_amount_per_team),
                 iconModifier
-                    .clickable { onDecreasePlayers() }
+                    .clickable { onDecreasePlayers() },
+                tint = Color.White
             )
             Box(Modifier.fillMaxHeight()) {
                 Text(
                     text = "$players",
                     Modifier
                         .align(Alignment.Center),
-                    style = MaterialTheme.typography.titleLarge
+                    style = LocalTextStyle.current.copy(
+                        fontSize = 32.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold
+                    )
                 )
             }
             Icon(
                 Icons.Filled.ArrowForward,
                 contentDescription = stringResource(R.string.increases_players_amount_per_team),
                 iconModifier
-                    .clickable { onIncreasePlayers() }
+                    .clickable { onIncreasePlayers() },
+                tint = Color.White
             )
 
         }
