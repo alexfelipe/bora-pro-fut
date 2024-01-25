@@ -26,22 +26,21 @@ class TeamDrawerUseCase {
                 it.level
             }.toMutableList()
 
-        val teams = List(amountTeams) {
-            mutableListOf<Player>()
+        val bestPlayers = sortedPlayers.takeLast(amountTeams)
+
+        val teams = bestPlayers.map {
+            mutableListOf(it)
         }
 
-        teams.forEach { team ->
-            while (sortedPlayers.isNotEmpty()) {
-                if(team.size == playersPerTeam) {
+        while (sortedPlayers.isNotEmpty()) {
+            teams.forEach {
+                if (sortedPlayers.isEmpty()) {
                     return@forEach
                 }
-                if (team.size.mod(2) == 0) {
-                    team.add(sortedPlayers.removeFirst())
-                } else {
-                    team.add(sortedPlayers.removeLast())
-                }
+                it.add(sortedPlayers.removeFirst())
             }
         }
+
         return teams.map {
             it.toSet()
         }

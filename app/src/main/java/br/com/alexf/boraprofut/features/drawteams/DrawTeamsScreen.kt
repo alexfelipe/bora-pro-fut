@@ -236,7 +236,8 @@ fun DrawTeamsScreen(
                                                 uiState.onDecreasePlayerLevel(player)
                                             }
                                         )
-                                        .background(Color(0xFFFF1744))
+                                        .background(Color(0xFFFF1744)
+                                            .copy(alpha = 0.8f))
                                         .padding(4.dp)
                                 ) {
                                     Icon(
@@ -262,7 +263,8 @@ fun DrawTeamsScreen(
                                                 uiState.onIncreasePlayerLevel(player)
                                             }
                                         )
-                                        .background(Color(0xFF00E676))
+                                        .background(Color(0xFF00E676)
+                                            .copy(alpha = 0.8f))
                                         .padding(4.dp)
                                 ) {
                                     Icon(

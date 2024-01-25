@@ -35,8 +35,8 @@ class TeamDrawerUseCaseTest {
 
     @Test
     fun shouldDrawTeamsPlayerBalancedGivenAmount() {
-        val players = List(10){
-            Player(name = "jogador ${it + 1}", 12)
+        val players = List(16){
+            Player(name = "jogador ${it + 1}", Random.nextInt(1, 10))
         }.toSet()
         val drawnTeams = teamDrawer
             .drawBalancedTeams(players, 4)

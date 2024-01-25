@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.update
 import kotlin.random.Random
 
 //TODO analisar e refatorar para padronizar onde será armazenado o valor padrão
-private const val defaultPlayersPerTeam = 4
+private const val defaultPlayersPerTeam = 5
 
 class PlayersRepository {
 

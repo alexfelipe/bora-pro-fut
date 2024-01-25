@@ -51,22 +51,22 @@ fun RandomTeamsScreen(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-        BoraProFutButton(
-            onClick = { onDrawGamesClick() },
-            Modifier.padding(16.dp)
-        ) {
-            Box(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    text = "Sortear amistoso"
-                        .toUpperCase(Locale.current),
-                    Modifier
-                        .align(Alignment.Center),
-                    style = LocalTextStyle.current.copy(
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-            }
-        }
+//        BoraProFutButton(
+//            onClick = { onDrawGamesClick() },
+//            Modifier.padding(16.dp)
+//        ) {
+//            Box(modifier = Modifier.fillMaxWidth()) {
+//                Text(
+//                    text = "Sortear amistoso"
+//                        .toUpperCase(Locale.current),
+//                    Modifier
+//                        .align(Alignment.Center),
+//                    style = LocalTextStyle.current.copy(
+//                        fontWeight = FontWeight.Bold
+//                    )
+//                )
+//            }
+//        }
         Row(
             Modifier.padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
