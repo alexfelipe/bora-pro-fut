@@ -26,8 +26,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.alexf.boraprofut.R
-import br.com.alexf.boraprofut.features.game.model.ReadyMadeGames
-import br.com.alexf.boraprofut.features.game.model.TeamAtStandby
 import br.com.alexf.boraprofut.features.randomteams.ReadyMadeGamesUiState
 
 @Composable
@@ -45,7 +43,7 @@ fun GameScreen(
                 contentPadding = PaddingValues(15.dp),
             ) {
                 items(uiState.teamAtStandby) { time ->
-                    TeamAtStandbyComponent(time = time)
+                    ReadyMadeGamesComponent(timeA = time.name)
                 }
             }
         }
@@ -57,43 +55,18 @@ fun GameScreen(
             contentPadding = PaddingValues(15.dp),
         ) {
             items(uiState.readyMadeGames) { time ->
-                ReadyMadeGamesComponent(time = time)
+                ReadyMadeGamesComponent(timeA = time.timeA, timeB = time.timeB)
             }
         }
     }
 }
 
-@Composable
-private fun TeamAtStandbyComponent(
-    modifier: Modifier = Modifier,
-    time: TeamAtStandby
-) {
-    Card(
-        shape = RoundedCornerShape(10.dp),
-        border = BorderStroke(1.dp, Color.Gray),
-        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
-        modifier = modifier
-            .fillMaxWidth()
-            .height(90.dp)
-            .background(Color.White)
-    ) {
-        Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.Absolute.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            TextGame(string = time.name,)
-        }
-    }
-}
 
 @Composable
 private fun ReadyMadeGamesComponent(
     modifier: Modifier = Modifier,
-    time: ReadyMadeGames
+    timeA: String,
+    timeB:String = ""
 ) {
     Card(
         shape = RoundedCornerShape(10.dp),
@@ -112,9 +85,14 @@ private fun ReadyMadeGamesComponent(
             horizontalArrangement = Arrangement.Absolute.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TextGame(string = time.timeA, modifier = modifier.weight(1F))
-            TextGame(string = stringResource(id = R.string.match_symbol), modifier = modifier.weight(1F))
-            TextGame(string = time.timeB, modifier = modifier.weight(1F))
+            TextGame(string = timeA, modifier = modifier.weight(1F))
+            if (timeB.isNotBlank()) {
+                TextGame(
+                    string = stringResource(id = R.string.match_symbol),
+                    modifier = modifier.weight(1F)
+                )
+                TextGame(string = timeA, modifier = modifier.weight(1F))
+            }
         }
     }
 }
@@ -134,7 +112,7 @@ fun TextGame(
 @Preview
 @Composable
 fun ReadyMadeGamesComponentPreview() {
-    ReadyMadeGamesComponent(time = ReadyMadeGames("teste1", "teste2", "teste3"))
+    ReadyMadeGamesComponent(timeA = "Flamengo", timeB = "Vasco")
 }
 
 @Preview(showSystemUi = true)
