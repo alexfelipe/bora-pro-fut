@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.update
 data class DrawTeamsUiState(
     val players: Set<Player> = emptySet(),
     val playersPerTeam: Int = 0,
-    val isShowPlayers: Boolean = false,
+    val isShowPlayers: Boolean = true,
     val onShowPlayersToggle: () -> Unit = {},
     val onDecreasePlayersPerTeam: () -> Unit = {},
     val onIncreasePlayersPerTeam: () -> Unit = {},
