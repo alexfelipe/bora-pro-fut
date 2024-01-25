@@ -1,6 +1,7 @@
 package br.com.alexf.boraprofut.features.balancedteams
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,48 +11,65 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Sync
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.com.alexf.boraprofut.features.players.model.Player
-import br.com.alexf.boraprofut.features.players.playersRoute
+import br.com.alexf.boraprofut.R
+import br.com.alexf.boraprofut.models.Player
+import br.com.alexf.boraprofut.models.Team
 import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
 import kotlin.random.Random
 
 @Composable
 fun BalancedTeamsScreen(
     uiState: BalancedTeamUiState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onDrawTeamsAgain: () -> Unit,
 ) {
     Column(
         modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-        Text(
-            text = "Times sorteados",
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            style = MaterialTheme.typography.titleLarge
-        )
+        Row(
+            Modifier.padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Times sorteados",
+                Modifier
+                    .weight(1f),
+                style = MaterialTheme.typography.titleLarge
+            )
+            Icon(
+                Icons.Outlined.Sync,
+                contentDescription = stringResource(R.string.draw_teams_again_icon),
+                Modifier
+                    .clip(CircleShape)
+                    .clickable { onDrawTeamsAgain() }
+                    .padding(16.dp)
+            )
+        }
         Spacer(modifier = Modifier.size(16.dp))
         uiState.teams.forEachIndexed { index, team ->
-            val teamLevel = remember {
-                team.sumOf {
-                    it.level
-                }
-            }
             Column(Modifier.padding(vertical = 8.dp)) {
                 Row(
                     Modifier
@@ -74,14 +92,14 @@ fun BalancedTeamsScreen(
                         style = MaterialTheme.typography.titleMedium
                     )
                     Text(
-                        text = "Nível $teamLevel",
+                        text = "Nível ${team.level}",
                         Modifier
                             .padding(16.dp),
                         style = MaterialTheme.typography.titleMedium
                     )
                 }
                 Column {
-                    team.forEach { p ->
+                    team.players.forEach { p ->
                         Row(
                             Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
@@ -118,18 +136,16 @@ private fun BalancedTeamsScreenPreview() {
         Surface {
             BalancedTeamsScreen(
                 uiState = BalancedTeamUiState(
-                    teams = listOf(
-                        List(5) {
-                            Player("jogador ${it + 1}", Random.nextInt(1, 10))
-                        }.toSet(),
-                        List(5) {
-                            Player("jogador ${it + 1}", Random.nextInt(1, 10))
-                        }.toSet(),
-                        List(5) {
-                            Player("jogador ${it + 1}", Random.nextInt(1, 10))
-                        }.toSet(),
-                    )
-                )
+                    teams = List(3) {
+                        Team(players = List(6) {
+                            Player(
+                                "Jogador $it",
+                                Random.nextInt(1, 10)
+                            )
+                        }.toSet())
+                    }
+                ),
+                onDrawTeamsAgain = {}
             )
         }
     }

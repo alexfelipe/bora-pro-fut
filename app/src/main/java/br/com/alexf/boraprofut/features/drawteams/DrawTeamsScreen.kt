@@ -46,7 +46,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.com.alexf.boraprofut.features.players.model.Player
+import br.com.alexf.boraprofut.models.Player
 import br.com.alexf.boraprofut.ui.components.SelectPlayerPerTeam
 import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
 import kotlin.random.Random

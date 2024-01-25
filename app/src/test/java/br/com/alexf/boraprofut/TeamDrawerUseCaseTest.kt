@@ -1,9 +1,7 @@
 package br.com.alexf.boraprofut
 
-import br.com.alexf.boraprofut.features.players.model.Player
+import br.com.alexf.boraprofut.models.Player
 import br.com.alexf.boraprofut.features.players.useCases.TeamDrawerUseCase
-import br.com.alexf.boraprofut.features.randomteams.generateRandomColor
-import br.com.alexf.boraprofut.features.randomteams.randomTeams
 import org.junit.Assert
 import org.junit.Test
 import kotlin.random.Random

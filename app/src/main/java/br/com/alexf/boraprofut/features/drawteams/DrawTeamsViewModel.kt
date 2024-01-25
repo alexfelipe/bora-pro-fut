@@ -2,7 +2,7 @@ package br.com.alexf.boraprofut.features.drawteams
 
 import androidx.lifecycle.ViewModel
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository
-import br.com.alexf.boraprofut.features.players.model.Player
+import br.com.alexf.boraprofut.models.Player
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
