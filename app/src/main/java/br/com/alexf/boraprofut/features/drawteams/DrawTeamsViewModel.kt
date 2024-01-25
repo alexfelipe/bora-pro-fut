@@ -20,9 +20,7 @@ class DrawTeamsViewModel(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DrawTeamsUiState())
-    val uiState = _uiState
-        .combine(repository.players) { uiState, players ->
-            uiState.copy(players = players)
+    val uiState = _uiState.combine(repository.players) { uiState, players -> uiState.copy(players = players)
         }.combine(repository.playersPerTeam) { uiState, playersPerTeam ->
             uiState.copy(playersPerTeam = playersPerTeam)
         }
