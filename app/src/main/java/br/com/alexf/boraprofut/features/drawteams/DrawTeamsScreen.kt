@@ -40,6 +40,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -247,9 +249,12 @@ fun DrawTeamsScreen(
                                     )
                                 }
                                 Text(
-                                    text = "${player.level}", style = LocalTextStyle.current.copy(
+                                    text = "${player.level}",
+                                    Modifier.width(30.dp),
+                                    style = LocalTextStyle.current.copy(
                                         fontSize = 20.sp,
-                                        fontWeight = FontWeight.Bold
+                                        fontWeight = FontWeight.Bold,
+                                        textAlign = TextAlign.Center
                                     )
                                 )
                                 Box(
@@ -260,6 +265,7 @@ fun DrawTeamsScreen(
                                                 uiState.onIncreasePlayerLevel(player)
                                             },
                                             onLongClick = {
+
                                                 uiState.onIncreasePlayerLevel(player)
                                             }
                                         )
@@ -307,6 +313,7 @@ fun DrawTeamsScreenDisplayingPlayersPreview() {
                         Player(name = "Alex", level = Random.nextInt(1, 10)),
                         Player(name = "Thailan", level = Random.nextInt(1, 10)),
                         Player(name = "Daniel", level = Random.nextInt(1, 10)),
+                        Player(name = "Joao", level = 10),
                     ),
                     isShowPlayers = true
                 ),

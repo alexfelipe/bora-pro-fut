@@ -26,14 +26,13 @@ class TeamDrawerUseCase {
                 it.level
             }.toMutableList()
 
-        val bestPlayers = sortedPlayers.takeLast(amountTeams)
-
-        val teams = bestPlayers.map {
-            mutableListOf(it)
+        val teamsWithBestPlayersIncluded = MutableList(amountTeams) {
+            val bestPlayer = sortedPlayers.removeLast()
+            mutableListOf(bestPlayer)
         }
 
         while (sortedPlayers.isNotEmpty()) {
-            teams.forEach {
+            teamsWithBestPlayersIncluded.forEach {
                 if (sortedPlayers.isEmpty()) {
                     return@forEach
                 }
@@ -41,7 +40,7 @@ class TeamDrawerUseCase {
             }
         }
 
-        return teams.map {
+        return teamsWithBestPlayersIncluded.map {
             it.toSet()
         }
     }
