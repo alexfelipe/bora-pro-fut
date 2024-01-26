@@ -1,5 +1,7 @@
 package br.com.alexf.boraprofut.data.repositories
 
+import android.util.Log
+import br.com.alexf.boraprofut.data.database.dao.PlayersDao
 import br.com.alexf.boraprofut.features.game.model.Team
 import br.com.alexf.boraprofut.models.Player
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,7 +12,13 @@ import kotlin.random.Random
 //TODO analisar e refatorar para padronizar onde será armazenado o valor padrão
 private const val defaultPlayersPerTeam = 5
 
-class PlayersRepository {
+class PlayersRepository(
+    private val dao: PlayersDao
+) {
+
+    init {
+        Log.i("PlayersRepository", ": $dao")
+    }
 
     val players = _players.asStateFlow()
     val games = _game.asStateFlow()
