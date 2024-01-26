@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -28,7 +30,9 @@ class BalancedTeamViewModel(
     init {
         viewModelScope.launch {
             combine(
-                repository.players,
+                repository.players.map {
+                    it.toSet()
+                },
                 repository.playersPerTeam
             ) { players, playersPerTeam ->
                 Pair(useCase.drawBalancedTeams(players, playersPerTeam), playersPerTeam)
@@ -50,7 +54,7 @@ class BalancedTeamViewModel(
 
     fun drawTeams() {
         viewModelScope.launch {
-            val players = repository.players.value
+            val players = repository.players.first().toSet()
             val playersPerTeam = uiState.value.playersPerTeam
             _uiState.update { state ->
                 state.copy(
@@ -64,7 +68,6 @@ class BalancedTeamViewModel(
             }
         }
     }
-
 
 
 }

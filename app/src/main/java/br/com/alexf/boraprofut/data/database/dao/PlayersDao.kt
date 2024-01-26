@@ -11,11 +11,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PlayersDao {
 
-    @Query("SELECT * FROM PlayerEntity")
+    @Query("SELECT * FROM PlayerEntity ORDER by name")
     fun findAll(): Flow<List<Player>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun save(entity: PlayerEntity)
+    suspend fun save(vararg entity: PlayerEntity)
 
     @Query("DELETE FROM PlayerEntity")
     suspend fun deleleAllPlayers()

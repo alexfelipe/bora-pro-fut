@@ -56,7 +56,9 @@ class PlayersViewModel(
                 copy(isSaving = true)
             }
             players.parseToPlayers().let {
-                repository.save(it)
+                viewModelScope.launch {
+                    repository.save(it)
+                }
             }
             _uiState.update {
                 it.copy(
