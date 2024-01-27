@@ -22,10 +22,6 @@ fun NavGraphBuilder.playersScreen(
                 onNavigateToDrawScreen()
             }
         }
-        PlayersScreen(uiState,
-            onSavePlayers = {
-                viewModel.savePlayers()
-            }
-        )
+        PlayersScreen(uiState = uiState, onSavePlayers = { viewModel.savePlayers() })
     }
 }

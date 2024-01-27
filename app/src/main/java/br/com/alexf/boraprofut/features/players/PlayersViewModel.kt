@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 
 data class PlayersUiState(
     val players: String = "",
-    val playersList: List<Player> = listOf(),
     val onPlayersChange: (String) -> Unit = {},
     val isSaving: Boolean = false,
 )
