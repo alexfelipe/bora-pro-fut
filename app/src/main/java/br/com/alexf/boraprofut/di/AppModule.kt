@@ -1,6 +1,7 @@
 package br.com.alexf.boraprofut.di
 
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository
+import br.com.alexf.boraprofut.features.balancedteams.BalancedTeamViewModel
 import br.com.alexf.boraprofut.features.drawteams.DrawTeamsViewModel
 import br.com.alexf.boraprofut.features.players.PlayersViewModel
 import br.com.alexf.boraprofut.features.players.useCases.TeamDrawerUseCase
@@ -17,6 +18,7 @@ val appModule = module {
     viewModelOf(::PlayersViewModel)
     viewModelOf(::DrawTeamsViewModel)
     viewModelOf(::RandomTeamsViewModel)
+    viewModelOf(::BalancedTeamViewModel)
     viewModelOf(::GameViewModel)
     singleOf(::TeamDrawerUseCase)
     singleOf(::GameUseCase)

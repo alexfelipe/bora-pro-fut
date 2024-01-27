@@ -7,6 +7,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import br.com.alexf.boraprofut.features.balancedteams.balancedTeams
+import br.com.alexf.boraprofut.features.balancedteams.navigateToBalancedTeams
 import br.com.alexf.boraprofut.features.drawteams.drawTeams
 import br.com.alexf.boraprofut.features.drawteams.navigateToDrawTeams
 import br.com.alexf.boraprofut.features.game.navigation.gameScreen
@@ -34,8 +36,12 @@ class MainActivity : ComponentActivity() {
                         drawTeams(
                             onNavigateToRandomTeams = {
                                 navController.navigateToRandomTeams()
+                            },
+                            onNavigateToBalancedTeams = {
+                                navController.navigateToBalancedTeams()
                             }
                         )
+                        balancedTeams()
                         randomTeams(
                             onNavigateToGameScreen = {
                                 navController.navigateToGameScreen()

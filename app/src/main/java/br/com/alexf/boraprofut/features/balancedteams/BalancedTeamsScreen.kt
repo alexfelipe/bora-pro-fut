@@ -1,9 +1,8 @@
-package br.com.alexf.boraprofut.features.randomteams
+package br.com.alexf.boraprofut.features.balancedteams
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,54 +18,36 @@ import androidx.compose.material.icons.outlined.Sync
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.intl.Locale
-import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.alexf.boraprofut.R
 import br.com.alexf.boraprofut.models.Player
 import br.com.alexf.boraprofut.models.Team
-import br.com.alexf.boraprofut.ui.components.BoraProFutButton
 import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
 import kotlin.random.Random
 
 @Composable
-fun RandomTeamsScreen(
-    uiState: RandomTeamsUiState,
+fun BalancedTeamsScreen(
+    uiState: BalancedTeamUiState,
     modifier: Modifier = Modifier,
-    onDrawGamesClick: () -> Unit = {},
-    onDrawTeamsAgain: () -> Unit = {}
+    onDrawTeamsAgain: () -> Unit,
 ) {
     Column(
         modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-//        BoraProFutButton(
-//            onClick = { onDrawGamesClick() },
-//            Modifier.padding(16.dp)
-//        ) {
-//            Box(modifier = Modifier.fillMaxWidth()) {
-//                Text(
-//                    text = "Sortear amistoso"
-//                        .toUpperCase(Locale.current),
-//                    Modifier
-//                        .align(Alignment.Center),
-//                    style = LocalTextStyle.current.copy(
-//                        fontWeight = FontWeight.Bold
-//                    )
-//                )
-//            }
-//        }
         Row(
             Modifier.padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -145,23 +126,27 @@ fun RandomTeamsScreen(
             }
         }
     }
+
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-fun RandomTeamsScreenPreview() {
+private fun BalancedTeamsScreenPreview() {
     BoraProFutTheme {
-        RandomTeamsScreen(
-            uiState = RandomTeamsUiState(
-                teams = List(3) {
-                    Team(players = List(6) {
-                        Player(
-                            "Jogador $it",
-                            Random.nextInt(1, 10)
-                        )
-                    }.toSet())
-                }
+        Surface {
+            BalancedTeamsScreen(
+                uiState = BalancedTeamUiState(
+                    teams = List(3) {
+                        Team(players = List(6) {
+                            Player(
+                                "Jogador $it",
+                                Random.nextInt(1, 10)
+                            )
+                        }.toSet())
+                    }
+                ),
+                onDrawTeamsAgain = {}
             )
-        )
+        }
     }
 }

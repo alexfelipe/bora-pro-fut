@@ -9,4 +9,5 @@
     <string name="formed_games">Partidas formadas</string>
     <string name="match_symbol">VS</string>
     <string name="players_registered">Jogadores cadastrados: %1$d</string>
+    <string name="draw_teams_again_icon">ícone para sortear times novamente</string>
 </resources>

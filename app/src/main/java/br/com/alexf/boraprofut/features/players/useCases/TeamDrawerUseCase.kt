@@ -1,6 +1,7 @@
 package br.com.alexf.boraprofut.features.players.useCases
 
-import br.com.alexf.boraprofut.features.players.model.Player
+import br.com.alexf.boraprofut.models.Player
+import kotlin.math.ceil
 
 class TeamDrawerUseCase {
 
@@ -13,6 +14,35 @@ class TeamDrawerUseCase {
             .chunked(playersPerTeam) {
                 it.toSet()
             }
+    }
+
+    fun drawBalancedTeams(
+        players: Set<Player>,
+        playersPerTeam: Int
+    ): List<Set<Player>> {
+        val amountTeams = ceil(players.size / playersPerTeam.toFloat()).toInt()
+        val sortedPlayers = players.shuffled()
+            .sortedBy {
+                it.level
+            }.toMutableList()
+
+        val teamsWithBestPlayersIncluded = MutableList(amountTeams) {
+            val bestPlayer = sortedPlayers.removeLast()
+            mutableListOf(bestPlayer)
+        }
+
+        while (sortedPlayers.isNotEmpty()) {
+            teamsWithBestPlayersIncluded.forEach {
+                if (sortedPlayers.isEmpty()) {
+                    return@forEach
+                }
+                it.add(sortedPlayers.removeFirst())
+            }
+        }
+
+        return teamsWithBestPlayersIncluded.map {
+            it.toSet()
+        }
     }
 
 }

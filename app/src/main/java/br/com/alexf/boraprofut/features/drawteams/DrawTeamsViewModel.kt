@@ -2,7 +2,7 @@ package br.com.alexf.boraprofut.features.drawteams
 
 import androidx.lifecycle.ViewModel
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository
-import br.com.alexf.boraprofut.features.players.model.Player
+import br.com.alexf.boraprofut.models.Player
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
@@ -11,8 +11,12 @@ import kotlinx.coroutines.flow.update
 data class DrawTeamsUiState(
     val players: Set<Player> = emptySet(),
     val playersPerTeam: Int = 0,
-    val isShowPlayers: Boolean = false,
-    val onShowPlayersToggle: () -> Unit = {}
+    val isShowPlayers: Boolean = true,
+    val onShowPlayersToggle: () -> Unit = {},
+    val onDecreasePlayersPerTeam: () -> Unit = {},
+    val onIncreasePlayersPerTeam: () -> Unit = {},
+    val onIncreasePlayerLevel: (Player) -> Unit = {},
+    val onDecreasePlayerLevel: (Player) -> Unit = {},
 )
 
 class DrawTeamsViewModel(
@@ -32,17 +36,21 @@ class DrawTeamsViewModel(
                     _uiState.update {
                         it.copy(isShowPlayers = !it.isShowPlayers)
                     }
+                },
+                onDecreasePlayersPerTeam = {
+                    repository.decreasePlayersPerTeam()
+                },
+                onIncreasePlayersPerTeam = {
+                    repository.increasePlayersPerTeam()
+                },
+                onDecreasePlayerLevel = {
+                    repository.decreasePlayerLevel(it)
+                },
+                onIncreasePlayerLevel = {
+                    repository.increasePlayerLevel(it)
                 }
             )
         }
-    }
-
-    fun increasePlayersPerTeam() {
-        repository.increasePlayersPerTeam()
-    }
-
-    fun decreasePlayersPerTeam() {
-        repository.decreasePlayersPerTeam()
     }
 
 }

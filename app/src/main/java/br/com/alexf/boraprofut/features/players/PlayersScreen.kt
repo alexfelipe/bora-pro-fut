@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LocalTextStyle
@@ -30,7 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.alexf.boraprofut.R
-import br.com.alexf.boraprofut.features.players.model.Player
+import br.com.alexf.boraprofut.models.Player
 import br.com.alexf.boraprofut.ui.components.BoraProFutButton
 import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
 
@@ -64,7 +65,10 @@ fun PlayersScreen(
                     .heightIn(200.dp)
                     .fillMaxWidth()
                     .padding(16.dp),
-                placeholder = { Text(text = stringResource(R.string.players)) }
+                label = {
+                    Text(text = stringResource(R.string.players))
+                },
+                shape = RoundedCornerShape(4)
             )
             Row(modifier = Modifier.padding(top = 10.dp, start = 16.dp, end = 16.dp)) {
                 Text(text = "Jogadores cadastrados: ", fontWeight = FontWeight(700))
@@ -133,7 +137,7 @@ fun HomeScreenPreview() {
     BoraProFutTheme {
         PlayersScreen(
             uiState = PlayersUiState(
-                players = "",
+                players = "Alex\nFelipe",
             ),
             onSavePlayers = {}
         )
@@ -153,5 +157,4 @@ fun HomeScreenWithIsSavingStatePreview() {
         )
     }
 }
-
 

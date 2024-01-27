@@ -1,4 +1,4 @@
-package br.com.alexf.boraprofut.features.randomteams
+package br.com.alexf.boraprofut.features.balancedteams
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,17 +12,17 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-data class RandomTeamsUiState(
+data class BalancedTeamUiState(
     val teams: List<Team> = emptyList(),
-    val playersPerTeam: Int = 0,
+    val playersPerTeam: Int = 0
 )
 
-class RandomTeamsViewModel(
+class BalancedTeamViewModel(
     private val repository: PlayersRepository,
     private val useCase: TeamDrawerUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(RandomTeamsUiState())
+    private val _uiState = MutableStateFlow(BalancedTeamUiState())
     val uiState = _uiState.asStateFlow()
 
     init {
@@ -31,7 +31,7 @@ class RandomTeamsViewModel(
                 repository.players,
                 repository.playersPerTeam
             ) { players, playersPerTeam ->
-                Pair(useCase.drawRandomTeams(players, playersPerTeam), playersPerTeam)
+                Pair(useCase.drawBalancedTeams(players, playersPerTeam), playersPerTeam)
             }.collectLatest {
                 val drawnTeams = it.first.map { players ->
                     Team(players)
@@ -48,17 +48,13 @@ class RandomTeamsViewModel(
         }
     }
 
-    fun save() {
-        repository.saveGame(TODO("fazer o state oferece o dado"))
-    }
-
     fun drawTeams() {
         viewModelScope.launch {
             val players = repository.players.value
             val playersPerTeam = uiState.value.playersPerTeam
             _uiState.update { state ->
                 state.copy(
-                    teams = useCase.drawRandomTeams(
+                    teams = useCase.drawBalancedTeams(
                         players,
                         playersPerTeam
                     ).map {
@@ -68,5 +64,7 @@ class RandomTeamsViewModel(
             }
         }
     }
+
+
 
 }
