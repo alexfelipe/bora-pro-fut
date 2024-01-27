@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -135,11 +136,8 @@ fun findAllDuplicates(array: List<Player>): Set<Player> {
 
 @Composable
 fun NamesDuplicates(modifier: Modifier = Modifier, player: String) {
-    LazyColumn(
-        modifier = modifier
-            .wrapContentSize(unbounded = true)
-            .padding(top = 6.dp, start = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+    LazyRow(
+        modifier = modifier.padding(top = 6.dp, start = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         itemsIndexed(findAllDuplicates(player.parseToPlayers(false)).toList()) { index, item ->
             if (index != 0) Text(text = ", ", fontSize = 12.sp)
