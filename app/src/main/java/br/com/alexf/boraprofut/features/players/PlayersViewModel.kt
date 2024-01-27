@@ -1,6 +1,5 @@
 package br.com.alexf.boraprofut.features.players
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository
@@ -9,12 +8,12 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class PlayersUiState(
     val players: String = "",
+    val playersList: List<Player> = listOf(),
     val onPlayersChange: (String) -> Unit = {},
     val isSaving: Boolean = false,
 )
@@ -49,7 +48,7 @@ class PlayersViewModel(
                 copy(isSaving = true)
             }
             players.parseToPlayers().let {
-                repository.save(it)
+                repository.save(it.toSet())
             }
             _uiState.update {
                 it.copy(
@@ -64,8 +63,16 @@ class PlayersViewModel(
 
 }
 
-private fun String.parseToPlayers(): Set<Player> {
-    return this.split("\n")
-        .map { Player(it) }
-        .toSet()
+fun String.parseToPlayers(duplicityEnabler: Boolean = true): List<Player> {
+    return if (duplicityEnabler) {
+        this.trim()
+            .split("\n")
+            .map { Player(it) }
+            .toSet().toList()
+    } else {
+        this.trim()
+            .split("\n")
+            .map { Player(it) }
+            .toList()
+    }
 }

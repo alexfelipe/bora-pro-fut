@@ -8,4 +8,5 @@
     <string name="waiting_next_game">Aguardando próximo jogo</string>
     <string name="formed_games">Partidas formadas</string>
     <string name="match_symbol">VS</string>
+    <string name="players_registered">Jogadores cadastrados: %1$d</string>
 </resources>
