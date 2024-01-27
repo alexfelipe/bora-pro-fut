@@ -9,15 +9,18 @@ import org.koin.androidx.compose.koinViewModel
 
 const val balancedTeamsRoute = "balancedTeams"
 
-fun NavGraphBuilder.balancedTeams(){
+fun NavGraphBuilder.balancedTeams() {
     composable(balancedTeamsRoute) {
         val viewModel = koinViewModel<BalancedTeamViewModel>()
         val uiState by viewModel.uiState
             .collectAsState(initial = BalancedTeamUiState())
-        BalancedTeamsScreen(uiState = uiState)
+        BalancedTeamsScreen(uiState = uiState,
+            onDrawTeamsAgain = {
+                viewModel.drawTeams()
+            })
     }
 }
 
-fun NavHostController.navigateToBalancedTeams(){
+fun NavHostController.navigateToBalancedTeams() {
     navigate(balancedTeamsRoute)
 }

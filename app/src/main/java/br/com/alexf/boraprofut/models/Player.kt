@@ -1,4 +1,4 @@
-package br.com.alexf.boraprofut.features.players.model
+package br.com.alexf.boraprofut.models
 
 data class Player(
     val name: String,

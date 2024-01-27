@@ -1,14 +1,14 @@
 package br.com.alexf.boraprofut.data.repositories
 
 import br.com.alexf.boraprofut.features.game.model.Team
-import br.com.alexf.boraprofut.features.players.model.Player
+import br.com.alexf.boraprofut.models.Player
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlin.random.Random
 
 //TODO analisar e refatorar para padronizar onde será armazenado o valor padrão
-private const val defaultPlayersPerTeam = 4
+private const val defaultPlayersPerTeam = 5
 
 class PlayersRepository {
 

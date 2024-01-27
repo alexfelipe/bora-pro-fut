@@ -1,16 +1,14 @@
 package br.com.alexf.boraprofut.features.players
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository
-import br.com.alexf.boraprofut.features.players.model.Player
+import br.com.alexf.boraprofut.models.Player
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch

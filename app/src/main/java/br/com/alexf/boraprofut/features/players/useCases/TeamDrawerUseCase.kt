@@ -1,6 +1,6 @@
 package br.com.alexf.boraprofut.features.players.useCases
 
-import br.com.alexf.boraprofut.features.players.model.Player
+import br.com.alexf.boraprofut.models.Player
 import kotlin.math.ceil
 
 class TeamDrawerUseCase {
@@ -26,23 +26,21 @@ class TeamDrawerUseCase {
                 it.level
             }.toMutableList()
 
-        val teams = List(amountTeams) {
-            mutableListOf<Player>()
+        val teamsWithBestPlayersIncluded = MutableList(amountTeams) {
+            val bestPlayer = sortedPlayers.removeLast()
+            mutableListOf(bestPlayer)
         }
 
-        teams.forEach { team ->
-            while (sortedPlayers.isNotEmpty()) {
-                if(team.size == playersPerTeam) {
+        while (sortedPlayers.isNotEmpty()) {
+            teamsWithBestPlayersIncluded.forEach {
+                if (sortedPlayers.isEmpty()) {
                     return@forEach
                 }
-                if (team.size.mod(2) == 0) {
-                    team.add(sortedPlayers.removeFirst())
-                } else {
-                    team.add(sortedPlayers.removeLast())
-                }
+                it.add(sortedPlayers.removeFirst())
             }
         }
-        return teams.map {
+
+        return teamsWithBestPlayersIncluded.map {
             it.toSet()
         }
     }
