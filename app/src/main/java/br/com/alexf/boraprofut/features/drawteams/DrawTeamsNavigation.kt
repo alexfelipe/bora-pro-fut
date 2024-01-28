@@ -12,6 +12,7 @@ const val drawTeamsRoute = "drawTeams"
 fun NavGraphBuilder.drawTeams(
     onNavigateToRandomTeams: () -> Unit,
     onNavigateToBalancedTeams: () -> Unit,
+    onNavigateToPlayersScreen: () -> Unit
 ) {
     composable(drawTeamsRoute) {
         val viewModel = koinViewModel<DrawTeamsViewModel>()
@@ -19,8 +20,9 @@ fun NavGraphBuilder.drawTeams(
             .uiState.collectAsState(initial = DrawTeamsUiState())
         DrawTeamsScreen(
             uiState,
-            onDrawRandomTeamsClick = { onNavigateToRandomTeams() },
-            onDrawBalancedTeamsClick = { onNavigateToBalancedTeams() }
+            onDrawRandomTeamsClick = onNavigateToRandomTeams,
+            onDrawBalancedTeamsClick = onNavigateToBalancedTeams,
+            onEditPlayersClick = onNavigateToPlayersScreen
         )
     }
 }

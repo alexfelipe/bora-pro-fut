@@ -20,7 +20,9 @@ class PlayersRepository(
     val playersPerTeam = _playersPerTeam.asStateFlow()
 
     suspend fun save(players: Set<Player>) {
-        val entities = players.map {
+        val entities = players
+            .filterNot { it.name.isBlank() }
+            .map {
             it.toPlayerEntity()
         }
         dao.save(*entities.toTypedArray())
@@ -65,6 +67,10 @@ class PlayersRepository(
                     it.name.trim().isNotBlank()
                 }.toSet()
         }
+    }
+
+    suspend fun deleteAllPlayers(){
+        dao.deleleAllPlayers()
     }
 
     private companion object {

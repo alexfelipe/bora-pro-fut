@@ -22,6 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Balance
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.People
@@ -40,14 +41,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.alexf.boraprofut.R
 import br.com.alexf.boraprofut.models.Player
 import br.com.alexf.boraprofut.ui.components.SelectPlayerPerTeam
 import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
@@ -67,6 +68,7 @@ fun DrawTeamsScreen(
     modifier: Modifier = Modifier,
     onDrawRandomTeamsClick: () -> Unit,
     onDrawBalancedTeamsClick: () -> Unit,
+    onEditPlayersClick: () -> Unit,
 ) {
     val totalPlayers = uiState.players.size
     Column(
@@ -189,8 +191,7 @@ fun DrawTeamsScreen(
         }
         if (uiState.isShowPlayers) {
             Column {
-                Text(
-                    text = "Jogadores",
+                Row(
                     Modifier
                         .fillMaxWidth()
                         .background(
@@ -201,10 +202,44 @@ fun DrawTeamsScreen(
                                     MaterialTheme.colorScheme.background
                                 ),
                             )
+                        ),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Jogadores",
+                        Modifier.padding(16.dp),
+                        style = MaterialTheme.typography.titleLarge.copy(Color.White)
+                    )
+                    Row(
+                        Modifier
+                            .padding(16.dp)
+                            .clickable {
+                                onEditPlayersClick()
+                            }
+                            .clip(RoundedCornerShape(15))
+                            .background(
+                                Brush.linearGradient(
+                                    listOf(
+                                        Color(0xFFD500F9),
+                                        Color(0xFFD500F9),
+                                    )
+                                )
+                            )
+                            .padding(8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Edit,
+                            contentDescription = stringResource(R.string.players_edit_icon),
+                            tint = Color.White
                         )
-                        .padding(16.dp),
-                    style = MaterialTheme.typography.titleLarge.copy(Color.White)
-                )
+                        Text(
+                            text = "Editar",
+                            style = LocalTextStyle.current.copy(color = Color.White)
+                        )
+                    }
+                }
                 Column(
                     Modifier.padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -238,8 +273,10 @@ fun DrawTeamsScreen(
                                                 uiState.onDecreasePlayerLevel(player)
                                             }
                                         )
-                                        .background(Color(0xFFFF1744)
-                                            .copy(alpha = 0.8f))
+                                        .background(
+                                            Color(0xFFFF1744)
+                                                .copy(alpha = 0.8f)
+                                        )
                                         .padding(4.dp)
                                 ) {
                                     Icon(
@@ -269,8 +306,10 @@ fun DrawTeamsScreen(
                                                 uiState.onIncreasePlayerLevel(player)
                                             }
                                         )
-                                        .background(Color(0xFF00E676)
-                                            .copy(alpha = 0.8f))
+                                        .background(
+                                            Color(0xFF00E676)
+                                                .copy(alpha = 0.8f)
+                                        )
                                         .padding(4.dp)
                                 ) {
                                     Icon(
@@ -297,7 +336,8 @@ fun DrawTeamsScreenPreview() {
         DrawTeamsScreen(
             uiState = DrawTeamsUiState(),
             onDrawRandomTeamsClick = {},
-            onDrawBalancedTeamsClick = {}
+            onDrawBalancedTeamsClick = {},
+            onEditPlayersClick = {}
         )
     }
 }
@@ -318,7 +358,8 @@ fun DrawTeamsScreenDisplayingPlayersPreview() {
                     isShowPlayers = true
                 ),
                 onDrawRandomTeamsClick = {},
-                onDrawBalancedTeamsClick = {}
+                onDrawBalancedTeamsClick = {},
+                onEditPlayersClick = {}
             )
         }
     }
