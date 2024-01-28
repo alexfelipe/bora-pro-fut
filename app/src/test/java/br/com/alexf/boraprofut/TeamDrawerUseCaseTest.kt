@@ -1,7 +1,7 @@
 package br.com.alexf.boraprofut
 
-import br.com.alexf.boraprofut.models.Player
 import br.com.alexf.boraprofut.features.players.useCases.TeamDrawerUseCase
+import br.com.alexf.boraprofut.models.Player
 import org.junit.Assert
 import org.junit.Test
 import kotlin.random.Random
@@ -35,7 +35,7 @@ class TeamDrawerUseCaseTest {
 
     @Test
     fun shouldDrawTeamsPlayerBalancedGivenAmount() {
-        val players = List(16){
+        val players = List(16) {
             Player(name = "jogador ${it + 1}", Random.nextInt(1, 10))
         }.toSet()
         val drawnTeams = teamDrawer

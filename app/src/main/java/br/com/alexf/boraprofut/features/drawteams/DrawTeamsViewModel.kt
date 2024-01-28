@@ -10,6 +10,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+sealed class InitState {
+    data object LOADING : InitState()
+    data object FINISHED : InitState()
+}
+
 data class DrawTeamsUiState(
     val players: Set<Player> = emptySet(),
     val playersPerTeam: Int = 0,
@@ -19,6 +24,7 @@ data class DrawTeamsUiState(
     val onIncreasePlayersPerTeam: () -> Unit = {},
     val onIncreasePlayerLevel: (Player) -> Unit = {},
     val onDecreasePlayerLevel: (Player) -> Unit = {},
+    val initState: InitState = InitState.LOADING
 )
 
 class DrawTeamsViewModel(
@@ -31,7 +37,10 @@ class DrawTeamsViewModel(
     }) { uiState, players ->
         uiState.copy(players = players)
     }.combine(repository.playersPerTeam) { uiState, playersPerTeam ->
-        uiState.copy(playersPerTeam = playersPerTeam)
+        uiState.copy(
+            playersPerTeam = playersPerTeam,
+            initState = InitState.FINISHED
+        )
     }
 
     init {
