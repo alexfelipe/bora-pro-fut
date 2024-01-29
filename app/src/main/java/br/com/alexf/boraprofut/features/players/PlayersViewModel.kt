@@ -75,6 +75,12 @@ class PlayersViewModel(
         }
     }
 
+    fun clearField() {
+        _uiState.update {
+            _uiState.value.copy(players = "", duplicateNames = listOf())
+        }
+    }
+
 }
 
 fun String.parseToUniquePlayers(): Set<Player> {

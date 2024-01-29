@@ -38,7 +38,8 @@ import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
 fun PlayersScreen(
     modifier: Modifier = Modifier,
     uiState: PlayersUiState,
-    onSavePlayers: () -> Unit
+    onSavePlayers: () -> Unit,
+    onClearTheField: () -> Unit,
 ) {
     val players = uiState.players
     Column(
@@ -79,6 +80,21 @@ fun PlayersScreen(
                             )
                         }
                     }
+                }
+            }
+            BoraProFutButton(onClick = onClearTheField, Modifier.padding(
+                start = 16.dp,
+                end = 16.dp,
+                bottom = 16.dp
+            )) {
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        text = stringResource(R.string.clear_field).toUpperCase(Locale.current),
+                        Modifier.align(Alignment.Center),
+                        style = LocalTextStyle.current.copy(
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
                 }
             }
             AmountPlayers(uiState = uiState)
@@ -164,7 +180,7 @@ fun HomeScreenPreview() {
     BoraProFutTheme {
         PlayersScreen(uiState = PlayersUiState(
             players = "Alex\nFelipe",
-        ), onSavePlayers = {})
+        ), onSavePlayers = {}, onClearTheField = {})
     }
 }
 
@@ -174,6 +190,6 @@ fun HomeScreenWithIsSavingStatePreview() {
     BoraProFutTheme {
         PlayersScreen(uiState = PlayersUiState(
             players = "Alex\nFelipe", isSaving = true
-        ), onSavePlayers = {})
+        ), onSavePlayers = {}, onClearTheField = {})
     }
 }

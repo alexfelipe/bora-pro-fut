@@ -12,4 +12,5 @@
     <string name="draw_teams_again_icon">ícone para sortear times novamente</string>
     <string name="register_of_players">Cadastro de jogadores</string>
     <string name="names_duplicated">Jogadores repetidos: </string>
+    <string name="clear_field">Limpar o campo </string>
 </resources>
