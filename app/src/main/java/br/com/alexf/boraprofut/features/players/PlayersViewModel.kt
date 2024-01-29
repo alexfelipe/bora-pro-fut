@@ -15,6 +15,8 @@ import kotlinx.coroutines.launch
 
 data class PlayersUiState(
     val players: String = "",
+    val amountPlayers: String = "",
+    val duplicateNames: List<Player> = listOf(),
     val onPlayersChange: (String) -> Unit = {},
     val isSaving: Boolean = false,
 )
@@ -33,7 +35,11 @@ class PlayersViewModel(
             currentState.copy(
                 onPlayersChange = { players ->
                     _uiState.update {
-                        it.copy(players = players)
+                        it.copy(
+                            players = players,
+                            amountPlayers = isTherePlayer(players),
+                            duplicateNames = findAllDuplicates(players.parseToPlayersWithDuplicates()).toList()
+                        )
                     }
                 },
             )
@@ -41,7 +47,7 @@ class PlayersViewModel(
         //TODO adicionado apenas para pular para a tela de sorteio diretamente [é gambiarra]
         viewModelScope.launch {
             delay(1000)
-            if(repository.players.first().isNotEmpty()) {
+            if (repository.players.first().isNotEmpty()) {
                 _isPlayersSaved.emit(true)
             }
         }
@@ -55,7 +61,7 @@ class PlayersViewModel(
             _uiState.update {
                 copy(isSaving = true)
             }
-            players.parseToPlayers().let {
+            players.parseToUniquePlayers().let {
                 repository.save(it.toSet())
             }
             _uiState.update {
@@ -71,18 +77,11 @@ class PlayersViewModel(
 
 }
 
-fun String.parseToPlayers(duplicityEnabler: Boolean = true): List<Player> {
-    return if (duplicityEnabler) {
-        this.trim()
-            .split("\n")
-            .map { Player(it) }
-            .toSet().toList()
-    } else {
-        this.trim()
-            .split("\n")
-            .map { Player(it) }
-            .toList()
-    }
+fun String.parseToUniquePlayers(): Set<Player> {
+    return this.trim()
+        .split("\n")
+        .map { Player(it) }
+        .toSet()
 }
 
 private fun Set<Player>.parseToString(): String {
@@ -90,3 +89,22 @@ private fun Set<Player>.parseToString(): String {
         "${it.name}\n"
     }.joinToString(separator = "")
 }
+
+fun String.parseToPlayersWithDuplicates(): List<Player> {
+    return this.trim()
+        .split("\n")
+        .map { Player("${it}, ") }
+        .toList()
+}
+
+private fun findAllDuplicates(array: List<Player>): Set<Player> {
+    val seen: MutableSet<Player> = mutableSetOf()
+    return array.filter {
+        !seen.add(it)
+    }.toSet()
+}
+
+private fun isTherePlayer(player: String): String {
+    return if (player.isNotBlank()) player.parseToUniquePlayers().size.toString() else ""
+}
+
