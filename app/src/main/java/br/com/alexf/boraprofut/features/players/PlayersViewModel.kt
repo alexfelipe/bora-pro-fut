@@ -14,6 +14,8 @@ import kotlinx.coroutines.launch
 
 data class PlayersUiState(
     val players: String = "",
+    val amountPlayers: String = "",
+    val duplicateNames: List<Player> = listOf(),
     val onPlayersChange: (String) -> Unit = {},
     val isSaving: Boolean = false,
 )
@@ -32,7 +34,11 @@ class PlayersViewModel(
             currentState.copy(
                 onPlayersChange = { players ->
                     _uiState.update {
-                        it.copy(players = players)
+                        it.copy(
+                            players = players,
+                            amountPlayers = isTherePlayer(players),
+                            duplicateNames = findAllDuplicates(players.parseToPlayersWithDuplicates()).toList()
+                        )
                     }
                 },
             )
@@ -59,7 +65,7 @@ class PlayersViewModel(
             _uiState.update {
                 copy(isSaving = true)
             }
-            players.parseToPlayers().let {
+            players.parseToUniquePlayers().let {
                 viewModelScope.launch {
                     repository.deleteAllPlayers()
                     repository.save(it)
@@ -78,8 +84,34 @@ class PlayersViewModel(
 
 }
 
-private fun String.parseToPlayers(): Set<Player> {
-    return this.split("\n")
+fun String.parseToUniquePlayers(): Set<Player> {
+    return this.trim()
+        .split("\n")
         .map { Player(it) }
         .toSet()
 }
+
+private fun Set<Player>.parseToString(): String {
+    return map {
+        "${it.name}\n"
+    }.joinToString(separator = "")
+}
+
+fun String.parseToPlayersWithDuplicates(): List<Player> {
+    return this.trim()
+        .split("\n")
+        .map { Player("${it}, ") }
+        .toList()
+}
+
+private fun findAllDuplicates(array: List<Player>): Set<Player> {
+    val seen: MutableSet<Player> = mutableSetOf()
+    return array.filter {
+        !seen.add(it)
+    }.toSet()
+}
+
+private fun isTherePlayer(player: String): String {
+    return if (player.isNotBlank()) player.parseToUniquePlayers().size.toString() else ""
+}
+

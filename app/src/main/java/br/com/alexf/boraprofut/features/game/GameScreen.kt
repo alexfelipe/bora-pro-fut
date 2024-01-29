@@ -82,20 +82,14 @@ private fun ReadyMadeGamesComponent(
             .background(Color.White)
     ) {
         Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .padding(16.dp),
+            modifier = modifier.fillMaxWidth().fillMaxHeight().padding(16.dp),
             horizontalArrangement = Arrangement.Absolute.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
             TextGame(string = timeA, modifier = modifier.weight(1F))
             if (timeB.isNotBlank()) {
-                TextGame(
-                    string = stringResource(id = R.string.match_symbol),
-                    modifier = modifier.weight(1F)
-                )
-                TextGame(string = timeA, modifier = modifier.weight(1F))
+                TextGame(string = stringResource(id = R.string.match_symbol), modifier = modifier.weight(1F))
+                TextGame(string = timeB, modifier = modifier.weight(1F))
             }
         }
     }

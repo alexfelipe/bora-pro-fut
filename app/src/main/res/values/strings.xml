@@ -8,6 +8,9 @@
     <string name="waiting_next_game">Aguardando próximo jogo</string>
     <string name="formed_games">Partidas formadas</string>
     <string name="match_symbol">VS</string>
+    <string name="players_registered">Jogadores: </string>
     <string name="draw_teams_again_icon">ícone para sortear times novamente</string>
+    <string name="register_of_players">Cadastro de jogadores</string>
+    <string name="names_duplicated">Jogadores repetidos: </string>
     <string name="players_edit_icon">ícone para editar jogadores</string>
 </resources>

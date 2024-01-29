@@ -12,7 +12,7 @@ data class ResultGames(
 )
 
 class GameUseCase (
-    val repository: PlayersRepository
+    private val repository: PlayersRepository
 ) {
     fun getGames(): ResultGames {
         val shuffledTeams = repository.games.value.toList().shuffled()
