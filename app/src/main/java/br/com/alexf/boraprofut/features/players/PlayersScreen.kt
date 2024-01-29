@@ -96,6 +96,7 @@ fun PlayersScreen(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AmountPlayers(modifier: Modifier = Modifier, uiState: PlayersUiState) {
     Row(
@@ -124,33 +125,21 @@ fun AmountPlayers(modifier: Modifier = Modifier, uiState: PlayersUiState) {
                 end = 16.dp
             )
         )
-        DuplicateNames(duplicateNames = uiState.duplicateNames)
-    }
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-fun DuplicateNames(modifier: Modifier = Modifier, duplicateNames: List<Player>) {
-    FlowRow(modifier = modifier.padding(top = 6.dp, start = 16.dp)) {
-        duplicateNames.forEach { item ->
-            Text(
-                text = item.name,
-                fontSize = 12.sp,
-                color = Color.Red
-            )
+        FlowRow(modifier = modifier.padding(top = 6.dp, start = 16.dp)) {
+            uiState.duplicateNames.forEach { item ->
+                Text(
+                    text = item.name,
+                    fontSize = 12.sp,
+                    color = Color.Red
+                )
+            }
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun NamesDuplicatesPreview() {
-    DuplicateNames(duplicateNames = listOf(Player("alex"), Player("felipe"), Player("felipe")))
-}
-
-@Preview(showBackground = true)
-@Composable
-fun AmountPlayersPreview() {
+private fun AmountPlayersPreview() {
     BoraProFutTheme {
         Column {
             AmountPlayers(uiState = PlayersUiState(players = "Alex\nFelipe"))
@@ -160,7 +149,7 @@ fun AmountPlayersPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenPreview() {
+private fun HomeScreenPreview() {
     BoraProFutTheme {
         PlayersScreen(uiState = PlayersUiState(
             players = "Alex\nFelipe",
@@ -170,7 +159,7 @@ fun HomeScreenPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenWithIsSavingStatePreview() {
+private fun HomeScreenWithIsSavingStatePreview() {
     BoraProFutTheme {
         PlayersScreen(uiState = PlayersUiState(
             players = "Alex\nFelipe", isSaving = true

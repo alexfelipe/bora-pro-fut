@@ -62,7 +62,7 @@ class PlayersViewModel(
                 copy(isSaving = true)
             }
             players.parseToUniquePlayers().let {
-                repository.save(it.toSet())
+                repository.save(it)
             }
             _uiState.update {
                 it.copy(
