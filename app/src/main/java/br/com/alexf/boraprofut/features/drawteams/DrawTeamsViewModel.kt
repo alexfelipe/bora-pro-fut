@@ -1,12 +1,19 @@
 package br.com.alexf.boraprofut.features.drawteams
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository
 import br.com.alexf.boraprofut.models.Player
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
+sealed class InitState {
+    data object LOADING : InitState()
+    data object FINISHED : InitState()
+}
 
 data class DrawTeamsUiState(
     val players: Set<Player> = emptySet(),
@@ -17,6 +24,7 @@ data class DrawTeamsUiState(
     val onIncreasePlayersPerTeam: () -> Unit = {},
     val onIncreasePlayerLevel: (Player) -> Unit = {},
     val onDecreasePlayerLevel: (Player) -> Unit = {},
+    val initState: InitState = InitState.LOADING
 )
 
 class DrawTeamsViewModel(
@@ -24,10 +32,16 @@ class DrawTeamsViewModel(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DrawTeamsUiState())
-    val uiState = _uiState.combine(repository.players) { uiState, players -> uiState.copy(players = players)
-        }.combine(repository.playersPerTeam) { uiState, playersPerTeam ->
-            uiState.copy(playersPerTeam = playersPerTeam)
-        }
+    val uiState = _uiState.combine(repository.players.map {
+        it.toSet()
+    }) { uiState, players ->
+        uiState.copy(players = players)
+    }.combine(repository.playersPerTeam) { uiState, playersPerTeam ->
+        uiState.copy(
+            playersPerTeam = playersPerTeam,
+            initState = InitState.FINISHED
+        )
+    }
 
     init {
         _uiState.update { currentState ->
@@ -44,10 +58,14 @@ class DrawTeamsViewModel(
                     repository.increasePlayersPerTeam()
                 },
                 onDecreasePlayerLevel = {
-                    repository.decreasePlayerLevel(it)
+                    viewModelScope.launch {
+                        repository.decreasePlayerLevel(it)
+                    }
                 },
                 onIncreasePlayerLevel = {
-                    repository.increasePlayerLevel(it)
+                    viewModelScope.launch {
+                        repository.increasePlayerLevel(it)
+                    }
                 }
             )
         }
