@@ -4,6 +4,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.navigation.koinNavViewModel
@@ -24,4 +25,8 @@ fun NavGraphBuilder.playersScreen(
         }
         PlayersScreen(uiState = uiState, onSavePlayers = { viewModel.savePlayers() })
     }
+}
+
+fun NavHostController.navigateToPlayersScreen() {
+    navigate(playersRoute)
 }

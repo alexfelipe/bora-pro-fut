@@ -1,28 +1,31 @@
 package br.com.alexf.boraprofut.data.repositories
 
+import br.com.alexf.boraprofut.data.database.dao.PlayersDao
+import br.com.alexf.boraprofut.data.database.entities.PlayerEntity
 import br.com.alexf.boraprofut.features.game.model.Team
 import br.com.alexf.boraprofut.models.Player
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlin.random.Random
 
 //TODO analisar e refatorar para padronizar onde será armazenado o valor padrão
 private const val defaultPlayersPerTeam = 5
 
-class PlayersRepository {
+class PlayersRepository(
+    private val dao: PlayersDao
+) {
 
-    val players = _players.asStateFlow()
+    val players = dao.findAll()
     val games = _game.asStateFlow()
     val playersPerTeam = _playersPerTeam.asStateFlow()
 
-    fun save(players: Set<Player>) {
-        _players.update {
-            players
-                .filter {
-                    it.name.trim().isNotBlank()
-                }.toSet()
+    suspend fun save(players: Set<Player>) {
+        val entities = players
+            .filterNot { it.name.isBlank() }
+            .map {
+            it.toPlayerEntity()
         }
+        dao.save(*entities.toTypedArray())
     }
 
     fun increasePlayersPerTeam() {
@@ -41,27 +44,19 @@ class PlayersRepository {
         }
     }
 
-    fun increasePlayerLevel(player: Player) {
-        _players.update { players ->
-            players.map {
-                if (it.name == player.name && it.level < 10) {
-                    it.copy(level = it.level + 1)
-                } else {
-                    it
-                }
-            }.toSet()
+    suspend fun increasePlayerLevel(player: Player) {
+        if (player.level < 10) {
+            val entity = player.copy(level = player.level + 1)
+                .toPlayerEntity()
+            dao.save(entity)
         }
     }
 
-    fun decreasePlayerLevel(player: Player) {
-        _players.update { players ->
-            players.map {
-                if (it.name == player.name && it.level > 0) {
-                    it.copy(level = it.level - 1)
-                } else {
-                    it
-                }
-            }.toSet()
+    suspend fun decreasePlayerLevel(player: Player) {
+        if (player.level > 2) {
+            val entity = player.copy(level = player.level - 1)
+                .toPlayerEntity()
+            dao.save(entity)
         }
     }
 
@@ -74,12 +69,20 @@ class PlayersRepository {
         }
     }
 
+    suspend fun deleteAllPlayers(){
+        dao.deleleAllPlayers()
+    }
+
     private companion object {
-        private val _players = MutableStateFlow<Set<Player>>(List(20) {
-            Player("jogador $it", Random.nextInt(1, 10))
-        }.toSet())
         private val _game = MutableStateFlow<Set<Team>>(emptySet())
         private val _playersPerTeam = MutableStateFlow(defaultPlayersPerTeam)
     }
 
+}
+
+private fun Player.toPlayerEntity(): PlayerEntity {
+    return PlayerEntity(
+        name = this.name,
+        level = this.level
+    )
 }
