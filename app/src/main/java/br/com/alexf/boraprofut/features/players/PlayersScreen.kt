@@ -1,6 +1,7 @@
 package br.com.alexf.boraprofut.features.players
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -11,9 +12,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Clear
+import androidx.compose.material.icons.outlined.Save
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -21,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -57,46 +64,42 @@ fun PlayersScreen(
                 Modifier.padding(16.dp),
                 style = MaterialTheme.typography.titleLarge
             )
-            Column(
-                Modifier.fillMaxWidth()
-            ) {
-                if (uiState.isSaving) {
-                    Box(modifier = Modifier.fillMaxWidth()) {
-                        CircularProgressIndicator(
-                            Modifier.align(
-                                Alignment.Center
-                            )
-                        )
-                    }
-                } else {
-                    BoraProFutButton(onClick = onSavePlayers, Modifier.padding(16.dp)) {
-                        Box(modifier = Modifier.fillMaxWidth()) {
-                            Text(
-                                text = stringResource(R.string.save_players).toUpperCase(Locale.current),
-                                Modifier.align(Alignment.Center),
-                                style = LocalTextStyle.current.copy(
-                                    fontWeight = FontWeight.Bold
-                                )
-                            )
-                        }
-                    }
-                }
-            }
-            BoraProFutButton(onClick = onClearTheField, Modifier.padding(
-                start = 16.dp,
-                end = 16.dp,
-                bottom = 16.dp
-            )) {
-                Box(modifier = Modifier.fillMaxWidth()) {
-                    Text(
-                        text = stringResource(R.string.clear_field).toUpperCase(Locale.current),
-                        Modifier.align(Alignment.Center),
-                        style = LocalTextStyle.current.copy(
-                            fontWeight = FontWeight.Bold
-                        )
-                    )
-                }
-            }
+//            Column(
+//                Modifier.fillMaxWidth()
+//            ) {
+//                if (uiState.isSaving) {
+//                    Box(modifier = Modifier.fillMaxWidth()) {
+//                        CircularProgressIndicator(
+//                            Modifier.align(
+//                                Alignment.Center
+//                            )
+//                        )
+//                    }
+//                } else {
+//                    BoraProFutButton(onClick = onSavePlayers, Modifier.padding(16.dp)) {
+//                        Box(modifier = Modifier.fillMaxWidth()) {
+//                            Row(
+//                                horizontalArrangement = Arrangement.Center,
+//                                verticalAlignment = Alignment.CenterVertically
+//                            ) {
+//                                Text(
+//                                    text = stringResource(R.string.save).toUpperCase(Locale.current),
+//                                    Modifier.weight(1f),
+//                                    style = LocalTextStyle.current.copy(
+//                                        fontWeight = FontWeight.Bold
+//                                    )
+//                                )
+//                                Icon(
+//                                    Icons.Outlined.Save,
+//                                    contentDescription = stringResource(R.string.draw_teams_again_icon),
+//                                    Modifier.clip(CircleShape).padding(16.dp)
+//                                )
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+
             AmountPlayers(uiState = uiState)
             OutlinedTextField(
                 modifier = Modifier
