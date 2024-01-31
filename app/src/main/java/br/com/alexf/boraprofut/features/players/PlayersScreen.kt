@@ -190,7 +190,7 @@ fun AmountPlayers(modifier: Modifier = Modifier, uiState: PlayersUiState) {
 
 @Preview(showBackground = true)
 @Composable
-fun AmountPlayersPreview() {
+private fun AmountPlayersPreview() {
     BoraProFutTheme {
         Column {
             AmountPlayers(uiState = PlayersUiState(players = "Alex\nFelipe"))
@@ -200,7 +200,7 @@ fun AmountPlayersPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenPreview() {
+private fun HomeScreenPreview() {
     BoraProFutTheme {
         PlayersScreen(uiState = PlayersUiState(
             players = "Alex\nFelipe",
@@ -210,7 +210,7 @@ fun HomeScreenPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenWithIsSavingStatePreview() {
+private fun HomeScreenWithIsSavingStatePreview() {
     BoraProFutTheme {
         PlayersScreen(uiState = PlayersUiState(
             players = "Alex\nFelipe", isSaving = true
