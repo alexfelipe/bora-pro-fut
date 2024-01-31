@@ -15,7 +15,10 @@ fun NavGraphBuilder.playersScreen(
         val uiState by viewModel.uiState.collectAsState(initial = PlayersUiState())
         PlayersScreen(
             uiState = uiState,
-            onSavePlayers = { viewModel.savePlayers() },
+            onSavePlayers = {
+                viewModel.savePlayers()
+                onNavigateToDrawScreen()
+            },
             onClear = { viewModel.clearField() })
     }
 }
