@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.sp
 import br.com.alexf.boraprofut.R
 import br.com.alexf.boraprofut.models.Player
 import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
-import okhttp3.internal.wait
 
 @Composable
 fun PlayersScreen(
@@ -62,22 +61,24 @@ fun PlayersScreen(
             )
             AmountPlayers(uiState = uiState)
             Column(Modifier.padding(top = 16.dp)) {
-                Row(modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)
+                Row(modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    Row(Modifier.clip(CircleShape).background(Color.Green).weight(1f),  horizontalArrangement = Arrangement.Absolute.SpaceBetween,  verticalAlignment = Alignment.CenterVertically) {
-                        Text(stringResource(id = R.string.save), Modifier.padding(8.dp), color = Color.Black, fontWeight = FontWeight(700))
-                        Icon(
-                            imageVector = Icons.Outlined.Done,
-                            contentDescription = null,
-                            Modifier.clip(CircleShape).clickable {}.padding(8.dp)
-                        )
-                    }
-                    Row(Modifier.clip(CircleShape).background(Color.Red), horizontalArrangement = Arrangement.Absolute.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                        Text(stringResource(id = R.string.clear), Modifier.padding(8.dp), color = Color.Black, fontWeight = FontWeight(700))
+                    Row(Modifier.clip(CircleShape).background(Color(0xFF8B0000)).padding(horizontal = 8.dp), horizontalArrangement = Arrangement.Absolute.Center, verticalAlignment = Alignment.CenterVertically) {
+                        Text(stringResource(id = R.string.clear), Modifier.padding(top = 8.dp, start = 8.dp, bottom = 8.dp, end = 2.dp), color = Color.White, fontWeight = FontWeight(700))
                         Icon(
                             imageVector = Icons.Outlined.Clear,
                             contentDescription = null,
-                            Modifier.clip(CircleShape).clickable {}.padding(8.dp)
+                            Modifier.clip(CircleShape).clickable {}.padding(top = 8.dp, start = 2.dp, bottom = 8.dp, end = 4.dp),
+                            tint = Color.White,
+                        )
+                    }
+                    Row(Modifier.clip(CircleShape).background(Color(0xFF006400)).weight(1f),  horizontalArrangement = Arrangement.Absolute.Center,  verticalAlignment = Alignment.CenterVertically) {
+                        Text(stringResource(id = R.string.save), Modifier.padding(top = 8.dp, start = 8.dp, bottom = 8.dp, end = 2.dp), color = Color.White, fontWeight = FontWeight(700))
+                        Icon(
+                            imageVector = Icons.Outlined.Done,
+                            contentDescription = null,
+                            Modifier.clip(CircleShape).clickable {}.padding(top = 8.dp, start = 2.dp, bottom = 8.dp, end = 4.dp),
+                            tint = Color.White,
                         )
                     }
                 }
