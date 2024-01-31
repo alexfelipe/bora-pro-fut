@@ -105,9 +105,13 @@ fun String.parseToPlayersWithDuplicates(): List<Player> {
 
 private fun findAllDuplicates(array: List<Player>): Set<Player> {
     val seen: MutableSet<Player> = mutableSetOf()
-    return array.filter {
+    val listFormated = array.filter {
         !seen.add(it)
     }.toSet()
+    listFormated.lastOrNull()?.let {
+        it.name = it.name.replace(",", "")
+    }
+    return listFormated
 }
 
 private fun isTherePlayer(player: String): String {

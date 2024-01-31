@@ -1,5 +1,10 @@
 package br.com.alexf.boraprofut.features.players
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,10 +24,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Clear
 import androidx.compose.material.icons.outlined.Done
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,7 +43,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.alexf.boraprofut.R
-import br.com.alexf.boraprofut.models.Player
 import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
 
 @Composable
@@ -41,9 +50,8 @@ fun PlayersScreen(
     modifier: Modifier = Modifier,
     uiState: PlayersUiState,
     onSavePlayers: () -> Unit,
-    onClearTheField: () -> Unit,
+    onClear: () -> Unit,
 ) {
-    val players = uiState.players
     Column(
         modifier
             .fillMaxSize()
@@ -61,25 +69,80 @@ fun PlayersScreen(
             )
             AmountPlayers(uiState = uiState)
             Column(Modifier.padding(top = 16.dp)) {
-                Row(modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)
+                Row(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    Row(Modifier.clip(CircleShape).background(Color(0xFF8B0000)).padding(horizontal = 8.dp), horizontalArrangement = Arrangement.Absolute.Center, verticalAlignment = Alignment.CenterVertically) {
-                        Text(stringResource(id = R.string.clear), Modifier.padding(top = 8.dp, start = 8.dp, bottom = 8.dp, end = 2.dp), color = Color.White, fontWeight = FontWeight(700))
-                        Icon(
-                            imageVector = Icons.Outlined.Clear,
-                            contentDescription = null,
-                            Modifier.clip(CircleShape).clickable {}.padding(top = 8.dp, start = 2.dp, bottom = 8.dp, end = 4.dp),
-                            tint = Color.White,
-                        )
+                        AnimatedVisibility(
+                            visible = uiState.amountPlayers.isNotBlank(),
+                            enter = fadeIn(initialAlpha = 0.0f)
+                        ){
+                        Row(
+                            Modifier
+                                .clip(CircleShape)
+                                .background(Color(0xFF8B0000))
+                                .padding(horizontal = 8.dp)
+                                .clickable { onClear() },
+                            horizontalArrangement = Arrangement.Absolute.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                stringResource(id = R.string.clear),
+                                Modifier.padding(
+                                    top = 8.dp,
+                                    start = 8.dp,
+                                    bottom = 8.dp,
+                                    end = 2.dp
+                                ),
+                                color = Color.White,
+                                fontWeight = FontWeight(700)
+                            )
+                            Icon(
+                                imageVector = Icons.Outlined.Clear,
+                                contentDescription = null,
+                                Modifier
+                                    .clip(CircleShape)
+                                    .clickable {}
+                                    .padding(top = 8.dp, start = 2.dp, bottom = 8.dp, end = 4.dp),
+                                tint = Color.White,
+                            )
+                        }
                     }
-                    Row(Modifier.clip(CircleShape).background(Color(0xFF006400)).weight(1f),  horizontalArrangement = Arrangement.Absolute.Center,  verticalAlignment = Alignment.CenterVertically) {
-                        Text(stringResource(id = R.string.save), Modifier.padding(top = 8.dp, start = 8.dp, bottom = 8.dp, end = 2.dp), color = Color.White, fontWeight = FontWeight(700))
-                        Icon(
-                            imageVector = Icons.Outlined.Done,
-                            contentDescription = null,
-                            Modifier.clip(CircleShape).clickable {}.padding(top = 8.dp, start = 2.dp, bottom = 8.dp, end = 4.dp),
-                            tint = Color.White,
-                        )
+                    AnimatedVisibility(
+                        visible = uiState.amountPlayers.isNotBlank() && uiState.amountPlayers.toInt() > 3,
+                        Modifier.weight(1f),
+                        enter = fadeIn(initialAlpha = 0.0f)
+                    ){
+                        Row(
+                            Modifier
+                                .clip(CircleShape)
+                                .background(Color(0xFF006400))
+                                .clickable { onSavePlayers() },
+                            horizontalArrangement = Arrangement.Absolute.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                stringResource(id = R.string.save),
+                                Modifier.padding(
+                                    top = 8.dp,
+                                    start = 8.dp,
+                                    bottom = 8.dp,
+                                    end = 2.dp
+                                ),
+                                color = Color.White,
+                                fontWeight = FontWeight(700)
+                            )
+                            Icon(
+                                imageVector = Icons.Outlined.Done,
+                                contentDescription = null,
+                                Modifier
+                                    .clip(CircleShape)
+                                    .clickable {}
+                                    .padding(top = 8.dp, start = 2.dp, bottom = 8.dp, end = 4.dp),
+                                tint = Color.White,
+                            )
+                        }
                     }
                 }
                 OutlinedTextField(
@@ -87,7 +150,7 @@ fun PlayersScreen(
                         .heightIn(200.dp)
                         .fillMaxWidth()
                         .padding(16.dp),
-                    value = players,
+                    value = uiState.players,
                     onValueChange = uiState.onPlayersChange,
                     label = { Text(text = stringResource(R.string.players)) },
                     shape = RoundedCornerShape(4)
@@ -97,8 +160,13 @@ fun PlayersScreen(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AmountPlayers(modifier: Modifier = Modifier, uiState: PlayersUiState) {
+    AnimatedVisibility(
+        visible = uiState.players.isNotBlank(),
+        enter = fadeIn(initialAlpha = 0.0f)
+    ){
     Row(
         modifier.padding(
             top = 10.dp,
@@ -106,48 +174,47 @@ fun AmountPlayers(modifier: Modifier = Modifier, uiState: PlayersUiState) {
             end = 16.dp
         )
     ) {
-        Text(
-            text = stringResource(R.string.players_registered),
-            fontWeight = FontWeight(700)
-        )
-        Text(
-            modifier = Modifier.padding(start = 8.dp),
-            text = uiState.amountPlayers
-        )
-    }
-    Column {
-        Text(
-            text = stringResource(id = R.string.names_duplicated),
-            fontWeight = FontWeight(700),
-            modifier = Modifier.padding(
-                top = 10.dp,
-                start = 16.dp,
-                end = 16.dp
-            )
-        )
-        DuplicateNames(duplicateNames = uiState.duplicateNames)
-    }
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-fun DuplicateNames(modifier: Modifier = Modifier, duplicateNames: List<Player>) {
-    FlowRow(modifier = modifier.padding(top = 6.dp, start = 16.dp)) {
-        duplicateNames.forEach { item ->
             Text(
-                text = item.name,
-                fontSize = 12.sp,
-                color = Color.Red
+                text = stringResource(R.string.players_registered),
+                fontWeight = FontWeight(700)
             )
+            Text(
+                modifier = Modifier.padding(start = 8.dp),
+                text = uiState.amountPlayers
+            )
+        }
+    }
+    AnimatedVisibility(
+        visible = uiState.duplicateNames.isNotEmpty(),
+        enter = fadeIn(initialAlpha = 0.0f)
+    ){
+        Column {
+            Text(
+                text = stringResource(id = R.string.names_duplicated),
+                fontWeight = FontWeight(700),
+                modifier = Modifier.padding(
+                    top = 10.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                )
+            )
+            FlowRow(modifier = modifier
+                .padding(top = 6.dp, start = 16.dp)
+                .clip(CircleShape)
+                .background(Color(0xFF8B0000))
+                .padding(4.dp)) {
+                uiState.duplicateNames.forEach { item ->
+                    Text(
+                        text = item.name,
+                        fontSize = 12.sp,
+                        color = Color.White
+                    )
+                }
+            }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun NamesDuplicatesPreview() {
-    DuplicateNames(duplicateNames = listOf(Player("alex"), Player("felipe"), Player("felipe")))
-}
 
 @Preview(showBackground = true)
 @Composable
@@ -165,7 +232,7 @@ fun HomeScreenPreview() {
     BoraProFutTheme {
         PlayersScreen(uiState = PlayersUiState(
             players = "Alex\nFelipe",
-        ), onSavePlayers = {}, onClearTheField = {})
+        ), onSavePlayers = {}, onClear = {})
     }
 }
 
@@ -175,6 +242,6 @@ fun HomeScreenWithIsSavingStatePreview() {
     BoraProFutTheme {
         PlayersScreen(uiState = PlayersUiState(
             players = "Alex\nFelipe", isSaving = true
-        ), onSavePlayers = {}, onClearTheField = {})
+        ), onSavePlayers = {}, onClear = {})
     }
 }

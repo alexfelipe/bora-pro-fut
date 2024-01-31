@@ -1,6 +1,6 @@
 package br.com.alexf.boraprofut.models
 
 data class Player(
-    val name: String,
+    var name: String,
     val level: Int = 0
 )
