@@ -16,14 +16,17 @@ fun NavGraphBuilder.playersScreen(
 ) {
     composable(playersRoute) {
         val viewModel = koinNavViewModel<PlayersViewModel>()
-        val uiState by viewModel.uiState
-            .collectAsState(initial = PlayersUiState())
+        val uiState by viewModel.uiState.collectAsState(initial = PlayersUiState())
         LaunchedEffect(Unit) {
             viewModel.isPlayersSaved.collectLatest {
                 onNavigateToDrawScreen()
             }
         }
-        PlayersScreen(uiState = uiState, onSavePlayers = { viewModel.savePlayers() })
+        PlayersScreen(
+            uiState = uiState,
+            onSavePlayers = { viewModel.savePlayers() },
+            onClearPlayers = {viewModel.clearPlayers()}
+        )
     }
 }
 
