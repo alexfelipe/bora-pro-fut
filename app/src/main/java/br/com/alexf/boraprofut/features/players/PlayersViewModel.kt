@@ -37,7 +37,7 @@ class PlayersViewModel(
                         it.copy(
                             players = players,
                             amountPlayers = isTherePlayer(players),
-                            duplicateNames = findAllDuplicates(players.parseToPlayersWithDuplicates()).toList()
+                            duplicateNames = formatAndReturnDuplicates(players.parseToPlayersWithDuplicates()).toList()
                         )
                     }
                 },
@@ -110,15 +110,14 @@ fun String.parseToPlayersWithDuplicates(): List<Player> {
         .toList()
 }
 
-private fun findAllDuplicates(array: List<Player>): Set<Player> {
-    val seen: MutableSet<Player> = mutableSetOf()
-    val listFormated = array.filter {
-        !seen.add(it)
-    }.toSet()
-    listFormated.lastOrNull()?.let {
-        it.name = it.name.replace(",", "")
-    }
-    return listFormated
+private fun formatAndReturnDuplicates(array: List<Player>): Set<Player> {
+   return array
+        .groupingBy { it.name }
+        .eachCount()
+        .filter { it.value > 1 }
+        .keys
+        .map { Player(name = it.replace(",", "")) }
+        .toSet()
 }
 
 private fun isTherePlayer(player: String): String {
