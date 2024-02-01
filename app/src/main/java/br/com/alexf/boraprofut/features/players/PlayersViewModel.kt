@@ -82,7 +82,7 @@ class PlayersViewModel(
         }
     }
 
-    fun clearField() {
+    fun clearPlayers() {
         _uiState.update {
             _uiState.value.copy(players = "", duplicateNames = listOf())
         }

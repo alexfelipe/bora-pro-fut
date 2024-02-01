@@ -25,7 +25,7 @@ fun NavGraphBuilder.playersScreen(
         PlayersScreen(
             uiState = uiState,
             onSavePlayers = { viewModel.savePlayers() },
-            onClearPlayers = {viewModel.clearField()}
+            onClearPlayers = {viewModel.clearPlayers()}
         )
     }
 }
