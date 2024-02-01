@@ -12,13 +12,18 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+private const val MINIMUM_PLAYERS = 3
 data class PlayersUiState(
     val players: String = "",
-    val amountPlayers: String = "",
-    val duplicateNames: List<Player> = listOf(),
+    val amountPlayers: Int? = null,
+    val duplicateNames: String = "",
     val onPlayersChange: (String) -> Unit = {},
     val isSaving: Boolean = false,
-)
+){
+    fun isShowSaveButton () = players.isNotBlank()
+            && amountPlayers != null && amountPlayers > 0
+            && amountPlayers > MINIMUM_PLAYERS
+}
 
 class PlayersViewModel(
     private val repository: PlayersRepository
@@ -37,7 +42,7 @@ class PlayersViewModel(
                         it.copy(
                             players = players,
                             amountPlayers = isTherePlayer(players),
-                            duplicateNames = formatAndReturnDuplicates(players.parseToPlayersWithDuplicates()).toList()
+                            duplicateNames = players.formatAndReturnDuplicates()
                         )
                     }
                 },
@@ -84,7 +89,7 @@ class PlayersViewModel(
 
     fun clearPlayers() {
         _uiState.update {
-            _uiState.value.copy(players = "", duplicateNames = listOf())
+            _uiState.value.copy(players = "", duplicateNames = "")
         }
     }
 
@@ -97,30 +102,15 @@ fun String.parseToUniquePlayers(): Set<Player> {
         .toSet()
 }
 
-private fun Set<Player>.parseToString(): String {
-    return map {
-        "${it.name}\n"
-    }.joinToString(separator = "")
+private fun String.formatAndReturnDuplicates(): String {
+   val names = this.trim().split("\n")
+   return names.filter { name ->
+       names.count {
+           name == it
+       } > 1
+   }.toSet().joinToString()
 }
 
-fun String.parseToPlayersWithDuplicates(): List<Player> {
-    return this.trim()
-        .split("\n")
-        .map { Player("${it}, ") }
-        .toList()
+private fun isTherePlayer(player: String): Int? {
+    return if (player.isNotBlank()) player.parseToUniquePlayers().size else null
 }
-
-private fun formatAndReturnDuplicates(array: List<Player>): Set<Player> {
-   return array
-        .groupingBy { it.name }
-        .eachCount()
-        .filter { it.value > 1 }
-        .keys
-        .map { Player(name = it.replace(",", "")) }
-        .toSet()
-}
-
-private fun isTherePlayer(player: String): String {
-    return if (player.isNotBlank()) player.parseToUniquePlayers().size.toString() else ""
-}
-
