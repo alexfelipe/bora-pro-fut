@@ -1,4 +1,4 @@
-package br.com.alexf.boraprofut.features.drawteams
+package br.com.alexf.boraprofut.features.drawTeams
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -3,7 +3,7 @@ package br.com.alexf.boraprofut.features.randomteams
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository
-import br.com.alexf.boraprofut.features.players.useCases.TeamDrawerUseCase
+import br.com.alexf.boraprofut.features.drawTeams.useCases.TeamDrawerUseCase
 import br.com.alexf.boraprofut.models.Team
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

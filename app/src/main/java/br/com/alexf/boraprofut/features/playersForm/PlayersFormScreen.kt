@@ -1,4 +1,4 @@
-package br.com.alexf.boraprofut.features.players
+package br.com.alexf.boraprofut.features.playersForm
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn

@@ -1,4 +1,4 @@
-package br.com.alexf.boraprofut.features.players
+package br.com.alexf.boraprofut.features.playersForm
 
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState

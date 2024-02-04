@@ -1,4 +1,4 @@
-package br.com.alexf.boraprofut.features.balancedteams
+package br.com.alexf.boraprofut.features.balancedTeams
 
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue

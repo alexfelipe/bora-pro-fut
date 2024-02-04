@@ -1,4 +1,4 @@
-package br.com.alexf.boraprofut.features.players
+package br.com.alexf.boraprofut.features.playersForm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,14 +13,15 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 private const val MINIMUM_PLAYERS = 3
+
 data class PlayersUiState(
     val players: String = "",
     val amountPlayers: Int? = null,
     val duplicateNames: String = "",
     val onPlayersChange: (String) -> Unit = {},
     val isSaving: Boolean = false,
-){
-    fun isShowSaveButton () = players.isNotBlank()
+) {
+    fun isShowSaveButton() = players.isNotBlank()
             && amountPlayers != null && amountPlayers > 0
             && amountPlayers > MINIMUM_PLAYERS
 }
@@ -38,13 +39,14 @@ class PlayersViewModel(
         _uiState.update { currentState ->
             currentState.copy(
                 onPlayersChange = { players ->
-                    _uiState.update {
-                        it.copy(
-                            players = players,
-                            amountPlayers = isTherePlayer(players),
-                            duplicateNames = players.formatAndReturnDuplicates()
-                        )
-                    }
+_uiState.update {
+    it.copy(
+        players = players,
+        amountPlayers = isTherePlayer(players),
+        duplicateNames = players.duplicateNames()
+            .joinToString()
+    )
+}
                 },
             )
         }
@@ -102,13 +104,16 @@ fun String.parseToUniquePlayers(): Set<Player> {
         .toSet()
 }
 
-private fun String.formatAndReturnDuplicates(): String {
-   val names = this.trim().split("\n")
-   return names.filter { name ->
-       names.count {
-           name == it
-       } > 1
-   }.toSet().joinToString()
+fun String.duplicateNames(): Set<String> {
+    return this.trim()
+        .split("\n")
+        .toMutableList()
+        .also { names ->
+            names.toSet()
+                .forEach {
+                    names.remove(it)
+                }
+        }.toSet()
 }
 
 private fun isTherePlayer(player: String): Int? {
