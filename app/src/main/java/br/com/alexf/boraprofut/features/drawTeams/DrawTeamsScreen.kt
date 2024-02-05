@@ -53,6 +53,16 @@ import br.com.alexf.boraprofut.R
 import br.com.alexf.boraprofut.models.Player
 import br.com.alexf.boraprofut.ui.components.SelectPlayerPerTeam
 import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
+import br.com.alexf.boraprofut.ui.theme.DecreasePlayerLevelContainerColor
+import br.com.alexf.boraprofut.ui.theme.DrawBalancedTeamsContainerPrimaryColor
+import br.com.alexf.boraprofut.ui.theme.DrawBalancedTeamsContainerSecondaryColor
+import br.com.alexf.boraprofut.ui.theme.DrawRandomTeamsContainerPrimaryColor
+import br.com.alexf.boraprofut.ui.theme.DrawRandomTeamsContainerSecondaryColor
+import br.com.alexf.boraprofut.ui.theme.EditPlayersButtonContainerPrimaryColor
+import br.com.alexf.boraprofut.ui.theme.EditPlayersButtonContainerSecondaryColor
+import br.com.alexf.boraprofut.ui.theme.IncreasePlayerLevelContainerColor
+import br.com.alexf.boraprofut.ui.theme.PlayersContainerPrimaryColor
+import br.com.alexf.boraprofut.ui.theme.PlayersContainerSecondaryColor
 import kotlin.random.Random
 
 private class DrawOption(
@@ -93,6 +103,8 @@ fun DrawTeamsScreen(
                 .align(Alignment.CenterHorizontally)
         )
         val options = remember {
+
+
             listOf(
                 DrawOption(
                     title = context.getString(R.string.random),
@@ -100,8 +112,8 @@ fun DrawTeamsScreen(
                     backgroundColor = Brush
                         .linearGradient(
                             colors = listOf(
-                                Color(0xFF673AB7),
-                                Color(0xFF223311)
+                                DrawRandomTeamsContainerPrimaryColor,
+                                DrawRandomTeamsContainerSecondaryColor
                             )
                         ),
                     action = onDrawRandomTeamsClick
@@ -112,8 +124,8 @@ fun DrawTeamsScreen(
                     backgroundColor = Brush
                         .linearGradient(
                             colors = listOf(
-                                Color(0xFF2196F3),
-                                Color(0xFFE91E63)
+                                DrawBalancedTeamsContainerPrimaryColor,
+                                DrawBalancedTeamsContainerSecondaryColor
                             )
                         ),
                     action = onDrawBalancedTeamsClick
@@ -201,8 +213,8 @@ fun DrawTeamsScreen(
                         .background(
                             Brush.linearGradient(
                                 listOf(
-                                    Color(0xFF3F51B5),
-                                    Color(0xFF651FFF),
+                                    PlayersContainerPrimaryColor,
+                                    PlayersContainerSecondaryColor,
                                     MaterialTheme.colorScheme.background
                                 ),
                             )
@@ -215,6 +227,7 @@ fun DrawTeamsScreen(
                         Modifier.padding(16.dp),
                         style = MaterialTheme.typography.titleLarge.copy(Color.White)
                     )
+
                     Row(
                         Modifier
                             .padding(16.dp)
@@ -225,8 +238,8 @@ fun DrawTeamsScreen(
                             .background(
                                 Brush.linearGradient(
                                     listOf(
-                                        Color(0xFFD500F9),
-                                        Color(0xFFD500F9),
+                                        EditPlayersButtonContainerPrimaryColor,
+                                        EditPlayersButtonContainerSecondaryColor,
                                     )
                                 )
                             )
@@ -266,6 +279,7 @@ fun DrawTeamsScreen(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
+
                                 Box(
                                     modifier = Modifier
                                         .clip(CircleShape)
@@ -278,7 +292,7 @@ fun DrawTeamsScreen(
                                             }
                                         )
                                         .background(
-                                            Color(0xFFFF1744)
+                                            DecreasePlayerLevelContainerColor
                                                 .copy(alpha = 0.8f)
                                         )
                                         .padding(4.dp)
@@ -298,6 +312,7 @@ fun DrawTeamsScreen(
                                         textAlign = TextAlign.Center
                                     )
                                 )
+
                                 Box(
                                     modifier = Modifier
                                         .clip(CircleShape)
@@ -311,7 +326,7 @@ fun DrawTeamsScreen(
                                             }
                                         )
                                         .background(
-                                            Color(0xFF00E676)
+                                            IncreasePlayerLevelContainerColor
                                                 .copy(alpha = 0.8f)
                                         )
                                         .padding(4.dp)
