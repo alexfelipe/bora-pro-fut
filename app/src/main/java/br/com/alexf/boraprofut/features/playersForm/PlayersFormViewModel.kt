@@ -39,14 +39,14 @@ class PlayersViewModel(
         _uiState.update { currentState ->
             currentState.copy(
                 onPlayersChange = { players ->
-_uiState.update {
-    it.copy(
-        players = players,
-        amountPlayers = isTherePlayer(players),
-        duplicateNames = players.duplicateNames()
-            .joinToString()
-    )
-}
+                    _uiState.update {
+                        it.copy(
+                            players = players,
+                            amountPlayers = isTherePlayer(players),
+                            duplicateNames = players.duplicateNames()
+                                .joinToString()
+                        )
+                    }
                 },
             )
         }
@@ -107,13 +107,10 @@ fun String.parseToUniquePlayers(): Set<Player> {
 fun String.duplicateNames(): Set<String> {
     return this.trim()
         .split("\n")
-        .toMutableList()
-        .also { names ->
-            names.toSet()
-                .forEach {
-                    names.remove(it)
-                }
-        }.toSet()
+        .groupingBy { it }
+        .eachCount()
+        .filter { it.value > 1 }
+        .keys
 }
 
 private fun isTherePlayer(player: String): Int? {
