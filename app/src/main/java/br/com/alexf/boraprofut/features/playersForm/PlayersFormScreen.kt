@@ -50,12 +50,12 @@ fun PlayersScreen(
     Column(
         modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .background(MaterialTheme.colorScheme.background)
     ) {
         Column(
             Modifier
                 .weight(1f)
-                .verticalScroll(rememberScrollState())
         ) {
             Text(
                 text = stringResource(id = R.string.register_of_players),
@@ -97,9 +97,9 @@ fun PlayersScreen(
                             .clip(RoundedCornerShape(8.dp))
                             .background(DuplicatesNamesContainerColor)
                             .padding(
-                            horizontal = 12.dp,
-                            vertical = 8.dp
-                        ),  color = Color.White, fontSize = 12.sp
+                                horizontal = 12.dp,
+                                vertical = 8.dp
+                            ), color = Color.White, fontSize = 12.sp
                     )
                 }
             }
