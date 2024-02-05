@@ -17,4 +17,13 @@
     <string name="drawn_teams">Times sorteados</string>
     <string name="team">Time %1$s</string>
     <string name="level">Nível %1$s</string>
+    <string name="teams_draw">Sorteio de times</string>
+    <string name="random">aleatório</string>
+    <string name="balanced">equilibrado</string>
+    <string name="icon_of_display_players_button">ícone do botão para mostrar jogadores</string>
+    <string name="hide_players">Esconder jogadores</string>
+    <string name="icon_of_hide_players_button">ícone do botão para esconder jogadores</string>
+    <string name="show_players">Mostrar jogadores</string>
+    <string name="players">Jogadores</string>
+    <string name="edit">Editar</string>
 </resources>

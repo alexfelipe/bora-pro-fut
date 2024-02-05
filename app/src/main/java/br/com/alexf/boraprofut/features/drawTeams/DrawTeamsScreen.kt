@@ -41,6 +41,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -70,6 +71,7 @@ fun DrawTeamsScreen(
     onDrawBalancedTeamsClick: () -> Unit,
     onEditPlayersClick: () -> Unit,
 ) {
+    val context = LocalContext.current
     val totalPlayers = uiState.players.size
     Column(
         modifier
@@ -78,7 +80,8 @@ fun DrawTeamsScreen(
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text = "Sorteio de times", Modifier.padding(16.dp),
+            text = stringResource(R.string.teams_draw),
+            Modifier.padding(16.dp),
             style = MaterialTheme.typography.titleLarge,
         )
         SelectPlayerPerTeam(
@@ -92,7 +95,7 @@ fun DrawTeamsScreen(
         val options = remember {
             listOf(
                 DrawOption(
-                    title = "aleatório",
+                    title = context.getString(R.string.random),
                     icon = Icons.Filled.People,
                     backgroundColor = Brush
                         .linearGradient(
@@ -104,7 +107,7 @@ fun DrawTeamsScreen(
                     action = onDrawRandomTeamsClick
                 ),
                 DrawOption(
-                    title = "equilibrado",
+                    title = context.getString(R.string.balanced),
                     icon = Icons.Filled.Balance,
                     backgroundColor = Brush
                         .linearGradient(
@@ -168,14 +171,14 @@ fun DrawTeamsScreen(
                 if (uiState.isShowPlayers) {
                     Triple(
                         Icons.Filled.KeyboardArrowDown,
-                        "ícone do botão para mostrar jogadores",
-                        "Esconder jogadores"
+                        context.getString(R.string.icon_of_display_players_button),
+                        context.getString(R.string.hide_players)
                     )
                 } else {
                     Triple(
                         Icons.Filled.KeyboardArrowRight,
-                        "ícone do botão para esconder jogadores",
-                        "Mostrar jogadores"
+                        context.getString(R.string.icon_of_hide_players_button),
+                        context.getString(R.string.show_players)
                     )
                 }
             }
@@ -184,7 +187,8 @@ fun DrawTeamsScreen(
                 contentDescription = contentDescription
             )
             Text(
-                text = "$buttonText ($totalPlayers)", style = LocalTextStyle.current.copy(
+                text = "$buttonText ($totalPlayers)",
+                style = LocalTextStyle.current.copy(
                     fontSize = 20.sp,
                 )
             )
@@ -207,7 +211,7 @@ fun DrawTeamsScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Jogadores",
+                        text = stringResource(R.string.players),
                         Modifier.padding(16.dp),
                         style = MaterialTheme.typography.titleLarge.copy(Color.White)
                     )
@@ -235,7 +239,7 @@ fun DrawTeamsScreen(
                             tint = Color.White
                         )
                         Text(
-                            text = "Editar",
+                            text = stringResource(R.string.edit),
                             style = LocalTextStyle.current.copy(color = Color.White)
                         )
                     }
