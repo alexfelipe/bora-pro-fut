@@ -190,7 +190,7 @@ fun PlayersScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun HomeScreenPreview() {
+private fun PlayersFormScreenPreview() {
     BoraProFutTheme {
         PlayersScreen(uiState = PlayersUiState(
             players = "Alex\nFelipe",
@@ -200,7 +200,7 @@ private fun HomeScreenPreview() {
 
 @Preview(showBackground = true)
 @Composable
-private fun HomeScreenWithIsSavingStatePreview() {
+private fun PlayersFormScreenWithIsSavingStatePreview() {
     BoraProFutTheme {
         PlayersScreen(uiState = PlayersUiState(
             players = "Alex\nFelipe", isSaving = true
