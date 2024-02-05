@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -67,8 +68,8 @@ fun SelectPlayerPerTeam(
             verticalAlignment = Alignment.CenterVertically
         ) {
             val iconModifier = Modifier
-                .fillMaxHeight()
-                .width(40.dp)
+                .clip(CircleShape)
+                .size(50.dp)
             Icon(
                 Icons.Filled.ArrowBack,
                 contentDescription = stringResource(R.string.decreases_players_amount_per_team),

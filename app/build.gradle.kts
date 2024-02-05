@@ -57,6 +57,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.datastore.preferences)
     testImplementation(libs.kluent.android)
     testImplementation(libs.kotlin.test.junit)
     implementation(libs.androidx.room.runtime)

@@ -52,10 +52,14 @@ class DrawTeamsViewModel(
                     }
                 },
                 onDecreasePlayersPerTeam = {
-                    repository.decreasePlayersPerTeam()
+                    viewModelScope.launch {
+                        repository.decreasePlayersPerTeam()
+                    }
                 },
                 onIncreasePlayersPerTeam = {
-                    repository.increasePlayersPerTeam()
+                    viewModelScope.launch {
+                        repository.increasePlayersPerTeam()
+                    }
                 },
                 onDecreasePlayerLevel = {
                     viewModelScope.launch {
