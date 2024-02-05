@@ -1,22 +1,21 @@
 package br.com.alexf.boraprofut.di
 
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import br.com.alexf.boraprofut.data.database.BoraProFutDatabase
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository
-import br.com.alexf.boraprofut.features.balancedteams.BalancedTeamViewModel
-import br.com.alexf.boraprofut.features.drawteams.DrawTeamsViewModel
-import br.com.alexf.boraprofut.features.players.PlayersViewModel
-import br.com.alexf.boraprofut.features.players.useCases.TeamDrawerUseCase
-import br.com.alexf.boraprofut.features.randomteams.RandomTeamsViewModel
-import br.com.alexf.boraprofut.features.randomteams.GameViewModel
+import br.com.alexf.boraprofut.features.balancedTeams.BalancedTeamViewModel
+import br.com.alexf.boraprofut.features.drawTeams.DrawTeamsViewModel
+import br.com.alexf.boraprofut.features.drawTeams.useCases.TeamDrawerUseCase
 import br.com.alexf.boraprofut.features.game.usecase.GameUseCase
+import br.com.alexf.boraprofut.features.playersForm.PlayersViewModel
+import br.com.alexf.boraprofut.features.randomteams.GameViewModel
+import br.com.alexf.boraprofut.features.randomteams.RandomTeamsViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
-import org.koin.dsl.single
-
-//TODO vamo trocar ideia de onde deixar esse código
 
 val appModule = module {
     viewModelOf(::PlayersViewModel)
@@ -39,5 +38,11 @@ val dataModule = module {
     }
     single {
         get<BoraProFutDatabase>().playerDao()
+    }
+    single {
+        PreferenceDataStoreFactory.create {
+            androidContext()
+                .preferencesDataStoreFile("user_preferences")
+        }
     }
 }

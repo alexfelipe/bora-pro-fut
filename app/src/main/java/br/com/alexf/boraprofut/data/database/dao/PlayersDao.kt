@@ -18,6 +18,6 @@ interface PlayersDao {
     suspend fun save(vararg entity: PlayerEntity)
 
     @Query("DELETE FROM PlayerEntity")
-    suspend fun deleleAllPlayers()
+    suspend fun deleteAllPlayers()
 
 }

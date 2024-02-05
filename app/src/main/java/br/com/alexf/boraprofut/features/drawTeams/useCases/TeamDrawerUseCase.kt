@@ -1,4 +1,4 @@
-package br.com.alexf.boraprofut.features.players.useCases
+package br.com.alexf.boraprofut.features.drawTeams.useCases
 
 import br.com.alexf.boraprofut.models.Player
 import kotlin.math.ceil

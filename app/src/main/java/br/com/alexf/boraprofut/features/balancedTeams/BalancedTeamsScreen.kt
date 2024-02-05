@@ -1,4 +1,4 @@
-package br.com.alexf.boraprofut.features.balancedteams
+package br.com.alexf.boraprofut.features.balancedTeams
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,7 +21,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -54,7 +53,7 @@ fun BalancedTeamsScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Times sorteados",
+                text = stringResource(R.string.drawn_teams),
                 Modifier
                     .weight(1f),
                 style = MaterialTheme.typography.titleLarge
@@ -86,15 +85,14 @@ fun BalancedTeamsScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Time ${index + 1}",
+                        text = stringResource(R.string.team, index + 1),
                         Modifier
                             .padding(16.dp),
                         style = MaterialTheme.typography.titleMedium
                     )
                     Text(
-                        text = "Nível ${team.level}",
-                        Modifier
-                            .padding(16.dp),
+                        text = stringResource(R.string.level, team.level),
+                        Modifier.padding(16.dp),
                         style = MaterialTheme.typography.titleMedium
                     )
                 }

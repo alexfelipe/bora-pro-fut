@@ -1,4 +1,4 @@
-package br.com.alexf.boraprofut.features.drawteams
+package br.com.alexf.boraprofut.features.drawTeams
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -52,10 +52,14 @@ class DrawTeamsViewModel(
                     }
                 },
                 onDecreasePlayersPerTeam = {
-                    repository.decreasePlayersPerTeam()
+                    viewModelScope.launch {
+                        repository.decreasePlayersPerTeam()
+                    }
                 },
                 onIncreasePlayersPerTeam = {
-                    repository.increasePlayersPerTeam()
+                    viewModelScope.launch {
+                        repository.increasePlayersPerTeam()
+                    }
                 },
                 onDecreasePlayerLevel = {
                     viewModelScope.launch {
