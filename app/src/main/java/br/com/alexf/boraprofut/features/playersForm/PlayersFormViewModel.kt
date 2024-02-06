@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository
 import br.com.alexf.boraprofut.models.Player
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -55,10 +56,9 @@ class PlayersFormViewModel(
             repository.players.collectLatest { players ->
                 _uiState.update { currentState ->
                     currentState.copy(
-                        players = players
-                            .joinToString("") {
-                                "${it.name}\n"
-                            })
+                        players = players.joinToString("") { "${it.name}\n" },
+                        amountPlayers = players.size
+                    )
                 }
             }
         }
@@ -92,6 +92,9 @@ class PlayersFormViewModel(
     fun clearPlayers() {
         _uiState.update {
             _uiState.value.copy(players = "", duplicateNames = "")
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllPlayers()
         }
     }
 
