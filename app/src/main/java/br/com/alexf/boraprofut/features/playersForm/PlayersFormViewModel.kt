@@ -26,7 +26,7 @@ data class PlayersUiState(
             && amountPlayers > MINIMUM_PLAYERS
 }
 
-class PlayersViewModel(
+class PlayersFormViewModel(
     private val repository: PlayersRepository
 ) : ViewModel() {
 

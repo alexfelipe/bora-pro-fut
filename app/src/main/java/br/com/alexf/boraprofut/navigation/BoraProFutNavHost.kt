@@ -9,9 +9,8 @@ import br.com.alexf.boraprofut.features.drawTeams.drawTeams
 import br.com.alexf.boraprofut.features.drawTeams.drawTeamsRoute
 import br.com.alexf.boraprofut.features.drawTeams.navigateToDrawTeams
 import br.com.alexf.boraprofut.features.game.navigation.gameScreen
-import br.com.alexf.boraprofut.features.game.navigation.navigateToGameScreen
 import br.com.alexf.boraprofut.features.playersForm.navigateToPlayersScreen
-import br.com.alexf.boraprofut.features.playersForm.playersScreen
+import br.com.alexf.boraprofut.features.playersForm.playersForm
 import br.com.alexf.boraprofut.features.randomteams.navigateToRandomTeams
 import br.com.alexf.boraprofut.features.randomteams.randomTeams
 
@@ -21,7 +20,7 @@ fun BoraProFutNavHost(navController: NavHostController) {
         navController = navController,
         startDestination = drawTeamsRoute
     ) {
-        playersScreen(onNavigateToDrawScreen = {
+        playersForm(onNavigateToDrawScreen = {
             navController.navigateToDrawTeams()
         })
         drawTeams(
@@ -36,11 +35,7 @@ fun BoraProFutNavHost(navController: NavHostController) {
             }
         )
         balancedTeams()
-        randomTeams(
-            onNavigateToGameScreen = {
-                navController.navigateToGameScreen()
-            }
-        )
+        randomTeams()
         gameScreen()
     }
 }

@@ -9,13 +9,13 @@ import androidx.navigation.compose.composable
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.navigation.koinNavViewModel
 
-const val playersRoute = "players"
+const val playersFormRoute = "playersForm"
 
-fun NavGraphBuilder.playersScreen(
+fun NavGraphBuilder.playersForm(
     onNavigateToDrawScreen: () -> Unit
 ) {
-    composable(playersRoute) {
-        val viewModel = koinNavViewModel<PlayersViewModel>()
+    composable(playersFormRoute) {
+        val viewModel = koinNavViewModel<PlayersFormViewModel>()
         val uiState by viewModel.uiState.collectAsState(initial = PlayersUiState())
         LaunchedEffect(Unit) {
             viewModel.isPlayersSaved.collectLatest {
@@ -31,5 +31,5 @@ fun NavGraphBuilder.playersScreen(
 }
 
 fun NavHostController.navigateToPlayersScreen() {
-    navigate(playersRoute)
+    navigate(playersFormRoute)
 }

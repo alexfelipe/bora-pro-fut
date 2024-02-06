@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.alexf.boraprofut.R
 import br.com.alexf.boraprofut.features.game.model.ReadyMadeGames
-import br.com.alexf.boraprofut.features.randomteams.ReadyMadeGamesUiState
 
 @Composable
 fun GameScreen(
