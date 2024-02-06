@@ -36,6 +36,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.alexf.boraprofut.R
 import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
+import br.com.alexf.boraprofut.ui.theme.ClearPlayersTextFieldContainerColor
+import br.com.alexf.boraprofut.ui.theme.DuplicatesNamesContainerColor
+import br.com.alexf.boraprofut.ui.theme.SavePlayersButtonContainerColor
 
 @Composable
 fun PlayersScreen(
@@ -47,12 +50,12 @@ fun PlayersScreen(
     Column(
         modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .background(MaterialTheme.colorScheme.background)
     ) {
         Column(
             Modifier
                 .weight(1f)
-                .verticalScroll(rememberScrollState())
         ) {
             Text(
                 text = stringResource(id = R.string.register_of_players),
@@ -88,14 +91,15 @@ fun PlayersScreen(
                         Modifier.padding(top = 10.dp),
                         fontWeight = FontWeight(700)
                     )
+
                     Text(
                         text = uiState.duplicateNames, Modifier
                             .clip(RoundedCornerShape(8.dp))
-                            .background(Color(0xFF8B0000))
+                            .background(DuplicatesNamesContainerColor)
                             .padding(
-                            horizontal = 12.dp,
-                            vertical = 8.dp
-                        ),  color = Color.White, fontSize = 12.sp
+                                horizontal = 12.dp,
+                                vertical = 8.dp
+                            ), color = Color.White, fontSize = 12.sp
                     )
                 }
             }
@@ -114,10 +118,11 @@ fun PlayersScreen(
                         modifier,
                         fadeIn(initialAlpha = 0.0f)
                     ) {
+
                         Row(
                             Modifier
                                 .clip(CircleShape)
-                                .background(Color(0xFF8B0000))
+                                .background(ClearPlayersTextFieldContainerColor)
                                 .padding(horizontal = 8.dp, vertical = 8.dp)
                                 .clickable { onClearPlayers() },
                             horizontalArrangement = Arrangement.Absolute.Center,
@@ -143,10 +148,11 @@ fun PlayersScreen(
                         modifier.weight(1f),
                         fadeIn(initialAlpha = 0.0f)
                     ) {
+
                         Row(
                             Modifier
                                 .clip(CircleShape)
-                                .background( Color(0xFF006400))
+                                .background(SavePlayersButtonContainerColor)
                                 .padding(horizontal = 8.dp, vertical = 8.dp)
                                 .clickable { onSavePlayers() },
                             horizontalArrangement = Arrangement.Absolute.Center,
@@ -184,7 +190,7 @@ fun PlayersScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun HomeScreenPreview() {
+private fun PlayersFormScreenPreview() {
     BoraProFutTheme {
         PlayersScreen(uiState = PlayersUiState(
             players = "Alex\nFelipe",
@@ -194,7 +200,7 @@ private fun HomeScreenPreview() {
 
 @Preview(showBackground = true)
 @Composable
-private fun HomeScreenWithIsSavingStatePreview() {
+private fun PlayersFormScreenWithIsSavingStatePreview() {
     BoraProFutTheme {
         PlayersScreen(uiState = PlayersUiState(
             players = "Alex\nFelipe", isSaving = true

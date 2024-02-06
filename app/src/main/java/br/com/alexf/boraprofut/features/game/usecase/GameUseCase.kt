@@ -1,10 +1,8 @@
 package br.com.alexf.boraprofut.features.game.usecase
 
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository
-import br.com.alexf.boraprofut.features.game.mock.teamList
 import br.com.alexf.boraprofut.features.game.model.ReadyMadeGames
 import br.com.alexf.boraprofut.features.game.model.TeamAtStandby
-import kotlinx.coroutines.flow.toList
 
 data class ResultGames(
     val readyMadeGamesList: List<ReadyMadeGames>,

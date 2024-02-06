@@ -21,10 +21,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Balance
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Remove
@@ -41,6 +41,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -52,6 +53,16 @@ import br.com.alexf.boraprofut.R
 import br.com.alexf.boraprofut.models.Player
 import br.com.alexf.boraprofut.ui.components.SelectPlayerPerTeam
 import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
+import br.com.alexf.boraprofut.ui.theme.DecreasePlayerLevelContainerColor
+import br.com.alexf.boraprofut.ui.theme.DrawBalancedTeamsContainerPrimaryColor
+import br.com.alexf.boraprofut.ui.theme.DrawBalancedTeamsContainerSecondaryColor
+import br.com.alexf.boraprofut.ui.theme.DrawRandomTeamsContainerPrimaryColor
+import br.com.alexf.boraprofut.ui.theme.DrawRandomTeamsContainerSecondaryColor
+import br.com.alexf.boraprofut.ui.theme.EditPlayersButtonContainerPrimaryColor
+import br.com.alexf.boraprofut.ui.theme.EditPlayersButtonContainerSecondaryColor
+import br.com.alexf.boraprofut.ui.theme.IncreasePlayerLevelContainerColor
+import br.com.alexf.boraprofut.ui.theme.PlayersContainerPrimaryColor
+import br.com.alexf.boraprofut.ui.theme.PlayersContainerSecondaryColor
 import kotlin.random.Random
 
 private class DrawOption(
@@ -70,6 +81,7 @@ fun DrawTeamsScreen(
     onDrawBalancedTeamsClick: () -> Unit,
     onEditPlayersClick: () -> Unit,
 ) {
+    val context = LocalContext.current
     val totalPlayers = uiState.players.size
     Column(
         modifier
@@ -78,7 +90,8 @@ fun DrawTeamsScreen(
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text = "Sorteio de times", Modifier.padding(16.dp),
+            text = stringResource(R.string.teams_draw),
+            Modifier.padding(16.dp),
             style = MaterialTheme.typography.titleLarge,
         )
         SelectPlayerPerTeam(
@@ -90,27 +103,29 @@ fun DrawTeamsScreen(
                 .align(Alignment.CenterHorizontally)
         )
         val options = remember {
+
+
             listOf(
                 DrawOption(
-                    title = "aleatório",
+                    title = context.getString(R.string.random),
                     icon = Icons.Filled.People,
                     backgroundColor = Brush
                         .linearGradient(
                             colors = listOf(
-                                Color(0xFF673AB7),
-                                Color(0xFF223311)
+                                DrawRandomTeamsContainerPrimaryColor,
+                                DrawRandomTeamsContainerSecondaryColor
                             )
                         ),
                     action = onDrawRandomTeamsClick
                 ),
                 DrawOption(
-                    title = "equilibrado",
+                    title = context.getString(R.string.balanced),
                     icon = Icons.Filled.Balance,
                     backgroundColor = Brush
                         .linearGradient(
                             colors = listOf(
-                                Color(0xFF2196F3),
-                                Color(0xFFE91E63)
+                                DrawBalancedTeamsContainerPrimaryColor,
+                                DrawBalancedTeamsContainerSecondaryColor
                             )
                         ),
                     action = onDrawBalancedTeamsClick
@@ -168,14 +183,14 @@ fun DrawTeamsScreen(
                 if (uiState.isShowPlayers) {
                     Triple(
                         Icons.Filled.KeyboardArrowDown,
-                        "ícone do botão para mostrar jogadores",
-                        "Esconder jogadores"
+                        context.getString(R.string.icon_of_display_players_button),
+                        context.getString(R.string.hide_players)
                     )
                 } else {
                     Triple(
-                        Icons.Filled.KeyboardArrowRight,
-                        "ícone do botão para esconder jogadores",
-                        "Mostrar jogadores"
+                        Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                        context.getString(R.string.icon_of_hide_players_button),
+                        context.getString(R.string.show_players)
                     )
                 }
             }
@@ -184,7 +199,8 @@ fun DrawTeamsScreen(
                 contentDescription = contentDescription
             )
             Text(
-                text = "$buttonText ($totalPlayers)", style = LocalTextStyle.current.copy(
+                text = "$buttonText ($totalPlayers)",
+                style = LocalTextStyle.current.copy(
                     fontSize = 20.sp,
                 )
             )
@@ -197,8 +213,8 @@ fun DrawTeamsScreen(
                         .background(
                             Brush.linearGradient(
                                 listOf(
-                                    Color(0xFF3F51B5),
-                                    Color(0xFF651FFF),
+                                    PlayersContainerPrimaryColor,
+                                    PlayersContainerSecondaryColor,
                                     MaterialTheme.colorScheme.background
                                 ),
                             )
@@ -207,10 +223,11 @@ fun DrawTeamsScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Jogadores",
+                        text = stringResource(R.string.players),
                         Modifier.padding(16.dp),
                         style = MaterialTheme.typography.titleLarge.copy(Color.White)
                     )
+
                     Row(
                         Modifier
                             .padding(16.dp)
@@ -221,8 +238,8 @@ fun DrawTeamsScreen(
                             .background(
                                 Brush.linearGradient(
                                     listOf(
-                                        Color(0xFFD500F9),
-                                        Color(0xFFD500F9),
+                                        EditPlayersButtonContainerPrimaryColor,
+                                        EditPlayersButtonContainerSecondaryColor,
                                     )
                                 )
                             )
@@ -235,7 +252,7 @@ fun DrawTeamsScreen(
                             tint = Color.White
                         )
                         Text(
-                            text = "Editar",
+                            text = stringResource(R.string.edit),
                             style = LocalTextStyle.current.copy(color = Color.White)
                         )
                     }
@@ -262,6 +279,7 @@ fun DrawTeamsScreen(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
+
                                 Box(
                                     modifier = Modifier
                                         .clip(CircleShape)
@@ -274,7 +292,7 @@ fun DrawTeamsScreen(
                                             }
                                         )
                                         .background(
-                                            Color(0xFFFF1744)
+                                            DecreasePlayerLevelContainerColor
                                                 .copy(alpha = 0.8f)
                                         )
                                         .padding(4.dp)
@@ -294,6 +312,7 @@ fun DrawTeamsScreen(
                                         textAlign = TextAlign.Center
                                     )
                                 )
+
                                 Box(
                                     modifier = Modifier
                                         .clip(CircleShape)
@@ -307,7 +326,7 @@ fun DrawTeamsScreen(
                                             }
                                         )
                                         .background(
-                                            Color(0xFF00E676)
+                                            IncreasePlayerLevelContainerColor
                                                 .copy(alpha = 0.8f)
                                         )
                                         .padding(4.dp)
