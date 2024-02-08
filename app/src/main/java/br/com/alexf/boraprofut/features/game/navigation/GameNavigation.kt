@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import br.com.alexf.boraprofut.features.game.GameScreen
-import br.com.alexf.boraprofut.features.randomteams.GameViewModel
+import br.com.alexf.boraprofut.features.game.GameViewModel
 import org.koin.androidx.compose.koinViewModel
 
 const val game = "game"

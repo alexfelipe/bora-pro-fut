@@ -1,4 +1,4 @@
-package br.com.alexf.boraprofut.features.randomteams
+package br.com.alexf.boraprofut.features.game
 
 import androidx.lifecycle.ViewModel
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository

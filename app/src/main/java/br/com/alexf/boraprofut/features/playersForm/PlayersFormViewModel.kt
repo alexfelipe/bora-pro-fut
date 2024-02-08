@@ -27,7 +27,7 @@ data class PlayersUiState(
             && amountPlayers > MINIMUM_PLAYERS
 }
 
-class PlayersViewModel(
+class PlayersFormViewModel(
     private val repository: PlayersRepository
 ) : ViewModel() {
 
@@ -93,7 +93,7 @@ class PlayersViewModel(
         _uiState.update {
             _uiState.value.copy(players = "", duplicateNames = "")
         }
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             repository.deleteAllPlayers()
         }
     }

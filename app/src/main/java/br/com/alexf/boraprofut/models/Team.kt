@@ -5,8 +5,7 @@ data class Team(
 ) {
 
     val level
-        get() =
-            players
-                .sumOf { it.level }
-                .div(players.size)
+        get() = players
+            .sumOf { it.level }
+            .div(players.size)
 }

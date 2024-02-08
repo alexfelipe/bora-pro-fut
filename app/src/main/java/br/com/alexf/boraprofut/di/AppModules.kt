@@ -9,8 +9,8 @@ import br.com.alexf.boraprofut.features.balancedTeams.BalancedTeamViewModel
 import br.com.alexf.boraprofut.features.drawTeams.DrawTeamsViewModel
 import br.com.alexf.boraprofut.features.drawTeams.useCases.TeamDrawerUseCase
 import br.com.alexf.boraprofut.features.game.usecase.GameUseCase
-import br.com.alexf.boraprofut.features.playersForm.PlayersViewModel
-import br.com.alexf.boraprofut.features.randomteams.GameViewModel
+import br.com.alexf.boraprofut.features.playersForm.PlayersFormViewModel
+import br.com.alexf.boraprofut.features.game.GameViewModel
 import br.com.alexf.boraprofut.features.randomteams.RandomTeamsViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModelOf
@@ -18,7 +18,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val appModule = module {
-    viewModelOf(::PlayersViewModel)
+    viewModelOf(::PlayersFormViewModel)
     viewModelOf(::DrawTeamsViewModel)
     viewModelOf(::RandomTeamsViewModel)
     viewModelOf(::BalancedTeamViewModel)

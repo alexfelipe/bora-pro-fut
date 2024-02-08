@@ -9,18 +9,12 @@ import org.koin.androidx.compose.koinViewModel
 
 const val randomTeams = "randomTeams"
 
-fun NavGraphBuilder.randomTeams(
-    onNavigateToGameScreen: () -> Unit
-){
+fun NavGraphBuilder.randomTeams() {
     composable(randomTeams) {
         val viewModel = koinViewModel<RandomTeamsViewModel>()
         val uiState by viewModel.uiState.collectAsState(initial = RandomTeamsUiState())
         RandomTeamsScreen(
             uiState,
-            onDrawGamesClick = {
-                viewModel.save()
-                onNavigateToGameScreen()
-            },
             onDrawTeamsAgain = {
                 viewModel.drawTeams()
             }

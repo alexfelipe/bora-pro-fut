@@ -198,7 +198,7 @@ private fun PlayersFormScreenPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun PlayersFormScreenWithIsSavingStatePreview() {
     BoraProFutTheme {

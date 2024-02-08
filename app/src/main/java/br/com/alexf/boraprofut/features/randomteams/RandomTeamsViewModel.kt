@@ -53,10 +53,6 @@ class RandomTeamsViewModel(
         }
     }
 
-    fun save() {
-        repository.saveGame(TODO("fazer o state oferece o dado"))
-    }
-
     fun drawTeams() {
         viewModelScope.launch {
             val players = repository.players.first().toSet()
