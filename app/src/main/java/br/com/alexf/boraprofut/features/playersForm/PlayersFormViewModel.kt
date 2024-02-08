@@ -93,7 +93,7 @@ class PlayersFormViewModel(
         _uiState.update {
             _uiState.value.copy(players = "", duplicateNames = "")
         }
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             repository.deleteAllPlayers()
         }
     }
