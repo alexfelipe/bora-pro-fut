@@ -11,14 +11,14 @@ room {
 }
 
 android {
-    namespace = "br.com.alexf.boraprofut"
+    namespace = "br.com.alexf.futzinmaroto"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "br.com.alexf.boraprofut"
+        applicationId = "br.com.alexf.futzinmaroto"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
+        versionCode = 3
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

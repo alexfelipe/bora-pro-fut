@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Bora pro Fut"
+rootProject.name = "Futzin Maroto"
 include(":app")
  

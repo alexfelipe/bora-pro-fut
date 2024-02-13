@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Bora pro Fut</string>
+    <string name="app_name">Futzin Maroto</string>
     <string name="players_list">Lista de jogadores</string>
     <string name="players_amount_per_team">Jogadores por time</string>
     <string name="decreases_players_amount_per_team">Diminui quantidade de time</string>
