@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.navigation.koinNavViewModel
@@ -25,11 +26,13 @@ fun NavGraphBuilder.playersForm(
         PlayersScreen(
             uiState = uiState,
             onSavePlayers = { viewModel.savePlayers() },
-            onClearPlayers = {viewModel.clearPlayers()}
+            onClearPlayers = { viewModel.clearPlayers() }
         )
     }
 }
 
-fun NavHostController.navigateToPlayersScreen() {
-    navigate(playersFormRoute)
+fun NavHostController.navigateToPlayersFormScreen(
+    navOptions: NavOptions? = null
+) {
+    navigate(playersFormRoute, navOptions)
 }

@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import org.koin.androidx.compose.koinViewModel
 
@@ -18,7 +19,7 @@ const val drawTeamsRoute = "drawTeams"
 fun NavGraphBuilder.drawTeams(
     onNavigateToRandomTeams: () -> Unit,
     onNavigateToBalancedTeams: () -> Unit,
-    onNavigateToPlayersScreen: () -> Unit
+    onNavigateToPlayersFormScreen: () -> Unit
 ) {
     composable(drawTeamsRoute) {
         val viewModel = koinViewModel<DrawTeamsViewModel>()
@@ -30,17 +31,18 @@ fun NavGraphBuilder.drawTeams(
                     CircularProgressIndicator(Modifier.align(Alignment.Center))
                 }
             }
+
             InitState.FINISHED -> {
-                if(uiState.players.isNotEmpty()){
+                if (uiState.players.isNotEmpty()) {
                     DrawTeamsScreen(
                         uiState,
                         onDrawRandomTeamsClick = onNavigateToRandomTeams,
                         onDrawBalancedTeamsClick = onNavigateToBalancedTeams,
-                        onEditPlayersClick = onNavigateToPlayersScreen
+                        onEditPlayersClick = onNavigateToPlayersFormScreen
                     )
                 } else {
                     LaunchedEffect(null) {
-                        onNavigateToPlayersScreen()
+                        onNavigateToPlayersFormScreen()
                     }
                 }
             }
@@ -48,6 +50,8 @@ fun NavGraphBuilder.drawTeams(
     }
 }
 
-fun NavHostController.navigateToDrawTeams() {
-    navigate(drawTeamsRoute)
+fun NavHostController.navigateToDrawTeams(
+    navOptions: NavOptions? = null
+) {
+    navigate(drawTeamsRoute, navOptions)
 }
