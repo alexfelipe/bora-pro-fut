@@ -32,6 +32,5 @@ A partir dele você poderá:
 ## Acessar o App
 
 Você pode baixar o App e testá-lo:
-https://github.com/alexfelipe/bora-pro-fut/assets/8989346/cbdca783-aaff-4d30-91c4-1df778acbfb4
 
 [![Logo Google Play](https://github.com/alexfelipe/bora-pro-fut/assets/8989346/cbdca783-aaff-4d30-91c4-1df778acbfb4)](https://play.google.com/store/apps/details?id=br.com.alexf.boraprofut)
