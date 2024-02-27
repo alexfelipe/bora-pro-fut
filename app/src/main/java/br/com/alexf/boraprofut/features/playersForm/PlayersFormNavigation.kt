@@ -23,7 +23,7 @@ fun NavGraphBuilder.playersForm(
                 onNavigateToDrawScreen()
             }
         }
-        PlayersScreen(
+        PlayersFormScreen(
             uiState = uiState,
             onSavePlayers = { viewModel.savePlayers() },
             onClearPlayers = { viewModel.clearPlayers() }

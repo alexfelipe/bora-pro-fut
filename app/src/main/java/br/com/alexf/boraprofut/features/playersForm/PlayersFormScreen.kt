@@ -41,11 +41,11 @@ import br.com.alexf.boraprofut.ui.theme.DuplicatesNamesContainerColor
 import br.com.alexf.boraprofut.ui.theme.SavePlayersButtonContainerColor
 
 @Composable
-fun PlayersScreen(
-    modifier: Modifier = Modifier,
+fun PlayersFormScreen(
     uiState: PlayersUiState,
     onSavePlayers: () -> Unit,
     onClearPlayers: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier
@@ -192,7 +192,7 @@ fun PlayersScreen(
 @Composable
 private fun PlayersFormScreenPreview() {
     BoraProFutTheme {
-        PlayersScreen(uiState = PlayersUiState(
+        PlayersFormScreen(uiState = PlayersUiState(
             players = "Alex\nFelipe",
         ), onSavePlayers = {}, onClearPlayers = {})
     }
@@ -202,7 +202,7 @@ private fun PlayersFormScreenPreview() {
 @Composable
 private fun PlayersFormScreenWithIsSavingStatePreview() {
     BoraProFutTheme {
-        PlayersScreen(uiState = PlayersUiState(
+        PlayersFormScreen(uiState = PlayersUiState(
             players = "Alex\nFelipe", isSaving = true
         ), onSavePlayers = {}, onClearPlayers = {})
     }
