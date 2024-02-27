@@ -5,7 +5,7 @@ import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldContainAll
 import org.junit.Test
 
-class PlayersFormTest {
+class DuplicatesNamesTest {
 
     @Test
     fun shouldReturnDuplicatesNamesGivenAString() {
