@@ -12,6 +12,8 @@ import br.com.alexf.boraprofut.features.game.usecase.GameUseCase
 import br.com.alexf.boraprofut.features.playersForm.PlayersFormViewModel
 import br.com.alexf.boraprofut.features.game.GameViewModel
 import br.com.alexf.boraprofut.features.randomteams.RandomTeamsViewModel
+import br.com.alexf.boraprofut.features.timer.TimerUserCase
+import br.com.alexf.boraprofut.features.timer.TimerViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.singleOf
@@ -23,8 +25,10 @@ val appModule = module {
     viewModelOf(::RandomTeamsViewModel)
     viewModelOf(::BalancedTeamViewModel)
     viewModelOf(::GameViewModel)
+    viewModelOf(::TimerViewModel)
     singleOf(::TeamDrawerUseCase)
     singleOf(::GameUseCase)
+    singleOf(::TimerUserCase)
 }
 
 val dataModule = module {
