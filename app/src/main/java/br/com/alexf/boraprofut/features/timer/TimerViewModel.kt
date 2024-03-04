@@ -28,7 +28,7 @@ class TimerViewModel(
                     _uiState.update {
                         it.copy(
                             currentTime = currentTime,
-                                isPause = timerUseCase.isPause
+                            isPause = timerUseCase.isPause
                         )
                     }
                 }
@@ -36,22 +36,22 @@ class TimerViewModel(
     }
 
     fun setMinutes(minutes: Long) {
-        timerUseCase.minutes = minutes
+        timerUseCase.timeMillis = minutes * 60000
         _uiState.update {
-            it.copy(currentTime = timerUseCase.minutes)
+            it.copy(currentTime = timerUseCase.timeMillis)
         }
         timerUseCase.startTimer()
     }
 
     fun resume() {
-        timerUseCase.resume()
+        timerUseCase.isPause = false
         _uiState.update {
             it.copy(isPause = false)
         }
     }
 
     fun pause() {
-        timerUseCase.pause()
+        timerUseCase.isPause = true
         _uiState.update {
             it.copy(isPause = true)
         }

@@ -13,39 +13,29 @@ class TimerUserCase {
 
     private var job: Job = Job()
     var isPause = true
-        private set
-    private var currentTime = 0L
-    var minutes = 0L
+    private var currentTimeMillis = 0L
+    var timeMillis = 0L
         set(value) {
-            field = value * 60000
-            currentTime = field
+            field = value
+            currentTimeMillis = field
         }
-    private var _timer = MutableStateFlow(currentTime)
+    private var _timer = MutableStateFlow(currentTimeMillis)
     var timer = _timer.asStateFlow()
 
     fun startTimer() {
         job = CoroutineScope(IO).launch {
             isPause = false
-            while (currentTime > 0) {
-                println("$isPause $currentTime")
+            while (currentTimeMillis > 0) {
                 delay(1000)
                 if (isPause) {
                     continue
                 }
-                currentTime -= 1000
+                currentTimeMillis -= 1000
                 _timer.update {
-                    currentTime
+                    currentTimeMillis
                 }
             }
         }
-    }
-
-    fun resume() {
-        isPause = false
-    }
-
-    fun pause() {
-        isPause = true
     }
 
 }

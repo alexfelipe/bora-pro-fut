@@ -58,6 +58,7 @@ android {
 }
 
 dependencies {
+    testImplementation(libs.kotlinx.coroutines.test)
     implementation(libs.androidx.datastore.preferences)
     testImplementation(libs.kluent.android)
     testImplementation(libs.kotlin.test.junit)
