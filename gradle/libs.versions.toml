@@ -1,5 +1,5 @@
 [versions]
-agp = "8.2.1"
+agp = "8.2.2"
 datastorePreferences = "1.0.0"
 kluentAndroid = "1.73"
 koin-android = "3.5.3"
@@ -10,13 +10,13 @@ androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 lifecycle-runtime-ktx = "2.7.0"
 activity-compose = "1.8.2"
-compose-bom = "2024.01.00"
-material-icons-extended = "1.6.0"
-navigation-compose = "2.7.6"
+compose-bom = "2024.02.01"
+material-icons-extended = "1.6.2"
+navigation-compose = "2.7.7"
 coilCompose = "2.5.0"
 room = "2.6.1"
 ksp = "1.9.22-1.0.17"
-material3 = "1.2.0-rc01"
+material3 = "1.2.0"
 
 [libraries]
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }

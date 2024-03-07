@@ -68,7 +68,7 @@ class PlayersRepository(
     }
 
     suspend fun decreasePlayerLevel(player: Player) {
-        if (player.level > 2) {
+        if (player.level > 0) {
             val entity = player.copy(level = player.level - 1)
                 .toPlayerEntity()
             dao.save(entity)
