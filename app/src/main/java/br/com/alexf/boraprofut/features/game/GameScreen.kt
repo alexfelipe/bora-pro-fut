@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import br.com.alexf.boraprofut.R
 import br.com.alexf.boraprofut.features.game.model.ReadyMadeGames
 import br.com.alexf.boraprofut.preview.UiModePreviews
+import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
 
 @Composable
 fun GameScreen(
@@ -108,25 +109,25 @@ fun TextGame(
     )
 }
 
-@Preview
 @UiModePreviews
 @Composable
 fun ReadyMadeGamesComponentPreview() {
     ReadyMadeGamesComponent(timeA = "Flamengo", timeB = "Vasco")
 }
 
-@Preview(showSystemUi = true)
 @UiModePreviews
 @Composable
 private fun GameScreenPreview() {
-    GameScreen(
-        uiState = ReadyMadeGamesUiState(
-            readyMadeGames = listOf(
-                ReadyMadeGames(
-                    "Flamengo",
-                    timeB = "Vasco"
+    BoraProFutTheme {
+        GameScreen(
+            uiState = ReadyMadeGamesUiState(
+                readyMadeGames = listOf(
+                    ReadyMadeGames(
+                        "Flamengo",
+                        timeB = "Vasco"
+                    )
                 )
             )
         )
-    )
+    }
 }
