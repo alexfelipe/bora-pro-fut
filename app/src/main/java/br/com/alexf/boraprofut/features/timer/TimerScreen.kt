@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.alexf.boraprofut.preview.UiModePreviews
 import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
 import java.util.concurrent.TimeUnit
 
@@ -85,7 +86,7 @@ fun TimerScreen(
 }
 
 
-@Preview
+@UiModePreviews
 @Composable
 private fun TimerScreenPreview() {
     BoraProFutTheme {

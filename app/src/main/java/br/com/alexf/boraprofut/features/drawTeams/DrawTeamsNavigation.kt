@@ -24,8 +24,6 @@ fun NavGraphBuilder.drawTeams(
         val viewModel = koinViewModel<DrawTeamsViewModel>()
         val uiState by viewModel
             .uiState.collectAsState(initial = DrawTeamsUiState())
-        Timber.tag("drawTeams").i("${uiState.initState}")
-        Timber.tag("drawTeams").i("${uiState.players}")
         when (uiState.initState) {
             InitState.LOADING -> {
                 Box(modifier = Modifier.fillMaxSize()) {
