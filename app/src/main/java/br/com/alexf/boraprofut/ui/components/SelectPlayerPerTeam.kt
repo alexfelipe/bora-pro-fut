@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.alexf.boraprofut.R
+import br.com.alexf.boraprofut.preview.UiModePreviews
 import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
 import br.com.alexf.boraprofut.ui.theme.SelectPlayerContainerPrimaryColor
 import br.com.alexf.boraprofut.ui.theme.SelectPlayerContainerSecondaryColor
@@ -101,6 +102,7 @@ fun SelectPlayerPerTeam(
 }
 
 @Preview(showBackground = true)
+@UiModePreviews
 @Composable
 fun SelectPlayerPerTeamPreview() {
     BoraProFutTheme {
