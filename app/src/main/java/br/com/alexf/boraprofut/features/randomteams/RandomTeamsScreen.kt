@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import br.com.alexf.boraprofut.R
 import br.com.alexf.boraprofut.models.Player
 import br.com.alexf.boraprofut.models.Team
+import br.com.alexf.boraprofut.preview.UiModePreviews
 import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
 import kotlin.random.Random
 
@@ -127,6 +128,7 @@ fun RandomTeamsScreen(
 }
 
 @Preview(showBackground = true)
+@UiModePreviews
 @Composable
 fun RandomTeamsScreenPreview() {
     BoraProFutTheme {
