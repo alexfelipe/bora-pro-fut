@@ -9,22 +9,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
-import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import org.koin.androidx.compose.koinViewModel
+import timber.log.Timber
 
 const val drawTeamsRoute = "drawTeams"
 
 fun NavGraphBuilder.drawTeams(
     onNavigateToRandomTeams: () -> Unit,
     onNavigateToBalancedTeams: () -> Unit,
-    onNavigateToPlayersFormScreen: () -> Unit
+    onNavigateToPlayersForm: () -> Unit
 ) {
     composable(drawTeamsRoute) {
         val viewModel = koinViewModel<DrawTeamsViewModel>()
         val uiState by viewModel
             .uiState.collectAsState(initial = DrawTeamsUiState())
+        Timber.tag("drawTeams").i("${uiState.initState}")
+        Timber.tag("drawTeams").i("${uiState.players}")
         when (uiState.initState) {
             InitState.LOADING -> {
                 Box(modifier = Modifier.fillMaxSize()) {
@@ -38,20 +39,14 @@ fun NavGraphBuilder.drawTeams(
                         uiState,
                         onDrawRandomTeamsClick = onNavigateToRandomTeams,
                         onDrawBalancedTeamsClick = onNavigateToBalancedTeams,
-                        onEditPlayersClick = onNavigateToPlayersFormScreen
+                        onEditPlayersClick = onNavigateToPlayersForm
                     )
                 } else {
                     LaunchedEffect(null) {
-                        onNavigateToPlayersFormScreen()
+                        onNavigateToPlayersForm()
                     }
                 }
             }
         }
     }
-}
-
-fun NavHostController.navigateToDrawTeams(
-    navOptions: NavOptions? = null
-) {
-    navigate(drawTeamsRoute, navOptions)
 }
