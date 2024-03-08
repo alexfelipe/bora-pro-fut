@@ -12,7 +12,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -43,17 +42,13 @@ fun TimerScreen(
                 fontSize = 128.sp
             )
         )
-
-        val times = remember {
-            listOf(7L, 10L, 15L)
-        }
         FlowRow(
             Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            times.forEach {
+            uiState.times.forEach {
                 Button(onClick = {
                     onMinuteTimeClick(it)
                 }) {

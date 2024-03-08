@@ -10,11 +10,12 @@ import kotlinx.coroutines.launch
 
 data class TimerUiState(
     val currentTime: Long = 0L,
-    val isPause: Boolean = true
+    val isPause: Boolean = true,
+    val times: List<Long> = listOf(7L, 10L, 15L)
 )
 
 class TimerViewModel(
-    private val timerUseCase: TimerUserCase
+    private val timerUseCase: TimerUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(TimerUiState())

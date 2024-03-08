@@ -1,6 +1,6 @@
 package br.com.alexf.boraprofut
 
-import br.com.alexf.boraprofut.features.timer.TimerUserCase
+import br.com.alexf.boraprofut.features.timer.TimerUseCase
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.take
@@ -14,14 +14,14 @@ class TimerUseCaseTest {
     @Test
     fun shouldCountDownTimerGivenATimeInMillis() = runTest {
         val times = 5
-        val timerUserCase = TimerUserCase()
-        timerUserCase.timeMillis = times * 1000L
-        timerUserCase.startTimer()
-        val firstTimeAfterStart = timerUserCase.timer
+        val timerUseCase = TimerUseCase()
+        timerUseCase.timeMillis = times * 1000L
+        timerUseCase.startTimer()
+        val firstTimeAfterStart = timerUseCase.timer
             .drop(1)
             .first()
         firstTimeAfterStart shouldBeEqualTo 4000L
-        val timesSeries = timerUserCase.timer.take(times)
+        val timesSeries = timerUseCase.timer.take(times)
             .toList()
         timesSeries shouldBeEqualTo listOf(
             4000L,
