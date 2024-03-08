@@ -1,6 +1,5 @@
 package br.com.alexf.boraprofut.features.drawTeams
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
@@ -10,10 +9,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
-import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import org.koin.androidx.compose.koinViewModel
+import timber.log.Timber
 
 const val drawTeamsRoute = "drawTeams"
 
@@ -26,14 +24,15 @@ fun NavGraphBuilder.drawTeams(
         val viewModel = koinViewModel<DrawTeamsViewModel>()
         val uiState by viewModel
             .uiState.collectAsState(initial = DrawTeamsUiState())
-        Log.i("drawTeams", "${uiState.initState}")
-        Log.i("drawTeams", "${uiState.players}")
+        Timber.tag("drawTeams").i("${uiState.initState}")
+        Timber.tag("drawTeams").i("${uiState.players}")
         when (uiState.initState) {
             InitState.LOADING -> {
                 Box(modifier = Modifier.fillMaxSize()) {
                     CircularProgressIndicator(Modifier.align(Alignment.Center))
                 }
             }
+
             InitState.FINISHED -> {
                 if (uiState.players.isNotEmpty()) {
                     DrawTeamsScreen(
