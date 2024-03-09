@@ -42,9 +42,9 @@ class RandomTeamsViewModelTest {
     }
 
     @Test
-    fun `testing drawTeams - testing the drawTeam - after click the team should to be shuffled again`() = runTest(UnconfinedTestDispatcher()) {
+    fun `testing drawTeams - after click the team should to be shuffled again`() = runTest(UnconfinedTestDispatcher()) {
         viewModel.drawTeams()
-        Assert.assertNotEquals("Deve ser diferente", viewModel.uiState.value, drawRandomMock)
+        Assert.assertNotEquals("The list needs to be different", viewModel.uiState.value, drawRandomMock)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
