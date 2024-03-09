@@ -1,24 +1,47 @@
 package br.com.alexf.boraprofut.features.timer
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Pause
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.alexf.boraprofut.preview.UiModePreviews
 import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
+import br.com.alexf.boraprofut.ui.theme.ContinueButtonColor
+import br.com.alexf.boraprofut.ui.theme.PauseButtonColor
 import java.util.concurrent.TimeUnit
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -31,23 +54,58 @@ fun TimerScreen(
 ) {
     val currentTime = uiState.currentTime
     val isPause = uiState.isPause
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center
+    ) {
         val seconds = TimeUnit.MILLISECONDS.toSeconds(currentTime).mod(60)
         val minutes = TimeUnit.MILLISECONDS.toMinutes(currentTime)
         val textSeconds = if (seconds >= 10) "$seconds" else "0$seconds"
         val textMinutes = if (minutes >= 10) "$minutes" else "0$minutes"
-        Text(
-            text = "$textMinutes:$textSeconds",
-            Modifier.align(Alignment.CenterHorizontally),
-            style = LocalTextStyle.current.copy(
-                fontSize = 128.sp
+        Box(
+            Modifier
+                .size(300.dp)
+                .clip(CircleShape)
+                .background(MaterialTheme.colorScheme.primary, shape = CircleShape)
+                .align(Alignment.CenterHorizontally)
+        ) {
+            val animatedProgression by animateFloatAsState(
+                targetValue = uiState.timerProgress,
+                label = "timer circular progress animation",
+                animationSpec = tween(durationMillis = 1000, easing = LinearEasing),
             )
-        )
+            val animatedCircularProgressColor by animateColorAsState(
+                when {
+                    uiState.timerProgress < 0.5f -> Color.Green.copy(0.5f)
+                    uiState.timerProgress < 0.9f -> Color.Yellow.copy(0.8f)
+                    else -> Color.Red
+                },
+                label = "color"
+            )
+            CircularProgressIndicator(
+                progress = {
+                    animatedProgression
+                },
+                Modifier
+                    .align(Alignment.Center)
+                    .size(300.dp),
+                color = animatedCircularProgressColor,
+                strokeWidth = 10.dp,
+            )
+            Text(
+                text = "$textMinutes:$textSeconds",
+                Modifier.align(Alignment.Center),
+                style = LocalTextStyle.current.copy(
+                    fontSize = 100.sp,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+            )
+        }
         FlowRow(
             Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             uiState.times.forEach {
                 Button(onClick = {
@@ -59,25 +117,51 @@ fun TimerScreen(
         }
 
         AnimatedVisibility(currentTime > 0L) {
-            when (isPause) {
-                true -> {
-                    Button(
-                        onClick = onResumeClick,
-                        Modifier
-                            .padding(16.dp)
-                            .fillMaxWidth()
-                    ) {
-                        Text("Continuar")
+            Box(modifier = Modifier.fillMaxWidth()) {
+                when (isPause) {
+                    true -> {
+                        Button(
+                            onClick = onResumeClick,
+                            Modifier
+                                .padding(16.dp)
+                                .height(60.dp)
+                                .align(Alignment.Center),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = ContinueButtonColor
+                            )
+                        ) {
+                            Icon(Icons.Filled.PlayArrow, contentDescription = "ícone para dar play")
+                            Spacer(modifier = Modifier.size(8.dp))
+                            Text(
+                                "Continuar",
+                                style = LocalTextStyle.current.copy(
+                                    fontSize = 20.sp
+                                )
+                            )
+                        }
                     }
-                }
-                false -> {
-                    Button(
-                        onClick = onPauseClick,
-                        Modifier
-                            .padding(16.dp)
-                            .fillMaxWidth()
-                    ) {
-                        Text("Parar")
+
+                    false -> {
+
+                        Button(
+                            onClick = onPauseClick,
+                            Modifier
+                                .padding(16.dp)
+                                .height(60.dp)
+                                .align(Alignment.Center),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = PauseButtonColor
+                            )
+                        ) {
+                            Icon(Icons.Filled.Pause, contentDescription = "ícone para pausar")
+                            Spacer(modifier = Modifier.size(8.dp))
+                            Text(
+                                "Parar",
+                                style = LocalTextStyle.current.copy(
+                                    fontSize = 20.sp,
+                                )
+                            )
+                        }
                     }
                 }
             }
@@ -90,11 +174,118 @@ fun TimerScreen(
 @Composable
 private fun TimerScreenPreview() {
     BoraProFutTheme {
-        TimerScreen(
-            uiState = TimerUiState(currentTime = 0L),
-            onMinuteTimeClick = {},
-            onPauseClick = {},
-            onResumeClick = {}
-        )
+        Surface {
+            TimerScreen(
+                uiState = TimerUiState(currentTime = 0L),
+                onMinuteTimeClick = {},
+                onPauseClick = {},
+                onResumeClick = {}
+            )
+        }
+    }
+}
+
+@Preview(name = "timer with time")
+@Composable
+private fun TimerScreen1Preview() {
+    BoraProFutTheme {
+        Surface {
+            TimerScreen(
+                uiState = TimerUiState(
+                    currentTime = 1000L
+                ),
+                onMinuteTimeClick = {},
+                onPauseClick = {},
+                onResumeClick = {})
+        }
+    }
+}
+
+@Preview(name = "timer in resume state")
+@Composable
+private fun TimerScreen2Preview() {
+    BoraProFutTheme {
+        Surface {
+            TimerScreen(
+                uiState = TimerUiState(
+                    currentTime = 1000L,
+                    isPause = false
+                ),
+                onMinuteTimeClick = {},
+                onPauseClick = {},
+                onResumeClick = {})
+        }
+    }
+}
+
+@Preview(name = "timer in pause state")
+@Composable
+private fun TimerScreen3Preview() {
+    BoraProFutTheme {
+        Surface {
+            TimerScreen(
+                uiState = TimerUiState(
+                    currentTime = 1000L,
+                    isPause = true
+                ),
+                onMinuteTimeClick = {},
+                onPauseClick = {},
+                onResumeClick = {})
+        }
+    }
+}
+
+@Preview(name = "timer with progress below than 50%")
+@Composable
+private fun TimerScreen4Preview() {
+    BoraProFutTheme {
+        Surface {
+            TimerScreen(
+                uiState = TimerUiState(
+                    currentTime = 1000L,
+                    isPause = true,
+                    timerProgress = 0.49f
+                ),
+                onMinuteTimeClick = {},
+                onPauseClick = {},
+                onResumeClick = {})
+        }
+    }
+}
+
+@Preview(name = "timer with progress below than 89%")
+@Composable
+private fun TimerScreen5Preview() {
+    BoraProFutTheme {
+        Surface {
+            TimerScreen(
+                uiState = TimerUiState(
+                    currentTime = 1000L,
+                    isPause = true,
+                    timerProgress = 0.74f
+                ),
+                onMinuteTimeClick = {},
+                onPauseClick = {},
+                onResumeClick = {})
+        }
+    }
+}
+
+
+@Preview(name = "timer with progress in 90%")
+@Composable
+private fun TimerScreen6Preview() {
+    BoraProFutTheme {
+        Surface {
+            TimerScreen(
+                uiState = TimerUiState(
+                    currentTime = 1000L,
+                    isPause = true,
+                    timerProgress = 0.9f
+                ),
+                onMinuteTimeClick = {},
+                onPauseClick = {},
+                onResumeClick = {})
+        }
     }
 }
