@@ -17,6 +17,8 @@ coilCompose = "2.5.0"
 room = "2.6.1"
 ksp = "1.9.22-1.0.17"
 material3 = "1.2.0"
+io-mockk = "1.13.10"
+couroutines-test = "1.7.3"
 
 [libraries]
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
@@ -45,10 +47,20 @@ ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview
 ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3"}
+io-mockk = { module = "io.mockk:mockk", version.ref = "io-mockk" }
+org-jetbrains-kotlinx = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "couroutines-test" }
+
+[bundles]
+test-unit = [
+    "kotlin-test-junit",
+    "io-mockk",
+    "junit",
+    "org-jetbrains-kotlinx"
+]
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-ksp = {id = "com.google.devtools.ksp", version.ref = "ksp"}
-room = {id = "androidx.room", version.ref = "room" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+room = { id = "androidx.room", version.ref = "room" }
 

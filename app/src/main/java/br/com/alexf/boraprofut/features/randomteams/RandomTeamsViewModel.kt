@@ -30,24 +30,15 @@ class RandomTeamsViewModel(
     init {
         viewModelScope.launch {
             combine(
-                repository.players
-                    .map {
-                         it.toSet()
-                    },
+                repository.players.map { it.toSet() },
                 repository.playersPerTeam
             ) { players, playersPerTeam ->
                 Pair(useCase.drawRandomTeams(players, playersPerTeam), playersPerTeam)
             }.collectLatest {
-                val drawnTeams = it.first.map { players ->
-                    Team(players)
-                }
+                val drawnTeams = it.first.map { players -> Team(players) }
                 val playersPerTeam = it.second
                 _uiState.update { currentState ->
-                    currentState
-                        .copy(
-                            teams = drawnTeams,
-                            playersPerTeam = playersPerTeam
-                        )
+                    currentState.copy(teams = drawnTeams, playersPerTeam = playersPerTeam)
                 }
             }
         }
@@ -58,14 +49,7 @@ class RandomTeamsViewModel(
             val players = repository.players.first().toSet()
             val playersPerTeam = uiState.value.playersPerTeam
             _uiState.update { state ->
-                state.copy(
-                    teams = useCase.drawRandomTeams(
-                        players,
-                        playersPerTeam
-                    ).map {
-                        Team(it)
-                    }
-                )
+                state.copy(teams = useCase.drawRandomTeams(players, playersPerTeam).map { Team(it) })
             }
         }
     }

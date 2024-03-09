@@ -60,7 +60,7 @@ android {
 dependencies {
     implementation(libs.androidx.datastore.preferences)
     testImplementation(libs.kluent.android)
-    testImplementation(libs.kotlin.test.junit)
+    testImplementation(libs.bundles.test.unit)
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
@@ -78,7 +78,6 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
     implementation(libs.io.coil.kt.coil.compose)
-    testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))
