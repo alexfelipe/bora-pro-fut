@@ -40,10 +40,14 @@ class TimerViewModel(
 
     fun setMinutes(minutes: Long) {
         timerUseCase.timeMillis = minutes * 60000
-        _uiState.update {
-            it.copy(currentTime = timerUseCase.timeMillis)
-        }
+        timerUseCase.isPause = false
         timerUseCase.startTimer()
+        _uiState.update {
+            it.copy(
+                currentTime = timerUseCase.timeMillis,
+                isPause = timerUseCase.isPause
+            )
+        }
     }
 
     fun resume() {

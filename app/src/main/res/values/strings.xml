@@ -26,4 +26,6 @@
     <string name="show_players">Mostrar jogadores</string>
     <string name="players">Jogadores</string>
     <string name="edit">Editar</string>
+    <string name="pause">Pausar</string>
+    <string name="resume">Continuar</string>
 </resources>

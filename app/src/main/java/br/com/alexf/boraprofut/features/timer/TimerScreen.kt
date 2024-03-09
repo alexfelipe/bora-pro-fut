@@ -35,9 +35,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.alexf.boraprofut.R
 import br.com.alexf.boraprofut.preview.UiModePreviews
 import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
 import br.com.alexf.boraprofut.ui.theme.ContinueButtonColor
@@ -101,21 +103,27 @@ fun TimerScreen(
                 )
             )
         }
-        FlowRow(
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            uiState.times.forEach {
-                Button(onClick = {
-                    onMinuteTimeClick(it)
-                }) {
-                    Text(text = "$it min")
+        Spacer(modifier = Modifier.size(16.dp))
+        AnimatedVisibility(visible = uiState.isPause) {
+            FlowRow(
+                Modifier
+                    .padding(vertical = 16.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                uiState.times.forEach {
+                    Button(onClick = {
+                        onMinuteTimeClick(it)
+                    }, Modifier.height(60.dp)) {
+                        Text(
+                            text = "$it min", style = LocalTextStyle.current.copy(
+                                fontSize = 20.sp
+                            )
+                        )
+                    }
                 }
             }
         }
-
         AnimatedVisibility(currentTime > 0L) {
             Box(modifier = Modifier.fillMaxWidth()) {
                 when (isPause) {
@@ -133,7 +141,7 @@ fun TimerScreen(
                             Icon(Icons.Filled.PlayArrow, contentDescription = "ícone para dar play")
                             Spacer(modifier = Modifier.size(8.dp))
                             Text(
-                                "Continuar",
+                                stringResource(R.string.resume),
                                 style = LocalTextStyle.current.copy(
                                     fontSize = 20.sp
                                 )
@@ -156,7 +164,7 @@ fun TimerScreen(
                             Icon(Icons.Filled.Pause, contentDescription = "ícone para pausar")
                             Spacer(modifier = Modifier.size(8.dp))
                             Text(
-                                "Parar",
+                                stringResource(R.string.pause),
                                 style = LocalTextStyle.current.copy(
                                     fontSize = 20.sp,
                                 )
