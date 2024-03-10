@@ -107,14 +107,19 @@ fun TimerScreen(
         AnimatedVisibility(visible = uiState.isPause) {
             FlowRow(
                 Modifier
-                    .padding(vertical = 16.dp)
+                    .padding(16.dp)
                     .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 uiState.times.forEach {
-                    Button(onClick = {
-                        onMinuteTimeClick(it)
-                    }, Modifier.height(60.dp)) {
+                    Button(
+                        onClick = {
+                            onMinuteTimeClick(it)
+                        },
+                        Modifier
+                            .height(60.dp)
+                    ) {
                         Text(
                             text = "$it min", style = LocalTextStyle.current.copy(
                                 fontSize = 20.sp

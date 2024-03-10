@@ -8,10 +8,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import kotlin.properties.Delegates
 
-class TimerUseCase {
+class TimerCountDown {
 
     private var job: Job = Job()
     var isPause by Delegates.observable(true) { _, old, newValue ->
@@ -19,37 +18,38 @@ class TimerUseCase {
             startTimer()
         }
     }
-    private var currentTimeMillis = 0L
+    private var remainingTimeMillis = 0L
     var timeMillis = 0L
         set(value) {
             field = value
-            currentTimeMillis = field
+            remainingTimeMillis = field
         }
-    private var _timer = MutableStateFlow(currentTimeMillis)
+    private var _timer = MutableStateFlow(remainingTimeMillis)
     var timer = _timer.asStateFlow()
+    var tickDelay: Long = 500L
 
     fun startTimer() {
         job.cancel()
         job = CoroutineScope(IO).launch {
             isPause = false
-            while (currentTimeMillis > 0) {
-                delay(1000)
+            while (remainingTimeMillis > 0) {
+                val currentTimeMillis = System.currentTimeMillis()
+                delay(tickDelay)
                 if (isPause) {
                     break
                 }
-                currentTimeMillis -= 1000
+                remainingTimeMillis -= (System.currentTimeMillis() - currentTimeMillis)
                 _timer.update {
-                    currentTimeMillis
+                    remainingTimeMillis
                 }
             }
+            isPause = true
         }
     }
 
     fun progress(): Float =
-        if (currentTimeMillis > 0) {
-            ((timeMillis - currentTimeMillis) / timeMillis.toFloat()).also {
-                Timber.tag("TimerUseCase").i("$currentTimeMillis - ${(timeMillis - currentTimeMillis)} -> $it")
-            }
+        if (remainingTimeMillis > 0) {
+            ((timeMillis - remainingTimeMillis) / timeMillis.toFloat())
         } else 0f
 
 }
