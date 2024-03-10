@@ -28,3 +28,6 @@ val IncreasePlayerLevelContainerColor = Color(0xFF00E676)
 val DuplicatesNamesContainerColor = Color(0xFF8B0000)
 val ClearPlayersTextFieldContainerColor = Color(0xFF8B0000)
 val SavePlayersButtonContainerColor = Color(0xFF006400)
+
+val PauseButtonColor = Color(0xFFE53935)
+val ContinueButtonColor = Color(0xFF008866)

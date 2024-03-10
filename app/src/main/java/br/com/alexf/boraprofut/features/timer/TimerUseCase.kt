@@ -8,13 +8,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import kotlin.properties.Delegates
 
 class TimerUseCase {
 
     private var job: Job = Job()
     var isPause by Delegates.observable(true) { _, old, newValue ->
-        if(old != newValue && !newValue){
+        if (old != newValue && !newValue) {
             startTimer()
         }
     }
@@ -43,5 +44,12 @@ class TimerUseCase {
             }
         }
     }
+
+    fun progress(): Float =
+        if (currentTimeMillis > 0) {
+            ((timeMillis - currentTimeMillis) / timeMillis.toFloat()).also {
+                Timber.tag("TimerUseCase").i("$currentTimeMillis - ${(timeMillis - currentTimeMillis)} -> $it")
+            }
+        } else 0f
 
 }

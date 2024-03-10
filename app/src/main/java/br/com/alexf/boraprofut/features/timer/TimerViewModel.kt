@@ -11,7 +11,8 @@ import kotlinx.coroutines.launch
 data class TimerUiState(
     val currentTime: Long = 0L,
     val isPause: Boolean = true,
-    val times: List<Long> = listOf(7L, 10L, 15L)
+    val times: List<Long> = listOf(7L, 10L, 15L),
+    val timerProgress: Float = 0f
 )
 
 class TimerViewModel(
@@ -29,7 +30,8 @@ class TimerViewModel(
                     _uiState.update {
                         it.copy(
                             currentTime = currentTime,
-                            isPause = timerUseCase.isPause
+                            isPause = timerUseCase.isPause,
+                            timerProgress = timerUseCase.progress()
                         )
                     }
                 }
@@ -38,10 +40,14 @@ class TimerViewModel(
 
     fun setMinutes(minutes: Long) {
         timerUseCase.timeMillis = minutes * 60000
-        _uiState.update {
-            it.copy(currentTime = timerUseCase.timeMillis)
-        }
+        timerUseCase.isPause = false
         timerUseCase.startTimer()
+        _uiState.update {
+            it.copy(
+                currentTime = timerUseCase.timeMillis,
+                isPause = timerUseCase.isPause
+            )
+        }
     }
 
     fun resume() {
