@@ -1,38 +1,49 @@
 package br.com.alexf.boraprofut.features.randomteams
 
+import br.com.alexf.boraprofut.MainDispatcherRule
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository
 import br.com.alexf.boraprofut.features.drawTeams.useCases.TeamDrawerUseCase
 import br.com.alexf.boraprofut.models.Player
+import br.com.alexf.boraprofut.models.Team
 import io.mockk.every
 import io.mockk.mockk
+import junit.framework.Assert
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.Assert
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 class RandomTeamsViewModelTest {
-    val listPlayer = listOf(
-        Player("teste1", 0),
-        Player("teste2", 1),
-        Player("teste3", 3),
-    )
+
     val repository: PlayersRepository = mockk()
     val useCase: TeamDrawerUseCase = mockk()
-    val drawRandomMock = listOf(setOf(
-        Player("teste1", 0),
-        Player("teste2", 1),
-        Player("teste3", 3),
-    ))
-    private lateinit var viewModel: RandomTeamsViewModel
-    private var playerMock = flow { emit(listPlayer) }
 
-    private var playersPerTeamMock: Flow<Int> = flow {
+    private lateinit var viewModel: RandomTeamsViewModel
+
+    val listPlayer = listOf(
+        Player("teste1", 1),
+        Player("teste2", 2),
+        Player("teste3", 3),
+    )
+
+    private var repositoryPlayersMock = flow { emit(listPlayer) }
+
+
+    val userCaseDrawRandomTeamsMock = listOf(
+        setOf(
+            Player("teste1", 1),
+            Player("teste2", 2),
+            Player("teste3", 3),
+        )
+    )
+
+
+    private var repositoryPlayersPerTeamMock: Flow<Int> = flow {
         emit(5)
     }
 
@@ -42,29 +53,62 @@ class RandomTeamsViewModelTest {
     }
 
     @Test
-    fun `testing drawTeams - after click the team should to be shuffled again`() = runTest(UnconfinedTestDispatcher()) {
-        viewModel.drawTeams()
-        Assert.assertNotEquals("The list needs to be different", viewModel.uiState.value, drawRandomMock)
-    }
+    fun `testing drawTeams - after click the team should to be shuffled again`() {
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    private fun prepareScenario() {
-
-        every {
-            repository.players
-        } returns playerMock
-
-        every {
-            repository.playersPerTeam
-        } returns playersPerTeamMock
+        val listAfterClick = listOf(
+            setOf(
+                Player("teste2", 2),
+                Player("teste1", 1),
+                Player("teste3", 3),
+            )
+        )
 
         every {
             useCase.drawRandomTeams(any(), any())
-        } returns drawRandomMock
+        } returns listAfterClick
 
-        val testDispatcher = UnconfinedTestDispatcher()
+        viewModel.drawTeams()
 
+        val stateOfViewModel: List<Team> = viewModel.uiState.value.teams
+        val expect: List<Team> = listAfterClick.map { Team(it) }
+
+        val stepOne = expect.first().players.size == stateOfViewModel.first().players.size && expect.first().players.toSet() == stateOfViewModel.first().players.toSet()
+
+        org.junit.Assert.assertTrue(stepOne)
+
+        var isEquals = false
+
+        for (i in expect.first().players.indices) {
+            val set1 = expect.first().players.toList()[i]
+            val set2 = stateOfViewModel.first().players.toList()[i]
+            if (set1 != set2) {
+                isEquals = true
+                println("As listas não têm os mesmos elementos na mesma ordem.")
+                return
+            }
+        }
+        org.junit.Assert.assertTrue(isEquals)
+    }
+
+
+    private fun prepareScenario() {
+
+        val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
         Dispatchers.setMain(testDispatcher)
+
+        every {
+            repository.players
+        } returns repositoryPlayersMock
+
+        every {
+            repository.playersPerTeam
+        } returns repositoryPlayersPerTeamMock
+
+        every {
+            useCase.drawRandomTeams(any(), any())
+        } returns userCaseDrawRandomTeamsMock
+
+
 
         viewModel = RandomTeamsViewModel(repository, useCase)
     }

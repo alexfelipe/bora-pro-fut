@@ -1,5 +1,6 @@
 package br.com.alexf.boraprofut.features.randomteams
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository
@@ -51,6 +52,7 @@ class RandomTeamsViewModel(
             _uiState.update { state ->
                 state.copy(teams = useCase.drawRandomTeams(players, playersPerTeam).map { Team(it) })
             }
+            Log.d("TAG", "drawTeams: ${_uiState}")
         }
     }
 

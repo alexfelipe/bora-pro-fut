@@ -23,3 +23,17 @@ Zapp/src/main/java/br/com/alexf/boraprofut/features/drawTeams/useCases/TeamDrawe
 Wapp/src/main/java/br/com/alexf/boraprofut/features/randomteams/RandomTeamsNavigation.kt,6\5\65f2e609a2aca5fedce86db300fdd866fcc577ff
 ƒ
 Sapp/src/main/java/br/com/alexf/boraprofut/features/randomteams/RandomTeamsScreen.kt,d\a\da5977e3d8e2f6af2f59d120ebc5530813becb6f
+†
+Vapp/src/main/java/br/com/alexf/boraprofut/features/playersForm/PlayersFormViewModel.kt,6\9\69838007c9cb15fb4367ac9d5468606b94cdfe45
+Š
+Zapp/src/test/java/br/com/alexf/boraprofut/features/playersForm/PlayersFormViewModelTest.kt,c\7\c71a96f0c5c9a631b87a10552871dd97d8128494
+o
+?app/src/test/java/br/com/alexf/boraprofut/MainDispatcherRule.kt,4\5\45145a13b1fa9e451157044c0de5072964d152e0
+r
+Bapp/src/test/java/br/com/alexf/boraprofut/TeamDrawerUseCaseTest.kt,d\b\db98150e757f1516fba6df470969981e5e7c27ff
+h
+8app/src/main/java/br/com/alexf/boraprofut/models/Team.kt,b\3\b36ee24f2a0d74cc242e085b0e0a576bcd24cc49
+‡
+Wapp/src/main/java/br/com/alexf/boraprofut/features/balancedTeams/BalancedTeamsScreen.kt,1\8\18879763700311af7a9611f806bb8f28287d4136
+j
+:app/src/main/java/br/com/alexf/boraprofut/models/Player.kt,9\0\90e3fcf06200979c3c1886ef90df166bdc795e2f
