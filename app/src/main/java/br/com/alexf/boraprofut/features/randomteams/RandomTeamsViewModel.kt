@@ -52,7 +52,6 @@ class RandomTeamsViewModel(
             _uiState.update { state ->
                 state.copy(teams = useCase.drawRandomTeams(players, playersPerTeam).map { Team(it) })
             }
-            Log.d("TAG", "drawTeams: ${_uiState}")
         }
     }
 

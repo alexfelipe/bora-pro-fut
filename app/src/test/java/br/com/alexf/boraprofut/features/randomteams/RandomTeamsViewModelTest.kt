@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.Before
 import org.junit.Rule
@@ -53,7 +54,7 @@ class RandomTeamsViewModelTest {
     }
 
     @Test
-    fun `testing drawTeams - after click the team should to be shuffled again`() {
+    fun `testing drawTeams - after click the team should to be shuffled again`() = runTest {
 
         val listAfterClick = listOf(
             setOf(
@@ -83,8 +84,7 @@ class RandomTeamsViewModelTest {
             val set2 = stateOfViewModel.first().players.toList()[i]
             if (set1 != set2) {
                 isEquals = true
-                println("As listas não têm os mesmos elementos na mesma ordem.")
-                return
+                break
             }
         }
         org.junit.Assert.assertTrue(isEquals)
