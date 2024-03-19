@@ -63,4 +63,10 @@ class TimerViewModel(
         }
     }
 
+    fun restart() {
+        _uiState.update {
+            it.copy(currentTime = 0L)
+        }
+    }
+
 }
