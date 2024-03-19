@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository
 import br.com.alexf.boraprofut.models.Player
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -110,6 +109,7 @@ fun String.parseToUniquePlayers(): Set<Player> {
 fun String.duplicateNames(): Set<String> {
     return this.trim()
         .split("\n")
+        .map { it.trim() }
         .groupingBy { it }
         .eachCount()
         .filter { it.value > 1 }
