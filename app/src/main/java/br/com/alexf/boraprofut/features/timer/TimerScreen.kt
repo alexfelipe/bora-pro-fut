@@ -50,6 +50,7 @@ import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
 import br.com.alexf.boraprofut.ui.theme.ContinueButtonColor
 import br.com.alexf.boraprofut.ui.theme.PauseButtonColor
 import br.com.alexf.boraprofut.ui.theme.RestartButtonColor
+import br.com.alexf.boraprofut.ui.theme.RestartButtonContentColor
 import java.util.concurrent.TimeUnit
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -181,7 +182,7 @@ fun TimerScreen(
                                 Icon(
                                     Icons.Filled.RestartAlt,
                                     contentDescription = stringResource(R.string.restart_button_content_description),
-                                    tint = Color(0xFF424242)
+                                    tint = RestartButtonContentColor
                                 )
                                 Spacer(modifier = Modifier.size(8.dp))
                                 Text(
@@ -189,7 +190,7 @@ fun TimerScreen(
                                     style = LocalTextStyle.current.copy(
                                         fontSize = 20.sp
                                     ),
-                                    color = Color(0xFF424242)
+                                    color = RestartButtonContentColor
                                 )
                             }
                         }
