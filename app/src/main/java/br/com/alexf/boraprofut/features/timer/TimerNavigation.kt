@@ -23,6 +23,9 @@ fun NavGraphBuilder.timer() {
             },
             onResumeClick = {
                 viewModel.resume()
+            },
+            onRestartClick = {
+                viewModel.restart()
             })
     }
 }

@@ -28,4 +28,5 @@
     <string name="edit">Editar</string>
     <string name="pause">Pausar</string>
     <string name="resume">Continuar</string>
+    <string name="restart">Reiniciar</string>
 </resources>

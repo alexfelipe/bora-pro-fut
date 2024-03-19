@@ -11,18 +11,21 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.RestartAlt
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -46,6 +49,7 @@ import br.com.alexf.boraprofut.preview.UiModePreviews
 import br.com.alexf.boraprofut.ui.theme.BoraProFutTheme
 import br.com.alexf.boraprofut.ui.theme.ContinueButtonColor
 import br.com.alexf.boraprofut.ui.theme.PauseButtonColor
+import br.com.alexf.boraprofut.ui.theme.RestartButtonColor
 import java.util.concurrent.TimeUnit
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -55,6 +59,7 @@ fun TimerScreen(
     onMinuteTimeClick: (Long) -> Unit,
     onPauseClick: () -> Unit,
     onResumeClick: () -> Unit,
+    onRestartClick: () -> Unit
 ) {
     val currentTime = uiState.currentTime
     val isPause = uiState.isPause
@@ -137,24 +142,56 @@ fun TimerScreen(
             Box(modifier = Modifier.fillMaxWidth()) {
                 when (isPause) {
                     true -> {
-                        Button(
-                            onClick = onResumeClick,
-                            Modifier
-                                .padding(16.dp)
-                                .height(60.dp)
-                                .align(Alignment.Center),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = ContinueButtonColor
-                            )
+                        Row(
+                            Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            Icon(Icons.Filled.PlayArrow, contentDescription = "ícone para dar play")
-                            Spacer(modifier = Modifier.size(8.dp))
-                            Text(
-                                stringResource(R.string.resume),
-                                style = LocalTextStyle.current.copy(
-                                    fontSize = 20.sp
+                            Button(
+                                onClick = onResumeClick,
+                                Modifier
+                                    .padding(vertical = 16.dp)
+                                    .height(60.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = ContinueButtonColor
                                 )
-                            )
+                            ) {
+                                Icon(
+                                    Icons.Filled.PlayArrow,
+                                    contentDescription = "ícone para dar play"
+                                )
+                                Spacer(modifier = Modifier.size(8.dp))
+                                Text(
+                                    stringResource(R.string.resume),
+                                    style = LocalTextStyle.current.copy(
+                                        fontSize = 20.sp
+                                    )
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(16.dp))
+                            Button(
+                                onClick = onRestartClick,
+                                Modifier
+                                    .padding(vertical = 16.dp)
+                                    .height(60.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = RestartButtonColor
+                                )
+                            ) {
+                                Icon(
+                                    Icons.Filled.RestartAlt,
+                                    contentDescription = "ícone para reiniciar cronômetro",
+                                    tint = Color(0xFF424242)
+                                )
+                                Spacer(modifier = Modifier.size(8.dp))
+                                Text(
+                                    stringResource(R.string.restart),
+                                    style = LocalTextStyle.current.copy(
+                                        fontSize = 20.sp
+                                    ),
+                                    color = Color(0xFF424242)
+                                )
+                            }
                         }
                     }
 
@@ -196,7 +233,8 @@ private fun TimerScreenPreview() {
                 uiState = TimerUiState(currentTime = 0L),
                 onMinuteTimeClick = {},
                 onPauseClick = {},
-                onResumeClick = {}
+                onResumeClick = {},
+                onRestartClick = {}
             )
         }
     }
@@ -213,7 +251,8 @@ private fun TimerScreen1Preview() {
                 ),
                 onMinuteTimeClick = {},
                 onPauseClick = {},
-                onResumeClick = {})
+                onResumeClick = {},
+                onRestartClick = {})
         }
     }
 }
@@ -230,7 +269,8 @@ private fun TimerScreen2Preview() {
                 ),
                 onMinuteTimeClick = {},
                 onPauseClick = {},
-                onResumeClick = {})
+                onResumeClick = {},
+                onRestartClick = {})
         }
     }
 }
@@ -247,7 +287,8 @@ private fun TimerScreen3Preview() {
                 ),
                 onMinuteTimeClick = {},
                 onPauseClick = {},
-                onResumeClick = {})
+                onResumeClick = {},
+                onRestartClick = {})
         }
     }
 }
@@ -265,7 +306,8 @@ private fun TimerScreen4Preview() {
                 ),
                 onMinuteTimeClick = {},
                 onPauseClick = {},
-                onResumeClick = {})
+                onResumeClick = {},
+                onRestartClick = {})
         }
     }
 }
@@ -283,7 +325,8 @@ private fun TimerScreen5Preview() {
                 ),
                 onMinuteTimeClick = {},
                 onPauseClick = {},
-                onResumeClick = {})
+                onResumeClick = {},
+                onRestartClick = {})
         }
     }
 }
@@ -302,7 +345,8 @@ private fun TimerScreen6Preview() {
                 ),
                 onMinuteTimeClick = {},
                 onPauseClick = {},
-                onResumeClick = {})
+                onResumeClick = {},
+                onRestartClick = {})
         }
     }
 }

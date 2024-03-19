@@ -31,3 +31,4 @@ val SavePlayersButtonContainerColor = Color(0xFF006400)
 
 val PauseButtonColor = Color(0xFFE53935)
 val ContinueButtonColor = Color(0xFF008866)
+val RestartButtonColor = Color(0xFFFDC417)
