@@ -158,7 +158,7 @@ fun TimerScreen(
                             ) {
                                 Icon(
                                     Icons.Filled.PlayArrow,
-                                    contentDescription = "ícone para dar play"
+                                    contentDescription = stringResource(R.string.play_button_content_description)
                                 )
                                 Spacer(modifier = Modifier.size(8.dp))
                                 Text(
@@ -180,7 +180,7 @@ fun TimerScreen(
                             ) {
                                 Icon(
                                     Icons.Filled.RestartAlt,
-                                    contentDescription = "ícone para reiniciar cronômetro",
+                                    contentDescription = stringResource(R.string.restart_button_content_description),
                                     tint = Color(0xFF424242)
                                 )
                                 Spacer(modifier = Modifier.size(8.dp))
@@ -207,7 +207,7 @@ fun TimerScreen(
                                 containerColor = PauseButtonColor
                             )
                         ) {
-                            Icon(Icons.Filled.Pause, contentDescription = "ícone para pausar")
+                            Icon(Icons.Filled.Pause, contentDescription = stringResource(R.string.pause_button_content_description))
                             Spacer(modifier = Modifier.size(8.dp))
                             Text(
                                 stringResource(R.string.pause),

@@ -29,4 +29,7 @@
     <string name="pause">Pausar</string>
     <string name="resume">Continuar</string>
     <string name="restart">Reiniciar</string>
+    <string name="play_button_content_description">botão para iniciar o cronômetro</string>
+    <string name="restart_button_content_description">botão para reiniciar cronômetro</string>
+    <string name="pause_button_content_description">botão para pausar o cronômetro</string>
 </resources>
