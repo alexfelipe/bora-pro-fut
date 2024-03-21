@@ -65,7 +65,7 @@ class TimerViewModel(
 
     fun restart() {
         _uiState.update {
-            it.copy(currentTime = 0L)
+            it.copy(currentTime = 0L, timerProgress = 0f)
         }
     }
 
