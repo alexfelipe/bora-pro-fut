@@ -8,11 +8,24 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+sealed class TimerAction {
+    data object PAUSE : TimerAction()
+    data object RESTART : TimerAction()
+    data object NEW_TIME : TimerAction()
+}
+
+data class TimerRegister(
+    val timerAction: TimerAction,
+    val time: Long,
+    val timeStamp: Long = System.currentTimeMillis()
+)
+
 data class TimerUiState(
     val currentTime: Long = 0L,
     val isPause: Boolean = true,
     val times: List<Long> = listOf(5L, 7L, 10L, 15L, 20L),
-    val timerProgress: Float = 0f
+    val timerProgress: Float = 0f,
+    val timerRegisters: List<TimerRegister> = emptyList()
 )
 
 class TimerViewModel(
