@@ -53,7 +53,7 @@ fun RandomTeamsScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Times sorteados",
+                text = stringResource(R.string.teams_drawn),
                 Modifier
                     .weight(1f),
                 style = MaterialTheme.typography.titleLarge
@@ -85,13 +85,13 @@ fun RandomTeamsScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Time ${index + 1}",
+                        text = stringResource(id = R.string.team, index + 1),
                         Modifier
                             .padding(16.dp),
                         style = MaterialTheme.typography.titleMedium
                     )
                     Text(
-                        text = "Nível ${team.level}",
+                        text = stringResource(id = R.string.level, team.level),
                         Modifier
                             .padding(16.dp),
                         style = MaterialTheme.typography.titleMedium
