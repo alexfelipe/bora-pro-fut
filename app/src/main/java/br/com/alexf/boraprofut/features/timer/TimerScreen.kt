@@ -6,6 +6,7 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,6 +26,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.RestartAlt
@@ -39,6 +43,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -77,6 +82,7 @@ fun TimerScreen(
     ) {
         Box(
             Modifier
+                .padding(32.dp)
                 .size(300.dp)
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.primary, shape = CircleShape)
@@ -226,66 +232,99 @@ fun TimerScreen(
             }
         }
 
-        if (uiState.timerRegisters.isNotEmpty()) {
-            Text(
-                text = "Registros", Modifier
-                    .background(MaterialTheme.colorScheme.primary)
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                style = LocalTextStyle.current.copy(
-                    fontSize = 24.sp,
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-            )
-            uiState.timerRegisters.forEach { register ->
-                val (textAction, textColorAction) = when (register.timerAction) {
-                    TimerAction.NEW_TIME -> Pair("Novo tempo", MaterialTheme.colorScheme.primary)
-                    TimerAction.PAUSE -> Pair("Pause", PauseButtonColor)
-                    TimerAction.RESTART -> Pair("Reiniciar", RestartButtonColor)
-                }
-
-                Box(Modifier.fillMaxWidth()) {
-                    Row(
-                        Modifier
-                            .padding(8.dp)
-                            .fillMaxSize()
-                            .height(IntrinsicSize.Max)
-                    ) {
-                        Column(
-                            Modifier
-                                .weight(1f)
-                        ) {
-                            Text(
-                                text = textAction,
-                                style = LocalTextStyle.current.copy(
-                                    color = textColorAction,
-                                    fontSize = 20.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            )
-                            Spacer(modifier = Modifier.size(8.dp))
-                            Text(
-                                text = textTimer(currentTime = register.time),
-                                style = LocalTextStyle.current.copy(
-                                    fontSize = 18.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            )
+        if (uiState.timerLog.isNotEmpty()) {
+            Column {
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            uiState.onToggleTimerLog()
                         }
-                        Box(
-                            Modifier
-                                .fillMaxHeight()
-                        ) {
-                            val dateTimeText =
-                                SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(register.timeStamp)
-                            Text(
-                                text = dateTimeText,
-                                Modifier.align(Alignment.BottomEnd)
-                            )
+                        .background(MaterialTheme.colorScheme.primary)
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    val icon = remember(uiState.isDisplayTimerLog) {
+                        if (uiState.isDisplayTimerLog) {
+                            Icons.Filled.KeyboardArrowDown
+                        } else {
+                            Icons.AutoMirrored.Filled.KeyboardArrowRight
                         }
                     }
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                    Text(
+                        text = "Registros",
+                        style = LocalTextStyle.current.copy(
+                            fontSize = 24.sp,
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
+                    )
+                    Icon(
+                        Icons.Filled.History, contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
                 }
-                HorizontalDivider()
+                if(uiState.isDisplayTimerLog) {
+                    uiState.timerLog.forEach { register ->
+                        val (textAction, textColorAction) = when (register.timerAction) {
+                            TimerAction.NEW_TIME -> Pair(
+                                "Novo tempo",
+                                MaterialTheme.colorScheme.primary
+                            )
+
+                            TimerAction.PAUSE -> Pair("Pause", PauseButtonColor)
+                            TimerAction.RESTART -> Pair("Reiniciar", RestartButtonColor)
+                            TimerAction.CONTINUE -> Pair("Continuar", ContinueButtonColor)
+                        }
+                        Box(Modifier.fillMaxWidth()) {
+                            Row(
+                                Modifier
+                                    .padding(8.dp)
+                                    .fillMaxSize()
+                                    .height(IntrinsicSize.Max)
+                            ) {
+                                Column(
+                                    Modifier
+                                        .weight(1f)
+                                ) {
+                                    Text(
+                                        text = textAction,
+                                        style = LocalTextStyle.current.copy(
+                                            color = textColorAction,
+                                            fontSize = 20.sp,
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                    )
+                                    Spacer(modifier = Modifier.size(8.dp))
+                                    Text(
+                                        text = textTimer(currentTime = register.time),
+                                        style = LocalTextStyle.current.copy(
+                                            fontSize = 18.sp,
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                    )
+                                }
+                                Box(
+                                    Modifier
+                                        .fillMaxHeight()
+                                ) {
+                                    val dateTimeText =
+                                        SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(register.timeStamp)
+                                    Text(
+                                        text = dateTimeText,
+                                        Modifier.align(Alignment.BottomEnd)
+                                    )
+                                }
+                            }
+                        }
+                        HorizontalDivider()
+                    }
+                }
             }
         }
     }
@@ -436,16 +475,16 @@ private fun TimerScreen7Preview() {
             TimerScreen(
                 uiState = TimerUiState(
                     currentTime = 1000L,
-                    timerRegisters = listOf(
-                        TimerRegister(
+                    timerLog = listOf(
+                        TimerLog(
                             timerAction = TimerAction.NEW_TIME,
                             time = 10000,
                         ),
-                        TimerRegister(
+                        TimerLog(
                             timerAction = TimerAction.PAUSE,
                             time = 20000,
                         ),
-                        TimerRegister(
+                        TimerLog(
                             timerAction = TimerAction.RESTART,
                             time = 30000,
                         )

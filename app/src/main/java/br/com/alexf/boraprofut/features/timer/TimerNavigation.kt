@@ -13,7 +13,7 @@ const val timerRoute = "timer"
 fun NavGraphBuilder.timer() {
     composable(timerRoute) {
         val viewModel = koinViewModel<TimerViewModel>()
-        val uiState by viewModel.uiState.collectAsState()
+        val uiState by viewModel.uiState.collectAsState(TimerUiState())
         TimerScreen(uiState,
             onMinuteTimeClick = {
                 viewModel.setMinutes(it)

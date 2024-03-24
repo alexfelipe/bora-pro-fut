@@ -280,7 +280,6 @@ fun DrawTeamsScreen(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
-
                                 Box(
                                     modifier = Modifier
                                         .clip(CircleShape)

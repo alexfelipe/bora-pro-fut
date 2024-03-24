@@ -3,40 +3,41 @@ package br.com.alexf.boraprofut.features.timer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
-sealed class TimerAction {
-    data object PAUSE : TimerAction()
-    data object RESTART : TimerAction()
-    data object NEW_TIME : TimerAction()
-}
-
-data class TimerRegister(
-    val timerAction: TimerAction,
-    val time: Long,
-    val timeStamp: Long = System.currentTimeMillis()
-)
 
 data class TimerUiState(
     val currentTime: Long = 0L,
     val isPause: Boolean = true,
     val times: List<Long> = listOf(5L, 7L, 10L, 15L, 20L),
     val timerProgress: Float = 0f,
-    val timerRegisters: List<TimerRegister> = emptyList()
+    val timerLog: List<TimerLog> = emptyList(),
+    val isDisplayTimerLog: Boolean = true,
+    val onToggleTimerLog: () -> Unit = {}
 )
 
 class TimerViewModel(
-    private val timerCountDown: TimerCountDown
+    private val timerCountDown: TimerCountDown,
+    private val timerRepository: TimerRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(TimerUiState())
     val uiState = _uiState
-        .asStateFlow()
+        .combine(timerRepository.timerLog) { uiState, timerLog ->
+            uiState.copy(timerLog = timerLog)
+        }
 
     init {
+        _uiState.update { currentState ->
+            currentState.copy(
+                onToggleTimerLog = {
+                    _uiState.update {
+                        it.copy(isDisplayTimerLog = !it.isDisplayTimerLog)
+                    }
+                })
+        }
         viewModelScope.launch {
             timerCountDown.timer
                 .collectLatest { currentTime ->
@@ -49,6 +50,7 @@ class TimerViewModel(
                     }
                 }
         }
+
     }
 
     fun setMinutes(minutes: Long) {
@@ -56,6 +58,10 @@ class TimerViewModel(
         timerCountDown.isPause = false
         timerCountDown.startTimer()
         _uiState.update {
+            timerRepository.saveLog(
+                currentTime = it.currentTime,
+                action = TimerAction.NEW_TIME
+            )
             it.copy(
                 isPause = timerCountDown.isPause
             )
@@ -65,6 +71,10 @@ class TimerViewModel(
     fun resume() {
         timerCountDown.isPause = false
         _uiState.update {
+            timerRepository.saveLog(
+                currentTime = it.currentTime,
+                action = TimerAction.CONTINUE
+            )
             it.copy(isPause = false)
         }
     }
@@ -72,13 +82,25 @@ class TimerViewModel(
     fun pause() {
         timerCountDown.isPause = true
         _uiState.update {
-            it.copy(isPause = true)
+            timerRepository.saveLog(
+                currentTime = it.currentTime,
+                action = TimerAction.PAUSE
+            )
+            it.copy(
+                isPause = true,
+            )
         }
     }
 
     fun restart() {
         _uiState.update {
-            it.copy(currentTime = 0L, timerProgress = 0f)
+            timerRepository.saveLog(
+                currentTime = it.currentTime,
+                action = TimerAction.RESTART
+            )
+            it.copy(
+                currentTime = 0L, timerProgress = 0f
+            )
         }
     }
 

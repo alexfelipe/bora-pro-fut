@@ -13,6 +13,7 @@ import br.com.alexf.boraprofut.features.playersForm.PlayersFormViewModel
 import br.com.alexf.boraprofut.features.game.GameViewModel
 import br.com.alexf.boraprofut.features.randomteams.RandomTeamsViewModel
 import br.com.alexf.boraprofut.features.timer.TimerCountDown
+import br.com.alexf.boraprofut.features.timer.TimerRepository
 import br.com.alexf.boraprofut.features.timer.TimerViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModelOf
@@ -33,6 +34,7 @@ val appModule = module {
 
 val dataModule = module {
     singleOf(::PlayersRepository)
+    singleOf(::TimerRepository)
     single {
         Room.databaseBuilder(
             androidContext(),
