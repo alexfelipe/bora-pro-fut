@@ -24,6 +24,8 @@ data class DrawTeamsUiState(
     val onIncreasePlayersPerTeam: () -> Unit = {},
     val onIncreasePlayerLevel: (Player) -> Unit = {},
     val onDecreasePlayerLevel: (Player) -> Unit = {},
+    val setGoalKeeper: (Player) -> Unit = {},
+    val setNotGoalKeeper: (Player) -> Unit = {},
     val initState: InitState = InitState.LOADING
 )
 
@@ -69,6 +71,16 @@ class DrawTeamsViewModel(
                 onIncreasePlayerLevel = {
                     viewModelScope.launch {
                         repository.increasePlayerLevel(it)
+                    }
+                },
+                setGoalKeeper = {
+                    viewModelScope.launch {
+                        repository.setGoalKeeper(it)
+                    }
+                },
+                setNotGoalKeeper = {
+                    viewModelScope.launch {
+                        repository.setNotGoalKeeper(it)
                     }
                 }
             )
