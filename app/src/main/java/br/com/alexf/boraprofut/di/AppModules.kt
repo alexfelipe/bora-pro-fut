@@ -6,12 +6,13 @@ import androidx.room.Room
 import br.com.alexf.boraprofut.data.database.BoraProFutDatabase
 import br.com.alexf.boraprofut.data.database.MIGRATION_1_2
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository
+import br.com.alexf.boraprofut.data.repositories.PreferencesRepository
 import br.com.alexf.boraprofut.features.balancedTeams.BalancedTeamViewModel
 import br.com.alexf.boraprofut.features.drawTeams.DrawTeamsViewModel
 import br.com.alexf.boraprofut.features.drawTeams.useCases.TeamDrawerUseCase
+import br.com.alexf.boraprofut.features.game.GameViewModel
 import br.com.alexf.boraprofut.features.game.usecase.GameUseCase
 import br.com.alexf.boraprofut.features.playersForm.PlayersFormViewModel
-import br.com.alexf.boraprofut.features.game.GameViewModel
 import br.com.alexf.boraprofut.features.randomteams.RandomTeamsViewModel
 import br.com.alexf.boraprofut.features.timer.TimerCountDown
 import br.com.alexf.boraprofut.features.timer.TimerViewModel
@@ -34,6 +35,7 @@ val appModule = module {
 
 val dataModule = module {
     singleOf(::PlayersRepository)
+    singleOf(::PreferencesRepository)
     single {
         Room.databaseBuilder(
             androidContext(),

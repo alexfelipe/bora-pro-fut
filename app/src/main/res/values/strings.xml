@@ -32,4 +32,8 @@
     <string name="play_button_content_description">botão para iniciar o cronômetro</string>
     <string name="restart_button_content_description">botão para reiniciar cronômetro</string>
     <string name="pause_button_content_description">botão para pausar o cronômetro</string>
+    <string name="mark_player_as_goal_keeper_message">Para marcar um jogador como goleiro basta inserir (g) após o seu nome</string>
+    <string name="got_it">Entendi</string>
+    <string name="add_goal_keeper">Adicionar Goleiro</string>
+    <string name="show_add_goal_keeper_tip">mostrar dica para adicionar goleiro</string>
 </resources>
