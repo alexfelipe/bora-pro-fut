@@ -24,7 +24,7 @@
     <string name="hide_players">Esconder jogadores</string>
     <string name="icon_of_hide_players_button">ícone do botão para esconder jogadores</string>
     <string name="show_players">Mostrar jogadores</string>
-    <string name="players">Jogadores</string>
+    <string name="players">Jogadores (%d)</string>
     <string name="edit">Editar</string>
     <string name="pause">Pausar</string>
     <string name="resume">Continuar</string>
@@ -32,4 +32,14 @@
     <string name="play_button_content_description">botão para iniciar o cronômetro</string>
     <string name="restart_button_content_description">botão para reiniciar cronômetro</string>
     <string name="pause_button_content_description">botão para pausar o cronômetro</string>
+    <string name="level_text">Nível:</string>
+    <string name="decrease_level">diminuir nível</string>
+    <string name="increase_level">aumentar nível</string>
+    <string name="teams_drawn">Times sorteados</string>
+    <string name="mark_player_as_goal_keeper_message">Para marcar um jogador como goleiro basta inserir (g) após o seu nome</string>
+    <string name="got_it">Entendi</string>
+    <string name="add_goal_keeper">Adicionar Goleiro</string>
+    <string name="show_add_goal_keeper_tip">mostrar dica para adicionar goleiro</string>
+    <string name="goal_keeper_icon">goal keeper icon</string>
+    <string name="not_goal_keeper_icon">not goal keeper icon</string>
 </resources>

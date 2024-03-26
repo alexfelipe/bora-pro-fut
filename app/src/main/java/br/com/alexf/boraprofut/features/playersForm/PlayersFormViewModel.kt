@@ -3,12 +3,15 @@ package br.com.alexf.boraprofut.features.playersForm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository
+import br.com.alexf.boraprofut.data.repositories.PreferencesRepository
 import br.com.alexf.boraprofut.models.Player
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -20,6 +23,9 @@ data class PlayersUiState(
     val duplicateNames: String = "",
     val onPlayersChange: (String) -> Unit = {},
     val isSaving: Boolean = false,
+    val isToolTipVisible: Flow<Boolean> = flowOf(false),
+    val onShowToolTip: () -> Unit = {},
+    val onHideToolTip: () -> Unit = {}
 ) {
     fun isShowSaveButton() = players.isNotBlank()
             && amountPlayers != null && amountPlayers > 0
@@ -27,7 +33,8 @@ data class PlayersUiState(
 }
 
 class PlayersFormViewModel(
-    private val repository: PlayersRepository
+    private val repository: PlayersRepository,
+    private val preferencesRepository: PreferencesRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PlayersUiState())
@@ -38,24 +45,44 @@ class PlayersFormViewModel(
     init {
         _uiState.update { currentState ->
             currentState.copy(
+                isToolTipVisible = preferencesRepository.isToolTipVisible(),
                 onPlayersChange = { players ->
                     _uiState.update {
                         it.copy(
                             players = players,
                             amountPlayers = isTherePlayer(players),
                             duplicateNames = players.duplicateNames()
-                                .joinToString()
+                                .joinToString(),
                         )
                     }
                 },
+                onShowToolTip = {
+                    viewModelScope.launch {
+                        preferencesRepository.showToolTip()
+                    }
+                },
+                onHideToolTip = {
+                    viewModelScope.launch {
+                        preferencesRepository.hideToolTip()
+                    }
+                }
             )
         }
+
+
 
         viewModelScope.launch {
             repository.players.collectLatest { players ->
                 _uiState.update { currentState ->
                     currentState.copy(
-                        players = players.joinToString("") { "${it.name}\n" },
+                        players = players
+                            .joinToString("") {
+                                if (it.isGoalKeeper) {
+                                    "${it.name.trim()} (G)\n"
+                                } else {
+                                    "${it.name}\n"
+                                }
+                            },
                         amountPlayers = players.size
                     )
                 }

@@ -10,12 +10,12 @@ import androidx.navigation.compose.composable
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.navigation.koinNavViewModel
 
-const val playersFormRoute = "playersForm"
+const val PLAYERS_FORM_ROUTE = "playersForm"
 
 fun NavGraphBuilder.playersForm(
     onNavigateToDrawScreen: () -> Unit
 ) {
-    composable(playersFormRoute) {
+    composable(PLAYERS_FORM_ROUTE) {
         val viewModel = koinNavViewModel<PlayersFormViewModel>()
         val uiState by viewModel.uiState.collectAsState(initial = PlayersUiState())
         LaunchedEffect(Unit) {
@@ -34,5 +34,5 @@ fun NavGraphBuilder.playersForm(
 fun NavHostController.navigateToPlayersFormScreen(
     navOptions: NavOptions? = null
 ) {
-    navigate(playersFormRoute, navOptions)
+    navigate(PLAYERS_FORM_ROUTE, navOptions)
 }

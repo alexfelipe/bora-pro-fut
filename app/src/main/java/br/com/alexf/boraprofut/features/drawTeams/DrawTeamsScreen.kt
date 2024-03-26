@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,7 +29,10 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Remove
+import androidx.compose.material.icons.outlined.SportsHandball
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -46,7 +50,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.alexf.boraprofut.R
@@ -84,6 +87,7 @@ fun DrawTeamsScreen(
 ) {
     val context = LocalContext.current
     val totalPlayers = uiState.players.size
+
     Column(
         modifier
             .fillMaxSize()
@@ -161,7 +165,7 @@ fun DrawTeamsScreen(
                     )
                     Spacer(modifier = Modifier.size(16.dp))
                     Icon(
-                        option.icon, contentDescription = null,
+                        option.icon, contentDescription = option.title,
                         Modifier.size(64.dp),
                         tint = Color.White
                     )
@@ -207,141 +211,174 @@ fun DrawTeamsScreen(
             )
         }
         if (uiState.isShowPlayers) {
-            Column {
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .background(
-                            Brush.linearGradient(
-                                listOf(
-                                    PlayersContainerPrimaryColor,
-                                    PlayersContainerSecondaryColor,
-                                    MaterialTheme.colorScheme.background
-                                ),
-                            )
-                        ),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = stringResource(R.string.players),
-                        Modifier.padding(16.dp),
-                        style = MaterialTheme.typography.titleLarge.copy(Color.White)
-                    )
-
+            if (uiState.players.isNotEmpty()) {
+                Column {
                     Row(
                         Modifier
-                            .padding(16.dp)
-                            .clickable {
-                                onEditPlayersClick()
-                            }
-                            .clip(RoundedCornerShape(15))
+                            .fillMaxWidth()
                             .background(
                                 Brush.linearGradient(
                                     listOf(
-                                        EditPlayersButtonContainerPrimaryColor,
-                                        EditPlayersButtonContainerSecondaryColor,
-                                    )
+                                        PlayersContainerPrimaryColor,
+                                        PlayersContainerSecondaryColor,
+                                        MaterialTheme.colorScheme.background
+                                    ),
                                 )
-                            )
-                            .padding(8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Icon(
-                            imageVector = Icons.Filled.Edit,
-                            contentDescription = stringResource(R.string.players_edit_icon),
-                            tint = Color.White
-                        )
                         Text(
-                            text = stringResource(R.string.edit),
-                            style = LocalTextStyle.current.copy(color = Color.White)
+                            text = stringResource(R.string.players, uiState.players.size),
+                            Modifier.padding(16.dp),
+                            style = MaterialTheme.typography.titleLarge.copy(Color.White)
                         )
-                    }
-                }
-                Column(
-                    Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    uiState.players.forEach { player ->
+
                         Row(
                             Modifier
-                                .fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
+                                .padding(16.dp)
+                                .clickable {
+                                    onEditPlayersClick()
+                                }
+                                .clip(RoundedCornerShape(15))
+                                .background(
+                                    Brush.linearGradient(
+                                        listOf(
+                                            EditPlayersButtonContainerPrimaryColor,
+                                            EditPlayersButtonContainerSecondaryColor,
+                                        )
+                                    )
+                                )
+                                .padding(8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            Text(
-                                text = player.name, Modifier.weight(1f),
-                                style = LocalTextStyle.current.copy(
-                                    fontSize = 20.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
+                            Icon(
+                                imageVector = Icons.Filled.Edit,
+                                contentDescription = stringResource(R.string.players_edit_icon),
+                                tint = Color.White
                             )
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
-                            ) {
-
-                                Box(
-                                    modifier = Modifier
-                                        .clip(CircleShape)
-                                        .combinedClickable(
-                                            onClick = {
-                                                uiState.onDecreasePlayerLevel(player)
-                                            },
-                                            onLongClick = {
-                                                uiState.onDecreasePlayerLevel(player)
-                                            }
-                                        )
-                                        .background(
-                                            DecreasePlayerLevelContainerColor
-                                                .copy(alpha = 0.8f)
-                                        )
-                                        .padding(4.dp)
-                                ) {
-                                    Icon(
-                                        Icons.Outlined.Remove,
-                                        contentDescription = null,
-                                        tint = Color.White
-                                    )
-                                }
-                                Text(
-                                    text = "${player.level}",
-                                    Modifier.width(30.dp),
-                                    style = LocalTextStyle.current.copy(
-                                        fontSize = 20.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        textAlign = TextAlign.Center
-                                    )
-                                )
-
-                                Box(
-                                    modifier = Modifier
-                                        .clip(CircleShape)
-                                        .combinedClickable(
-                                            onClick = {
-                                                uiState.onIncreasePlayerLevel(player)
-                                            },
-                                            onLongClick = {
-
-                                                uiState.onIncreasePlayerLevel(player)
-                                            }
-                                        )
-                                        .background(
-                                            IncreasePlayerLevelContainerColor
-                                                .copy(alpha = 0.8f)
-                                        )
-                                        .padding(4.dp)
-                                ) {
-                                    Icon(
-                                        Icons.Outlined.Add,
-                                        contentDescription = null,
-                                        tint = Color.White
-                                    )
-                                }
-                            }
+                            Text(
+                                text = stringResource(R.string.edit),
+                                style = LocalTextStyle.current.copy(color = Color.White)
+                            )
                         }
                     }
+                    Column {
+                        uiState.players.forEachIndexed { index, player ->
+                            Row(
+                                Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                IconButton(onClick = {
+                                    if (player.isGoalKeeper) {
+                                        uiState.setNotGoalKeeper(player)
+                                    } else {
+                                        uiState.setGoalKeeper(player)
+                                    }
+                                }, modifier = Modifier.padding(vertical = 16.dp)) {
+                                    if (player.isGoalKeeper) {
+                                        Icon(
+                                            imageVector = Icons.Outlined.SportsHandball,
+                                            contentDescription = stringResource(R.string.goal_keeper_icon)
+                                        )
+                                    } else {
+                                        Icon(
+                                            imageVector = Icons.Outlined.SportsHandball,
+                                            contentDescription = stringResource(R.string.not_goal_keeper_icon),
+                                            tint = if (isSystemInDarkTheme()) {
+                                                Color.White.copy(alpha = 0.2f)
+                                            } else {
+                                                Color.Black.copy(alpha = 0.2f)
+                                            },
+                                        )
+                                    }
 
+                                }
+                                Text(
+                                    text = if (player.isGoalKeeper) {
+                                        "${player.name.trim()} (G)"
+                                    } else {
+                                        player.name
+                                    },
+                                    Modifier.weight(1f),
+                                    style = LocalTextStyle.current.copy(
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                )
+                                if (!player.isGoalKeeper) {
+                                    Row(
+                                        Modifier.padding(end = 16.dp),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                    ) {
+                                        Box(
+                                            modifier = Modifier
+                                                .clip(CircleShape)
+                                                .combinedClickable(
+                                                    onClick = {
+                                                        uiState.onDecreasePlayerLevel(player)
+                                                    },
+                                                    onLongClick = {
+                                                        uiState.onDecreasePlayerLevel(player)
+                                                    }
+                                                )
+                                                .background(
+                                                    DecreasePlayerLevelContainerColor
+                                                        .copy(alpha = 0.8f)
+                                                )
+                                                .padding(4.dp)
+                                        ) {
+                                            Icon(
+                                                Icons.Outlined.Remove,
+                                                contentDescription = stringResource(id = R.string.decrease_level),
+                                                tint = Color.White
+                                            )
+                                        }
+                                        Text(
+                                            text = "${player.level}",
+                                            Modifier.width(24.dp),
+                                            style = LocalTextStyle.current.copy(
+                                                fontSize = 20.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                textAlign = TextAlign.Center
+                                            )
+                                        )
+
+                                        Box(
+                                            modifier = Modifier
+                                                .clip(CircleShape)
+                                                .combinedClickable(
+                                                    onClick = {
+                                                        uiState.onIncreasePlayerLevel(player)
+                                                    },
+                                                    onLongClick = {
+
+                                                        uiState.onIncreasePlayerLevel(player)
+                                                    }
+                                                )
+                                                .background(
+                                                    IncreasePlayerLevelContainerColor
+                                                        .copy(alpha = 0.8f)
+                                                )
+                                                .padding(4.dp)
+                                        ) {
+                                            Icon(
+                                                Icons.Outlined.Add,
+                                                contentDescription = stringResource(id = R.string.increase_level),
+                                                tint = Color.White
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                            if (index < uiState.players.size - 1) {
+                                HorizontalDivider()
+                            }
+                        }
+
+                    }
                 }
             }
         }

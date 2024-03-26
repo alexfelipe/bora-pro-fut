@@ -10,10 +10,8 @@ val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
-
 val SelectPlayerContainerPrimaryColor = Color(0xFF673AB7)
 val SelectPlayerContainerSecondaryColor = Color(0xFFF44336)
-
 val DrawRandomTeamsContainerPrimaryColor = Color(0xFF673AB7)
 val DrawRandomTeamsContainerSecondaryColor = Color(0xFF223311)
 val DrawBalancedTeamsContainerPrimaryColor = Color(0xFF2196F3)
@@ -24,12 +22,10 @@ val EditPlayersButtonContainerPrimaryColor = Color(0xFFD500F9)
 val EditPlayersButtonContainerSecondaryColor = Color(0xFF651FFF)
 val DecreasePlayerLevelContainerColor = Color(0xFFFF1744)
 val IncreasePlayerLevelContainerColor = Color(0xFF00E676)
-
-val DuplicatesNamesContainerColor = Color(0xFF8B0000)
-val ClearPlayersTextFieldContainerColor = Color(0xFF8B0000)
-val SavePlayersButtonContainerColor = Color(0xFF006400)
-
 val PauseButtonColor = Color(0xFFE53935)
 val ContinueButtonColor = Color(0xFF008866)
 val RestartButtonColor = Color(0xFFFDC417)
 val RestartButtonContentColor = Color(0xFF424242)
+val DuplicatesNamesContainerColor = Color(0xFF8B0000)
+val ClearPlayersTextFieldContainerColor = Color(0xFF8B0000)
+val SavePlayersButtonContainerColor = Color(0xFF006400)

@@ -6,9 +6,9 @@ import br.com.alexf.boraprofut.data.database.dao.PlayersDao
 import br.com.alexf.boraprofut.data.database.entities.PlayerEntity
 
 @Database(
-    version = 1,
+    version = 2,
     exportSchema = true,
-    entities = [PlayerEntity::class]
+    entities = [PlayerEntity::class],
 )
 abstract class BoraProFutDatabase : RoomDatabase(){
 

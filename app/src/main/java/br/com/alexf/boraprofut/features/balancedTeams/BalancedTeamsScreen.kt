@@ -27,7 +27,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.alexf.boraprofut.R
@@ -98,27 +97,29 @@ fun BalancedTeamsScreen(
                     )
                 }
                 Column {
-                    team.players.forEach { p ->
+                    team.players.forEach { player ->
                         Row(
                             Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = p.name,
+                                text = "${player.name} ${if (player.isGoalKeeper) "(G)" else ""}",
                                 Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                                 style = LocalTextStyle.current.copy(
                                     fontSize = 20.sp,
                                     fontWeight = FontWeight.Bold
                                 )
                             )
-                            Text(
-                                text = "${p.level}",
-                                Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                                style = LocalTextStyle.current.copy(
-                                    fontSize = 20.sp,
-                                    fontWeight = FontWeight.Bold
+                            if (!player.isGoalKeeper) {
+                                Text(
+                                    text = "${player.level}",
+                                    Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                                    style = LocalTextStyle.current.copy(
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
                                 )
-                            )
+                            }
                         }
                     }
                 }
