@@ -4,6 +4,7 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import br.com.alexf.boraprofut.data.database.BoraProFutDatabase
+import br.com.alexf.boraprofut.data.database.MIGRATION_1_2
 import br.com.alexf.boraprofut.data.repositories.PlayersRepository
 import br.com.alexf.boraprofut.features.balancedTeams.BalancedTeamViewModel
 import br.com.alexf.boraprofut.features.drawTeams.DrawTeamsViewModel
@@ -38,7 +39,8 @@ val dataModule = module {
             androidContext(),
             BoraProFutDatabase::class.java,
             "bora-pro-fut.db"
-        ).build()
+        ).addMigrations(MIGRATION_1_2)
+            .build()
     }
     single {
         get<BoraProFutDatabase>().playerDao()
