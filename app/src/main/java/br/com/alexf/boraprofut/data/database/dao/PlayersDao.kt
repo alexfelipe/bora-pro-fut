@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PlayersDao {
 
-    @Query("SELECT * FROM PlayerEntity ORDER by name")
+    @Query("SELECT * FROM PlayerEntity ORDER BY is_goal_keeper DESC, name")
     fun findAll(): Flow<List<Player>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
