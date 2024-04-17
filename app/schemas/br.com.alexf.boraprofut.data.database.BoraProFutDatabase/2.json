@@ -1,12 +1,12 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 1,
-    "identityHash": "7f558be24c60997e8269ee8e2a802965",
+    "version": 2,
+    "identityHash": "be2de52b07ed48f8f8942eed5268e9d4",
     "entities": [
       {
         "tableName": "PlayerEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `level` INTEGER NOT NULL, `is_goal_keeper` INTEGER, PRIMARY KEY(`name`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `level` INTEGER NOT NULL, `is_goal_keeper` INTEGER NOT NULL, PRIMARY KEY(`name`))",
         "fields": [
           {
             "fieldPath": "name",
@@ -24,7 +24,7 @@
             "fieldPath": "isGoalKeeper",
             "columnName": "is_goal_keeper",
             "affinity": "INTEGER",
-            "notNull": false
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -40,7 +40,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7f558be24c60997e8269ee8e2a802965')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'be2de52b07ed48f8f8942eed5268e9d4')"
     ]
   }
 }

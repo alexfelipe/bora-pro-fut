@@ -13,11 +13,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.withContext
 
 private val playersPerTeamPreference = intPreferencesKey("playersPerTeam")
-private const val defaultPlayersPerTeam = 5
+private const val DEFAULT_PLAYERS_PER_TEAM = 5
 
 class PlayersRepository(
     private val dao: PlayersDao,
@@ -28,7 +27,7 @@ class PlayersRepository(
     val games = _game.asStateFlow()
     val playersPerTeam
         get() = dataStore.data.map {
-            it[playersPerTeamPreference] ?: defaultPlayersPerTeam
+            it[playersPerTeamPreference] ?: DEFAULT_PLAYERS_PER_TEAM
         }
 
     suspend fun save(players: Set<Player>) {
@@ -75,15 +74,6 @@ class PlayersRepository(
         }
     }
 
-    fun saveGame(players: Set<Team>) {
-        _game.update {
-            players
-                .filter {
-                    it.name.trim().isNotBlank()
-                }.toSet()
-        }
-    }
-
     suspend fun deleteAllPlayers() {
         dao.deleteAllPlayers()
     }
@@ -95,8 +85,11 @@ class PlayersRepository(
 }
 
 private fun Player.toPlayerEntity(): PlayerEntity {
+    val name = this.name.replace(Regex("\\([Gg]\\)"), "")
+    val isGoalKeeper = this.name.contains(Regex("\\([Gg]\\)")) || this.isGoalKeeper
     return PlayerEntity(
-        name = this.name,
-        level = this.level
+        name = name,
+        level = this.level,
+        isGoalKeeper = isGoalKeeper
     )
 }
