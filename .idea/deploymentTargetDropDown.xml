@@ -2,10 +2,13 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="Tests in 'br.com.alexf.boraprofut.features'">
+        <State />
+      </entry>
       <entry key="app">
         <State />
       </entry>
-      <entry key="shouldDisplayNameField_WhenNameIsDuplicated()">
+      <entry key="shouldDisplayAllComponents()">
         <State />
       </entry>
     </value>
